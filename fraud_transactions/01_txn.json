@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0001",
+  "amount_usd": 2159.52,
+  "merchant_category": "Pharmacy",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 300,
+  "account_age_days": 14,
+  "device_note": "device reports emulator characteristics",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "step_up",
+    "risk_points": 2
+  }
+}

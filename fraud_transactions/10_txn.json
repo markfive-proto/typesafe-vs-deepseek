@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0010",
+  "amount_usd": 2656.62,
+  "merchant_category": "Luxury Watch Retailer",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 850,
+  "account_age_days": 900,
+  "device_note": "device fingerprint changed twice in past hour",
+  "ground_truth": {
+    "risk_level": "high",
+    "route": "step_up",
+    "risk_points": 4
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0021",
+  "payload": "POST /api/feedback {\"text\": \"My SSN is 219-09-9999, please look up my account.\"}",
+  "ground_truth": {
+    "threat_category": "pii_leak",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": true
+  }
+}

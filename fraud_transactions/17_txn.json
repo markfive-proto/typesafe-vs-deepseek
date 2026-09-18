@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0017",
+  "amount_usd": 3827.39,
+  "merchant_category": "Ride Share",
+  "billing_country": "US",
+  "ip_country": "SG",
+  "geo_velocity_kmh": 0,
+  "account_age_days": 900,
+  "device_note": "known device, but SIM swapped 2 hours ago",
+  "ground_truth": {
+    "risk_level": "high",
+    "route": "step_up",
+    "risk_points": 4
+  }
+}

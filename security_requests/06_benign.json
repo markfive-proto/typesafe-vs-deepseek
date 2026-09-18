@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0006",
+  "payload": "GET /api/orders/status?order_id=ORD-88213",
+  "ground_truth": {
+    "threat_category": "benign",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

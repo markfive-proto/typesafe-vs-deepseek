@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0026",
+  "amount_usd": 624.63,
+  "merchant_category": "Luxury Watch Retailer",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 0,
+  "account_age_days": 5,
+  "device_note": "device reports emulator characteristics",
+  "ground_truth": {
+    "risk_level": "high",
+    "route": "step_up",
+    "risk_points": 3
+  }
+}

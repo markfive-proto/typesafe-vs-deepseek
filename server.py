@@ -18,6 +18,9 @@ import doc_pipeline as D
 import retrieval_pipeline as R
 import kb_pipeline as K
 import design_pipeline as G
+import fraud_pipeline as F
+import recon_pipeline as N
+import guardrail_pipeline as S
 
 P.load_env()
 
@@ -93,6 +96,12 @@ class Handler(BaseHTTPRequestHandler):
             return self._json({"files": list_emails()})
         if parsed.path == "/api/design_screens":
             return self._json({"files": G.list_screens()})
+        if parsed.path == "/api/fraud_transactions":
+            return self._json({"files": F.list_transactions()})
+        if parsed.path == "/api/recon_pairs":
+            return self._json({"files": N.list_pairs()})
+        if parsed.path == "/api/security_requests":
+            return self._json({"files": S.list_requests()})
         if parsed.path == "/api/queries":
             corpus = parse_qs(parsed.query).get("corpus", ["emails"])[0]
             mod = CORPORA.get(corpus, CORPORA["emails"])
@@ -129,6 +138,15 @@ class Handler(BaseHTTPRequestHandler):
             "/api/audit_design": (G.classify, name),
             "/api/audit_design_deepseek": (G.classify_via_deepseek, name),
             "/api/audit_design_openai": (G.classify_via_openai, name),
+            "/api/audit_fraud": (F.classify, name),
+            "/api/audit_fraud_deepseek": (F.classify_via_deepseek, name),
+            "/api/audit_fraud_openai": (F.classify_via_openai, name),
+            "/api/audit_recon": (N.classify, name),
+            "/api/audit_recon_deepseek": (N.classify_via_deepseek, name),
+            "/api/audit_recon_openai": (N.classify_via_openai, name),
+            "/api/audit_guardrail": (S.classify, name),
+            "/api/audit_guardrail_deepseek": (S.classify_via_deepseek, name),
+            "/api/audit_guardrail_openai": (S.classify_via_openai, name),
         }
         if parsed.path in routes:
             fn, arg = routes[parsed.path]

@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0024",
+  "amount_usd": 447.65,
+  "merchant_category": "Crypto Exchange",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 850,
+  "account_age_days": 400,
+  "device_note": "known device, biometric confirmed",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "step_up",
+    "risk_points": 2
+  }
+}

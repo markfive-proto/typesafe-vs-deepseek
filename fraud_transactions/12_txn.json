@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0012",
+  "amount_usd": 3927.86,
+  "merchant_category": "Wire Transfer Service",
+  "billing_country": "US",
+  "ip_country": "RU",
+  "geo_velocity_kmh": 850,
+  "account_age_days": 45,
+  "device_note": "new device, first transaction on this account",
+  "ground_truth": {
+    "risk_level": "critical",
+    "route": "block",
+    "risk_points": 5
+  }
+}

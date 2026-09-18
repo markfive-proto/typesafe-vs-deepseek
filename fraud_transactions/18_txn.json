@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0018",
+  "amount_usd": 3816.58,
+  "merchant_category": "Gift Card Kiosk",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 300,
+  "account_age_days": 2,
+  "device_note": "device reports emulator characteristics",
+  "ground_truth": {
+    "risk_level": "critical",
+    "route": "block",
+    "risk_points": 5
+  }
+}

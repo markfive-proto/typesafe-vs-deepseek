@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0010",
+  "bank_line": {
+    "description": "COBALT SYS INC",
+    "amount": 4740.29,
+    "date": "2026-03-08"
+  },
+  "ledger_line": {
+    "description": "FERNWAY*RETAIL",
+    "amount": 3671.8,
+    "date": "2026-03-08"
+  },
+  "ground_truth": {
+    "is_match": false,
+    "discrepancy_reason": "mismatched_vendor"
+  }
+}

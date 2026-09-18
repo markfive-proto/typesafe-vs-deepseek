@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0022",
+  "payload": "chat message: Here's my card number for the refund: 4111 1111 1111 1111, exp 09/27, cvv 123",
+  "ground_truth": {
+    "threat_category": "pii_leak",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": true
+  }
+}

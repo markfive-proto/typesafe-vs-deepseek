@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0025",
+  "bank_line": {
+    "description": "RIDGELINE LEGAL",
+    "amount": 6920.3,
+    "date": "2026-08-09"
+  },
+  "ledger_line": {
+    "description": "RIDGELINE LLP",
+    "amount": 6894.81,
+    "date": "2026-08-09"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "fx_rounding"
+  }
+}

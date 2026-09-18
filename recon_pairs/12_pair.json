@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0012",
+  "bank_line": {
+    "description": "NORTHWIND SUPPLY",
+    "amount": 7071.06,
+    "date": "2026-09-18"
+  },
+  "ledger_line": {
+    "description": "COBALT-SYS",
+    "amount": 7957.59,
+    "date": "2026-09-18"
+  },
+  "ground_truth": {
+    "is_match": false,
+    "discrepancy_reason": "mismatched_vendor"
+  }
+}

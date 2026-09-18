@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0010",
+  "payload": "chat message: Summarize this article about renewable energy trends.",
+  "ground_truth": {
+    "threat_category": "benign",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

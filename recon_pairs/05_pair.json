@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0005",
+  "bank_line": {
+    "description": "FERNWAY RETAIL LLC",
+    "amount": 1314.43,
+    "date": "2026-02-19"
+  },
+  "ledger_line": {
+    "description": "AWS*INV",
+    "amount": 2196.51,
+    "date": "2026-02-19"
+  },
+  "ground_truth": {
+    "is_match": false,
+    "discrepancy_reason": "mismatched_vendor"
+  }
+}

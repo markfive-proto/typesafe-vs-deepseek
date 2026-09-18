@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0027",
+  "bank_line": {
+    "description": "COBALT SYS INC",
+    "amount": 1206.53,
+    "date": "2026-02-13"
+  },
+  "ledger_line": {
+    "description": "COBALT-SYS",
+    "amount": 1206.53,
+    "date": "2026-02-13"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "none"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0030",
+  "amount_usd": 1561.19,
+  "merchant_category": "Gift Card Kiosk",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 0,
+  "account_age_days": 2,
+  "device_note": "new device, first transaction on this account",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "step_up",
+    "risk_points": 2
+  }
+}

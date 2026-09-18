@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0026",
+  "bank_line": {
+    "description": "FERNWAY RETAIL LLC",
+    "amount": 2957.82,
+    "date": "2026-06-11"
+  },
+  "ledger_line": {
+    "description": "FERNWAY*RETAIL",
+    "amount": 2957.82,
+    "date": "2026-06-11"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "none"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0016",
+  "amount_usd": 3424.89,
+  "merchant_category": "Coffee Shop",
+  "billing_country": "US",
+  "ip_country": "VN",
+  "geo_velocity_kmh": 0,
+  "account_age_days": 400,
+  "device_note": "known device, biometric confirmed",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "step_up",
+    "risk_points": 2
+  }
+}

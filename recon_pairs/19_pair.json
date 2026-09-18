@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0019",
+  "bank_line": {
+    "description": "RIDGELINE LEGAL",
+    "amount": 7789.97,
+    "date": "2026-06-18"
+  },
+  "ledger_line": {
+    "description": "FERNWAY*RETAIL",
+    "amount": 570.04,
+    "date": "2026-06-18"
+  },
+  "ground_truth": {
+    "is_match": false,
+    "discrepancy_reason": "mismatched_vendor"
+  }
+}

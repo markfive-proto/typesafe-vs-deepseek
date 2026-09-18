@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0022",
+  "bank_line": {
+    "description": "AMZN WEB SVCS",
+    "amount": 7409.74,
+    "date": "2026-06-15"
+  },
+  "ledger_line": {
+    "description": "AWS*INV",
+    "amount": 7409.74,
+    "date": "2026-06-16"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "timing"
+  }
+}

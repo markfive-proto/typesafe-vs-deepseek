@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0008",
+  "payload": "POST /api/support/ticket {\"subject\": \"Late delivery\", \"body\": \"My order hasn't arrived.\"}",
+  "ground_truth": {
+    "threat_category": "benign",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

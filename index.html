@@ -207,6 +207,9 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     <button id="tab-design">Design Audit</button>
     <button id="tab-card">Trading Card</button>
     <button id="tab-usecases">Use Cases</button>
+    <button id="tab-fraud">Fraud Triage</button>
+    <button id="tab-recon">Reconciliation</button>
+    <button id="tab-guardrail">Security Guardrail</button>
   </nav>
 
   <!-- DOCUMENTS -->
@@ -428,6 +431,84 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
   </section>
 
+  <!-- FRAUD TRIAGE -->
+  <section id="view-fraud" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      30 synthetic payment transactions (amount, geo-velocity, device signal, account age).
+      Score risk + Choice a route (approve/step_up/block) — the real-time fraud-gate pattern.
+    </p>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="fr-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="fr-selall">Select all</button>
+          <button class="primary" id="fr-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="fr-placeholder">Pick transactions on the left, then run — risk decisions stream in here live.</p>
+        <div class="table-wrap">
+          <table id="fr-results" hidden>
+            <thead id="fr-thead"></thead>
+            <tbody id="fr-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECONCILIATION -->
+  <section id="view-recon" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      30 synthetic bank-line vs ledger-line pairs — exact matches, FX rounding, banking fees,
+      posting-timing gaps, and real mismatches. Noul match + Choice discrepancy reason.
+    </p>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="rc-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="rc-selall">Select all</button>
+          <button class="primary" id="rc-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="rc-placeholder">Pick pairs on the left, then run — match decisions stream in here live.</p>
+        <div class="table-wrap">
+          <table id="rc-results" hidden>
+            <thead id="rc-thead"></thead>
+            <tbody id="rc-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY GUARDRAIL -->
+  <section id="view-guardrail" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      25 request/message payloads — benign traffic mixed with textbook SQLi, prompt-injection,
+      and PII-leak patterns. Detects each threat type in parallel, one call per payload.
+    </p>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="gr-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="gr-selall">Select all</button>
+          <button class="primary" id="gr-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="gr-placeholder">Pick payloads on the left, then run — threat detections stream in here live.</p>
+        <div class="table-wrap">
+          <table id="gr-results" hidden>
+            <thead id="gr-thead"></thead>
+            <tbody id="gr-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="note">
     Time to output = when that engine's own last response actually landed (its real, per-engine finish
     time — not a shared clock dominated by whichever engine is slowest). Sum latencies = if every one of
@@ -501,8 +582,8 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
 }
 
 // ---------- tabs ----------
-const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design', card: 'tab-card', usecases: 'tab-usecases' };
-const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design', card: 'view-card', usecases: 'view-usecases' };
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design', card: 'tab-card', usecases: 'tab-usecases', fraud: 'tab-fraud', recon: 'tab-recon', guardrail: 'tab-guardrail' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design', card: 'view-card', usecases: 'view-usecases', fraud: 'view-fraud', recon: 'view-recon', guardrail: 'view-guardrail' };
 Object.keys(tabs).forEach(name => {
   document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
 });
@@ -1116,6 +1197,109 @@ const TASK_SHAPES = [
 ];
 document.getElementById('uc-table-body').innerHTML = TASK_SHAPES.map(([shape, when, ex]) =>
   `<tr><td>${shape}</td><td>${when}</td><td>${ex}</td></tr>`).join('');
+
+// ================= generic simple audit tab (fraud / recon / guardrail) =================
+// Same shape as Design Audit's picker+table+3-engine-run, just parameterized — avoids
+// copy-pasting that whole wiring three more times for tabs that only differ in their fields.
+function setupAuditTab({ prefix, listUrl, urls, fields, buildGtSummary, fillFields, isCorrect }) {
+  const picker = document.getElementById(`${prefix}-picker`);
+  const runBtn = document.getElementById(`${prefix}-run`);
+  const selAllBtn = document.getElementById(`${prefix}-selall`);
+  const table = document.getElementById(`${prefix}-results`);
+  const body = document.getElementById(`${prefix}-results-body`);
+  const placeholder = document.getElementById(`${prefix}-placeholder`);
+  buildThead(document.getElementById(`${prefix}-thead`), fields);
+  const P_ = makePicker({ picker, selAllBtn, runBtn });
+
+  async function load() {
+    const res = await fetch(listUrl);
+    const { files } = await res.json();
+    P_.setFiles(files);
+    picker.innerHTML = files.map(f => `
+      <div class="pick-card" data-file="${f}">
+        <div class="check"></div>
+        <div class="row-main"><div class="name">${f}</div></div>
+      </div>`).join('');
+    picker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => P_.toggle(card.dataset.file, card)));
+  }
+
+  function rowHtml(file) {
+    const id = cssEscape(file);
+    const cells = ENGINES.map(e => fields.map(f => `<td${f.num ? ' class="num"' : ''} id="${e.key}-${f.key}-${id}">—</td>`).join('')).join('');
+    return `<tr id="row-${id}"><td>${file}</td><td id="gt-${id}">—</td><td class="status-pending">queued</td>${cells}</tr>`;
+  }
+  function fillRow(file, engine, data) {
+    const id = cssEscape(file);
+    const tr = document.getElementById(`row-${id}`);
+    if (!tr) return;
+    if (data.ground_truth) tr.querySelector(`#gt-${id}`).textContent = buildGtSummary(data.ground_truth);
+    if (data.error) { tr.querySelectorAll('td')[2].innerHTML = '<span class="status-err">error</span>'; return; }
+    fillFields(engine, id, data);
+    document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
+    document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
+      ? `${data.tokens.input}/${data.tokens.output} (${fmtCost(data.cost_usd)})`
+      : `${data.tokens.input}/${data.tokens.output}`;
+    const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
+    if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+  }
+
+  runBtn.addEventListener('click', () => {
+    const files = Array.from(P_.selected);
+    runBtn.disabled = true;
+    table.hidden = false;
+    placeholder.hidden = true;
+    runComparison({ files, urls, tableBody: body, rowHtml, fillRow, isCorrect }).finally(() => { runBtn.disabled = false; });
+  });
+
+  load();
+}
+
+// ---- Fraud Triage ----
+setupAuditTab({
+  prefix: 'fr',
+  listUrl: '/api/fraud_transactions',
+  urls: { ts: '/api/audit_fraud', ds: '/api/audit_fraud_deepseek', oa: '/api/audit_fraud_openai' },
+  fields: [{ label: 'Risk score', key: 'risk', num: true }, { label: 'Route', key: 'route' }, { label: 'ms', key: 'ms', num: true }, { label: 'tokens/cost', key: 'tok', num: true }],
+  buildGtSummary: gt => `${gt.risk_level} → ${gt.route}`,
+  fillFields: (engine, id, data) => {
+    const gt = data.ground_truth;
+    document.getElementById(`${engine}-risk-${id}`).textContent = data.risk_score != null ? data.risk_score.toFixed(2) : '—';
+    document.getElementById(`${engine}-route-${id}`).innerHTML = `${data.route ?? '—'} ${gt ? mark(data.route === gt.route) : ''}${hallucMark(data.hallucinated)}`;
+  },
+  isCorrect: (engine, data) => data.ground_truth && data.route === data.ground_truth.route,
+});
+
+// ---- Reconciliation ----
+setupAuditTab({
+  prefix: 'rc',
+  listUrl: '/api/recon_pairs',
+  urls: { ts: '/api/audit_recon', ds: '/api/audit_recon_deepseek', oa: '/api/audit_recon_openai' },
+  fields: [{ label: 'Match', key: 'match' }, { label: 'Reason', key: 'reason' }, { label: 'ms', key: 'ms', num: true }, { label: 'tokens/cost', key: 'tok', num: true }],
+  buildGtSummary: gt => `${gt.is_match ? 'match' : 'mismatch'} · ${gt.discrepancy_reason}`,
+  fillFields: (engine, id, data) => {
+    const gt = data.ground_truth;
+    document.getElementById(`${engine}-match-${id}`).innerHTML = `${data.is_match ? 'yes' : 'no'} ${gt ? mark(data.is_match === gt.is_match) : ''}`;
+    document.getElementById(`${engine}-reason-${id}`).innerHTML = `${data.discrepancy_reason ?? '—'} ${gt ? mark(data.discrepancy_reason === gt.discrepancy_reason) : ''}${hallucMark(data.hallucinated)}`;
+  },
+  isCorrect: (engine, data) => data.ground_truth && data.is_match === data.ground_truth.is_match,
+});
+
+// ---- Security Guardrail ----
+setupAuditTab({
+  prefix: 'gr',
+  listUrl: '/api/security_requests',
+  urls: { ts: '/api/audit_guardrail', ds: '/api/audit_guardrail_deepseek', oa: '/api/audit_guardrail_openai' },
+  fields: [{ label: 'Category', key: 'cat' }, { label: 'SQLi', key: 'sqli' }, { label: 'Prompt inj.', key: 'pi' }, { label: 'PII', key: 'pii' }, { label: 'ms', key: 'ms', num: true }, { label: 'tokens/cost', key: 'tok', num: true }],
+  buildGtSummary: gt => gt.threat_category,
+  fillFields: (engine, id, data) => {
+    const gt = data.ground_truth;
+    document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.threat_category ?? '—'} ${gt ? mark(data.threat_category === gt.threat_category) : ''}${hallucMark(data.hallucinated)}`;
+    document.getElementById(`${engine}-sqli-${id}`).innerHTML = `${data.is_sqli ? 'yes' : 'no'} ${gt ? mark(data.is_sqli === gt.is_sqli) : ''}`;
+    document.getElementById(`${engine}-pi-${id}`).innerHTML = `${data.is_prompt_injection ? 'yes' : 'no'} ${gt ? mark(data.is_prompt_injection === gt.is_prompt_injection) : ''}`;
+    document.getElementById(`${engine}-pii-${id}`).innerHTML = `${data.contains_pii ? 'yes' : 'no'} ${gt ? mark(data.contains_pii === gt.contains_pii) : ''}`;
+  },
+  isCorrect: (engine, data) => data.ground_truth && data.threat_category === data.ground_truth.threat_category,
+});
 
 loadDocuments();
 loadEmails();

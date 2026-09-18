@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0028",
+  "bank_line": {
+    "description": "BRIGHTROUTE HOST",
+    "amount": 5482.33,
+    "date": "2026-07-19"
+  },
+  "ledger_line": {
+    "description": "BRIGHTROUTE INC",
+    "amount": 5482.33,
+    "date": "2026-07-20"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "timing"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0020",
+  "amount_usd": 3864.68,
+  "merchant_category": "Grocery Co-op",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 0,
+  "account_age_days": 900,
+  "device_note": "known device, biometric confirmed",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "approve",
+    "risk_points": 1
+  }
+}

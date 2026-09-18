@@ -1,0 +1,15 @@
+{
+  "transaction_id": "txn_0029",
+  "amount_usd": 4309.15,
+  "merchant_category": "Streaming Service",
+  "billing_country": "US",
+  "ip_country": "US",
+  "geo_velocity_kmh": 300,
+  "account_age_days": 1800,
+  "device_note": "new device, first transaction on this account",
+  "ground_truth": {
+    "risk_level": "medium",
+    "route": "approve",
+    "risk_points": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0029",
+  "bank_line": {
+    "description": "BRIGHTROUTE HOST",
+    "amount": 5952.16,
+    "date": "2026-08-08"
+  },
+  "ledger_line": {
+    "description": "NW SUPPLY CO",
+    "amount": 1293.14,
+    "date": "2026-08-08"
+  },
+  "ground_truth": {
+    "is_match": false,
+    "discrepancy_reason": "mismatched_vendor"
+  }
+}

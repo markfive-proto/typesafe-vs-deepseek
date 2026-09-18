@@ -16,6 +16,9 @@ import doc_pipeline as D
 import retrieval_pipeline as R
 import kb_pipeline as K
 import design_pipeline as G
+import fraud_pipeline as F
+import recon_pipeline as N
+import guardrail_pipeline as S
 
 CORPORA = {"emails": R, "kb": K}
 
@@ -37,6 +40,18 @@ def list_emails():
 
 def list_design_screens():
     return G.list_screens()
+
+
+def list_fraud_transactions():
+    return F.list_transactions()
+
+
+def list_recon_pairs():
+    return N.list_pairs()
+
+
+def list_security_requests():
+    return S.list_requests()
 
 
 def safe_filename(name: str) -> str:

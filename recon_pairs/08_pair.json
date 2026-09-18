@@ -1,0 +1,17 @@
+{
+  "pair_id": "pair_0008",
+  "bank_line": {
+    "description": "NORTHWIND SUPPLY",
+    "amount": 6223.66,
+    "date": "2026-07-23"
+  },
+  "ledger_line": {
+    "description": "NW SUPPLY CO",
+    "amount": 6223.66,
+    "date": "2026-07-23"
+  },
+  "ground_truth": {
+    "is_match": true,
+    "discrepancy_reason": "none"
+  }
+}
