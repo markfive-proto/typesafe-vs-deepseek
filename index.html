@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeSafe vs DeepSeek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0; --surface: #ffffff; --ink: #1c1a17; --muted: #736b5c;
+  --border: #e6ded0; --accent: #2a5d50; --accent-soft: #e4efe9;
+  --accent2: #6d3fae; --accent2-soft: #eee4f9;
+  --warn: #a8501c; --warn-soft: #f6e6d9; --bad: #9c3b3b; --bad-soft: #f5e3e1;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", -apple-system, sans-serif; padding: 28px 16px 60px; }
+body.has-cmpbar { padding-bottom: 190px; }
+.wrap { max-width: 1200px; margin: 0 auto; }
+h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 600; margin: 0 0 4px; }
+p.sub { margin: 0 0 20px; color: var(--muted); font-size: 0.92rem; }
+
+nav.tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--ink); margin-bottom: 22px; flex-wrap: wrap; }
+nav.tabs button {
+  font-family: inherit; font-size: 0.9rem; font-weight: 600; color: var(--muted);
+  background: none; border: none; padding: 10px 16px; cursor: pointer; border-radius: 8px 8px 0 0;
+}
+nav.tabs button.active { color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-bottom: 2px solid var(--surface); margin-bottom: -2px; }
+.view { display: none; }
+.view.active { display: block; }
+
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 18px; max-height: 420px; overflow-y: auto; padding: 4px; }
+.pick-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px; cursor: pointer; user-select: none; display: flex; flex-direction: column; gap: 6px;
+}
+.pick-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.pick-card .name { font-size: 0.74rem; font-weight: 600; word-break: break-all; line-height: 1.3; }
+.pick-card .check { font-size: 0.7rem; font-weight: 600; color: var(--accent); }
+.pick-card .snippet { font-size: 0.7rem; color: var(--muted); line-height: 1.35; max-height: 3.6em; overflow: hidden; }
+.pick-card .subject { font-size: 0.78rem; font-weight: 600; line-height: 1.3; }
+.pick-card .gt { font-size: 0.68rem; color: var(--muted); }
+.doc-icon { font-size: 1.5rem; }
+
+.controls { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+button.primary {
+  font-family: inherit; font-weight: 600; font-size: 0.9rem; color: #fff; background: var(--accent);
+  border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer;
+}
+button.primary:disabled { opacity: 0.5; cursor: default; }
+button.ghost { font-family: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; cursor: pointer; color: var(--ink); }
+input[type=file] { display: none; }
+.upload-status { font-size: 0.8rem; color: var(--muted); }
+select#rq-select { font-family: inherit; font-size: 0.88rem; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); min-width: 320px; }
+
+.cmpbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; background: var(--surface); border-top: 2px solid var(--ink);
+  box-shadow: 0 -6px 20px rgba(0,0,0,.10); max-height: 45vh; overflow-y: auto;
+}
+.cmpbar-engine { flex: 1; min-width: 0; padding: 10px 18px; border-top: 3px solid transparent; }
+.cmpbar-engine.ts { border-top-color: var(--accent); border-right: 1px solid var(--border); }
+.cmpbar-engine.ds { border-top-color: var(--accent2); }
+.cmpbar-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.cmpbar-head span:first-child { font-weight: 600; font-size: 0.85rem; }
+.cmpbar-head .count { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 0.78rem; color: var(--muted); }
+.progress { height: 7px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
+.progress-fill { height: 100%; width: 0%; border-radius: 99px; transition: width .25s ease; }
+.cmpbar-engine.ts .progress-fill { background: var(--accent); }
+.cmpbar-engine.ds .progress-fill { background: var(--accent2); }
+.cmpbar-stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.78rem; }
+.cmpbar-stats span b { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; display: block; color: var(--ink); }
+.cmpbar-stats span { color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 0.82rem; }
+thead th { text-align: left; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+thead th.grp-ts { background: var(--accent-soft); color: var(--accent); }
+thead th.grp-ds { background: var(--accent2-soft); color: var(--accent2); }
+tbody td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.status-pending { color: var(--muted); }
+.status-run { color: var(--warn); }
+.status-ok { color: var(--accent); font-weight: 600; }
+.status-err { color: var(--bad); font-weight: 600; }
+.table-wrap { overflow-x: auto; }
+.ok-mark { color: var(--accent); font-weight: 700; }
+.bad-mark { color: var(--bad); font-weight: 700; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 0.7rem; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>TypeSafe vs DeepSeek-flash</h1>
+  <p class="sub">Same task, two engines, side by side — speed, tokens, cost, and accuracy against known ground truth.</p>
+
+  <nav class="tabs">
+    <button id="tab-documents" class="active">Documents</button>
+    <button id="tab-emails">Emails</button>
+    <button id="tab-retrieval">Retrieval</button>
+  </nav>
+
+  <!-- DOCUMENTS -->
+  <section id="view-documents" class="view active">
+    <p class="sub" style="margin-bottom:12px;">50 synthetic invoices, native PDF/XLSX (no OCR needed — text extracted directly via pdfplumber/openpyxl).</p>
+    <div class="picker" id="doc-picker"></div>
+    <div class="controls">
+      <button class="ghost" id="doc-selall">Select all</button>
+      <label class="ghost" for="doc-file" style="cursor:pointer;">Upload invoice</label>
+      <input type="file" id="doc-file" accept=".pdf,.xlsx">
+      <span class="upload-status" id="doc-upload-status"></span>
+      <button class="primary" id="doc-run" disabled>Run comparison (0)</button>
+    </div>
+    <div class="table-wrap">
+      <table id="doc-results" hidden>
+        <thead>
+          <tr>
+            <th rowspan="2">File</th><th rowspan="2">Ground truth</th><th rowspan="2">Status</th>
+            <th class="grp-ts" colspan="4">TypeSafe (Jev)</th>
+            <th class="grp-ds" colspan="4">DeepSeek-flash</th>
+          </tr>
+          <tr>
+            <th class="grp-ts">Category</th><th class="grp-ts">Total</th><th class="grp-ts num">ms</th><th class="grp-ts num">tokens</th>
+            <th class="grp-ds">Category</th><th class="grp-ds">Total</th><th class="grp-ds num">ms</th><th class="grp-ds num">tokens/cost</th>
+          </tr>
+        </thead>
+        <tbody id="doc-results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- EMAILS -->
+  <section id="view-emails" class="view">
+    <p class="sub" style="margin-bottom:12px;">50 synthetic emails across 7 categories — select some, classify with both engines.</p>
+    <div class="picker" id="em-picker"></div>
+    <div class="controls">
+      <button class="ghost" id="em-selall">Select all</button>
+      <button class="primary" id="em-run" disabled>Run comparison (0)</button>
+    </div>
+    <div class="table-wrap">
+      <table id="em-results" hidden>
+        <thead>
+          <tr>
+            <th rowspan="2">File</th><th rowspan="2">Ground truth</th><th rowspan="2">Status</th>
+            <th class="grp-ts" colspan="3">TypeSafe (Jev)</th>
+            <th class="grp-ds" colspan="3">DeepSeek-flash</th>
+          </tr>
+          <tr>
+            <th class="grp-ts">Category</th><th class="grp-ts num">ms</th><th class="grp-ts num">tokens</th>
+            <th class="grp-ds">Category</th><th class="grp-ds num">ms</th><th class="grp-ds num">tokens/cost</th>
+          </tr>
+        </thead>
+        <tbody id="em-results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- RETRIEVAL -->
+  <section id="view-retrieval" class="view">
+    <p class="sub" style="margin-bottom:12px;">Rerank all 50 sample emails by relevance to a query. TypeSafe asks all 50 relevance questions in <b>one call</b> (true intra-request parallelism); DeepSeek ranks all 50 in one generative pass.</p>
+    <div class="controls">
+      <select id="rq-select"></select>
+      <button class="primary" id="rq-run">Run comparison</button>
+    </div>
+    <div class="table-wrap">
+      <table id="rq-results" hidden>
+        <thead>
+          <tr><th>#</th><th class="grp-ts">TypeSafe top match</th><th class="grp-ts num">score</th><th class="grp-ds">DeepSeek top match</th><th class="grp-ds num">score</th></tr>
+        </thead>
+        <tbody id="rq-results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="note">
+    Wall time = actual elapsed time for the whole batch (requests fire concurrently). Sum ms = if every
+    call had run one-after-another — the gap between the two is the parallelism payoff.
+    Cost: TypeSafe Jev $42/Btok input (output free); DeepSeek-flash off-peak cache-hit/miss + output pricing.
+  </footer>
+</div>
+
+<div class="cmpbar" id="cmpbar" hidden>
+  <div class="cmpbar-engine ts">
+    <div class="cmpbar-head"><span>TypeSafe (Jev)</span><span class="count" id="cmp-ts-count">0/0</span></div>
+    <div class="progress"><div class="progress-fill" id="cmp-ts-fill"></div></div>
+    <div class="cmpbar-stats">
+      <span>Wall<b id="cmp-ts-wall">—</b></span>
+      <span>Sum of latencies<b id="cmp-ts-sum">—</b></span>
+      <span>Tokens in/out<b id="cmp-ts-tok">—</b></span>
+      <span>Cost<b id="cmp-ts-cost">—</b></span>
+      <span>Accuracy<b id="cmp-ts-acc">—</b></span>
+    </div>
+  </div>
+  <div class="cmpbar-engine ds">
+    <div class="cmpbar-head"><span>DeepSeek-flash</span><span class="count" id="cmp-ds-count">0/0</span></div>
+    <div class="progress"><div class="progress-fill" id="cmp-ds-fill"></div></div>
+    <div class="cmpbar-stats">
+      <span>Wall<b id="cmp-ds-wall">—</b></span>
+      <span>Sum of latencies<b id="cmp-ds-sum">—</b></span>
+      <span>Tokens in/out<b id="cmp-ds-tok">—</b></span>
+      <span>Cost<b id="cmp-ds-cost">—</b></span>
+      <span>Accuracy<b id="cmp-ds-acc">—</b></span>
+    </div>
+  </div>
+</div>
+
+<script>
+function cssEscape(s) { return s.replace(/[^a-zA-Z0-9_-]/g, '_'); }
+function mark(ok) { return ok ? '<span class="ok-mark">✓</span>' : '<span class="bad-mark">✗</span>'; }
+function setRunning(id) {
+  const tr = document.getElementById(id);
+  if (tr) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-run">running…</span>';
+}
+// ---------- shared fixed bottom comparison bar ----------
+const cmpbar = document.getElementById('cmpbar');
+function cmpbarShow(tsTitle, dsTitle) {
+  document.body.classList.add('has-cmpbar');
+  cmpbar.hidden = false;
+  cmpbar.querySelector('.ts .cmpbar-head span:first-child').textContent = tsTitle || 'TypeSafe (Jev)';
+  cmpbar.querySelector('.ds .cmpbar-head span:first-child').textContent = dsTitle || 'DeepSeek-flash';
+  ['ts', 'ds'].forEach(e => {
+    document.getElementById(`cmp-${e}-count`).textContent = '0/0';
+    document.getElementById(`cmp-${e}-fill`).style.width = '0%';
+    ['wall', 'sum', 'tok', 'cost', 'acc'].forEach(k => document.getElementById(`cmp-${e}-${k}`).textContent = '—');
+  });
+}
+function cmpbarProgress(engine, done, total) {
+  document.getElementById(`cmp-${engine}-count`).textContent = `${done}/${total}`;
+  document.getElementById(`cmp-${engine}-fill`).style.width = total ? Math.round((done / total) * 100) + '%' : '0%';
+}
+function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc }) {
+  document.getElementById(`cmp-${engine}-wall`).textContent = Math.round(wall) + 'ms';
+  document.getElementById(`cmp-${engine}-sum`).textContent = Math.round(sum) + 'ms';
+  document.getElementById(`cmp-${engine}-tok`).textContent = `${tokIn} / ${tokOut}`;
+  document.getElementById(`cmp-${engine}-cost`).textContent = cost == null ? '—' : '$' + cost.toFixed(4);
+  document.getElementById(`cmp-${engine}-acc`).textContent = acc == null ? '—' : Math.round(acc * 100) + '%';
+}
+
+// ---------- tabs ----------
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval' };
+Object.keys(tabs).forEach(name => {
+  document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
+});
+function switchTab(active) {
+  Object.keys(tabs).forEach(name => {
+    document.getElementById(tabs[name]).classList.toggle('active', name === active);
+    document.getElementById(views[name]).classList.toggle('active', name === active);
+  });
+}
+
+// ---------- generic picker ----------
+function makePicker({ picker, selAllBtn, runBtn }) {
+  let selected = new Set();
+  let allFiles = [];
+  function toggle(file, card) {
+    if (selected.has(file)) {
+      selected.delete(file);
+      card.classList.remove('selected');
+      card.querySelector('.check').textContent = '☐ select';
+    } else {
+      selected.add(file);
+      card.classList.add('selected');
+      card.querySelector('.check').textContent = '☑ selected';
+    }
+    runBtn.disabled = selected.size === 0;
+    runBtn.textContent = `Run comparison (${selected.size})`;
+  }
+  selAllBtn.addEventListener('click', () => {
+    const cards = picker.querySelectorAll('.pick-card');
+    const selectingAll = selected.size < allFiles.length;
+    cards.forEach(card => {
+      const f = card.dataset.file;
+      if (selectingAll && !selected.has(f)) toggle(f, card);
+      if (!selectingAll && selected.has(f)) toggle(f, card);
+    });
+  });
+  return { get selected() { return selected; }, setFiles(files) { allFiles = files; }, toggle };
+}
+
+// ---------- generic dual-engine comparison runner ----------
+// fires TS+DS requests for every selected file concurrently, fills the table as each resolves,
+// drives the fixed bottom progress bars live, and computes wall-clock vs summed-latency +
+// token/cost/accuracy totals per engine once everything settles.
+async function runComparison({ files, tsUrl, dsUrl, tableBody, rowHtml, fillRow, tsTitle, dsTitle, isCorrect }) {
+  cmpbarShow(tsTitle, dsTitle);
+  cmpbarProgress('ts', 0, files.length);
+  cmpbarProgress('ds', 0, files.length);
+  tableBody.innerHTML = files.map(rowHtml).join('');
+
+  const tsAgg = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, n: 0, done: 0 };
+  const dsAgg = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, n: 0, done: 0 };
+  const wallStart = performance.now();
+
+  files.forEach(f => setRunning(`row-${cssEscape(f)}`));
+
+  const post = (url, payload) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(r => r.json());
+
+  await Promise.all(files.flatMap(file => [
+    post(tsUrl, { file }).then(data => {
+      if (!data.error) {
+        tsAgg.sum += data.timing_ms.total; tsAgg.tokIn += data.tokens?.input || 0; tsAgg.tokOut += data.tokens?.output || 0;
+        tsAgg.cost += data.cost_usd || 0; tsAgg.n++; if (isCorrect('ts', data)) tsAgg.correct++;
+      }
+      tsAgg.done++; cmpbarProgress('ts', tsAgg.done, files.length);
+      fillRow(file, 'ts', data);
+    }),
+    post(dsUrl, { file }).then(data => {
+      if (!data.error) {
+        dsAgg.sum += data.timing_ms.total; dsAgg.tokIn += data.tokens?.input || 0; dsAgg.tokOut += data.tokens?.output || 0;
+        dsAgg.cost += data.cost_usd || 0; dsAgg.n++; if (isCorrect('ds', data)) dsAgg.correct++;
+      }
+      dsAgg.done++; cmpbarProgress('ds', dsAgg.done, files.length);
+      fillRow(file, 'ds', data);
+    }),
+  ]));
+
+  const wall = performance.now() - wallStart;
+  cmpbarFinal('ts', { wall, sum: tsAgg.sum, tokIn: tsAgg.tokIn, tokOut: tsAgg.tokOut, cost: tsAgg.cost, acc: tsAgg.n ? tsAgg.correct / tsAgg.n : null });
+  cmpbarFinal('ds', { wall, sum: dsAgg.sum, tokIn: dsAgg.tokIn, tokOut: dsAgg.tokOut, cost: dsAgg.cost, acc: dsAgg.n ? dsAgg.correct / dsAgg.n : null });
+}
+
+// ================= DOCUMENTS =================
+const docPicker = document.getElementById('doc-picker');
+const docRunBtn = document.getElementById('doc-run');
+const docSelAllBtn = document.getElementById('doc-selall');
+const docTable = document.getElementById('doc-results');
+const docBody = document.getElementById('doc-results-body');
+const docFileInput = document.getElementById('doc-file');
+const docUploadStatus = document.getElementById('doc-upload-status');
+const docP = makePicker({ picker: docPicker, selAllBtn: docSelAllBtn, runBtn: docRunBtn });
+
+async function loadDocuments() {
+  const res = await fetch('/api/documents');
+  const { files } = await res.json();
+  docP.setFiles(files);
+  docPicker.innerHTML = files.map(f => {
+    const icon = f.endsWith('.pdf') ? '📄' : '📊';
+    const gt = f.replace(/^\d+_/, '').replace(/\.(pdf|xlsx)$/, '');
+    return `<div class="pick-card" data-file="${f}">
+      <div class="doc-icon">${icon}</div>
+      <div class="name">${f}</div>
+      <div class="gt">true: ${gt}</div>
+      <div class="check">☐ select</div>
+    </div>`;
+  }).join('');
+  docPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => docP.toggle(card.dataset.file, card)));
+}
+
+docFileInput.addEventListener('change', async () => {
+  const file = docFileInput.files[0];
+  if (!file) return;
+  docUploadStatus.textContent = 'uploading…';
+  const b64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  const res = await fetch('/api/upload', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filename: file.name, data: b64 }) });
+  const data = await res.json();
+  docUploadStatus.textContent = data.ok ? `added ${data.file}` : `error: ${data.error}`;
+  if (data.ok) await loadDocuments();
+  docFileInput.value = '';
+});
+
+function docRowHtml(file) {
+  return `<tr id="row-${cssEscape(file)}">
+    <td>${file}</td><td id="gt-${cssEscape(file)}">—</td><td class="status-pending">queued</td>
+    <td id="ts-cat-${cssEscape(file)}">—</td><td id="ts-tot-${cssEscape(file)}">—</td><td class="num" id="ts-ms-${cssEscape(file)}">—</td><td class="num" id="ts-tok-${cssEscape(file)}">—</td>
+    <td id="ds-cat-${cssEscape(file)}">—</td><td id="ds-tot-${cssEscape(file)}">—</td><td class="num" id="ds-ms-${cssEscape(file)}">—</td><td class="num" id="ds-tok-${cssEscape(file)}">—</td>
+  </tr>`;
+}
+function docFillRow(file, engine, data) {
+  const id = cssEscape(file);
+  const tr = document.getElementById(`row-${id}`);
+  if (!tr) return;
+  tr.querySelector(`#gt-${id}`).textContent = data.ground_truth ? `${data.ground_truth.category} / $${data.ground_truth.total}` : '—';
+  if (data.error) {
+    tr.querySelectorAll('td')[2].innerHTML = '<span class="status-err">error</span>';
+    return;
+  }
+  const catOk = data.ground_truth && data.category === data.ground_truth.category;
+  const totOk = data.ground_truth && Math.abs(parseFloat(String(data.total_amount).replace(/[^0-9.]/g, '')) - data.ground_truth.total) < 0.01;
+  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}`;
+  document.getElementById(`${engine}-tot-${id}`).innerHTML = `${data.total_amount ?? '—'} ${data.ground_truth ? mark(totOk) : ''}`;
+  document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
+  document.getElementById(`${engine}-tok-${id}`).textContent = engine === 'ds' && data.cost_usd != null
+    ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
+    : `${data.tokens.input}/${data.tokens.output}`;
+  const bothDone = document.getElementById(`ts-ms-${id}`).textContent !== '—' && document.getElementById(`ds-ms-${id}`).textContent !== '—';
+  if (bothDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+}
+
+docRunBtn.addEventListener('click', () => {
+  const files = Array.from(docP.selected);
+  docRunBtn.disabled = true;
+  docTable.hidden = false;
+  runComparison({
+    files, tsUrl: '/api/process_document', dsUrl: '/api/process_document_deepseek',
+    tableBody: docBody, rowHtml: docRowHtml, fillRow: docFillRow,
+    tsTitle: 'TypeSafe (Jev)', dsTitle: 'DeepSeek-flash',
+    isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth.category,
+  }).finally(() => { docRunBtn.disabled = false; });
+});
+
+// ================= EMAILS =================
+const emPicker = document.getElementById('em-picker');
+const emRunBtn = document.getElementById('em-run');
+const emSelAllBtn = document.getElementById('em-selall');
+const emTable = document.getElementById('em-results');
+const emBody = document.getElementById('em-results-body');
+const emP = makePicker({ picker: emPicker, selAllBtn: emSelAllBtn, runBtn: emRunBtn });
+
+async function loadEmails() {
+  const res = await fetch('/api/emails');
+  const { files } = await res.json();
+  emP.setFiles(files);
+  const cards = await Promise.all(files.map(async f => {
+    const text = await (await fetch(`/emails_samples/${encodeURIComponent(f)}`)).text();
+    const subjectMatch = text.match(/^subject:\s*(.+)$/m);
+    const fromMatch = text.match(/^from:\s*(.+)$/m);
+    const body = text.replace(/^---[\s\S]*?---/, '').trim();
+    return { f, subject: subjectMatch ? subjectMatch[1] : f, from: fromMatch ? fromMatch[1] : '', snippet: body.slice(0, 120) };
+  }));
+  emPicker.innerHTML = cards.map(c => `
+    <div class="pick-card" data-file="${c.f}">
+      <div class="subject">${c.subject}</div>
+      <div class="name">${c.from}</div>
+      <div class="snippet">${c.snippet}</div>
+      <div class="check">☐ select</div>
+    </div>`).join('');
+  emPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => emP.toggle(card.dataset.file, card)));
+}
+
+function emRowHtml(file) {
+  return `<tr id="row-${cssEscape(file)}">
+    <td>${file}</td><td id="gt-${cssEscape(file)}">—</td><td class="status-pending">queued</td>
+    <td id="ts-cat-${cssEscape(file)}">—</td><td class="num" id="ts-ms-${cssEscape(file)}">—</td><td class="num" id="ts-tok-${cssEscape(file)}">—</td>
+    <td id="ds-cat-${cssEscape(file)}">—</td><td class="num" id="ds-ms-${cssEscape(file)}">—</td><td class="num" id="ds-tok-${cssEscape(file)}">—</td>
+  </tr>`;
+}
+function emFillRow(file, engine, data) {
+  const id = cssEscape(file);
+  const tr = document.getElementById(`row-${id}`);
+  if (!tr) return;
+  tr.querySelector(`#gt-${id}`).textContent = data.ground_truth ?? '—';
+  if (data.error) {
+    tr.querySelectorAll('td')[2].innerHTML = '<span class="status-err">error</span>';
+    return;
+  }
+  const catOk = data.ground_truth && data.category === data.ground_truth;
+  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}`;
+  document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
+  document.getElementById(`${engine}-tok-${id}`).textContent = engine === 'ds' && data.cost_usd != null
+    ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
+    : `${data.tokens.input}/${data.tokens.output}`;
+  const bothDone = document.getElementById(`ts-ms-${id}`).textContent !== '—' && document.getElementById(`ds-ms-${id}`).textContent !== '—';
+  if (bothDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+}
+
+emRunBtn.addEventListener('click', () => {
+  const files = Array.from(emP.selected);
+  emRunBtn.disabled = true;
+  emTable.hidden = false;
+  runComparison({
+    files, tsUrl: '/api/classify_email', dsUrl: '/api/classify_email_deepseek',
+    tableBody: emBody, rowHtml: emRowHtml, fillRow: emFillRow,
+    tsTitle: 'TypeSafe (Jev)', dsTitle: 'DeepSeek-flash',
+    isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth,
+  }).finally(() => { emRunBtn.disabled = false; });
+});
+
+// ================= RETRIEVAL =================
+const rqSelect = document.getElementById('rq-select');
+const rqRunBtn = document.getElementById('rq-run');
+const rqTable = document.getElementById('rq-results');
+const rqBody = document.getElementById('rq-results-body');
+
+async function loadQueries() {
+  const res = await fetch('/api/queries');
+  const { queries } = await res.json();
+  rqSelect.innerHTML = Object.entries(queries).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+}
+
+rqRunBtn.addEventListener('click', async () => {
+  rqRunBtn.disabled = true;
+  rqTable.hidden = false;
+  cmpbarShow('TypeSafe (Jev) — 1 call, 50 parallel questions', 'DeepSeek-flash — 1 call, generates all 50 scores');
+  cmpbarProgress('ts', 0, 1); cmpbarProgress('ds', 0, 1);
+  rqBody.innerHTML = '<tr><td colspan="5" class="status-run">running…</td></tr>';
+  const query = rqSelect.value;
+  const post = (url, engine) => {
+    const t0 = performance.now();
+    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }) })
+      .then(r => r.json())
+      .then(d => { cmpbarProgress(engine, 1, 1); return { d, ms: performance.now() - t0 }; });
+  };
+
+  const wallStart = performance.now();
+  const [ts, ds] = await Promise.all([post('/api/rerank_typesafe', 'ts'), post('/api/rerank_deepseek', 'ds')]);
+  const wall = performance.now() - wallStart;
+
+  cmpbarFinal('ts', { wall, sum: ts.d.timing_ms?.total ?? ts.ms, tokIn: ts.d.tokens?.input ?? 0, tokOut: ts.d.tokens?.output ?? 0, cost: ts.d.cost_usd, acc: ts.d.precision_at_k });
+  cmpbarFinal('ds', { wall, sum: ds.d.timing_ms?.total ?? ds.ms, tokIn: ds.d.tokens?.input ?? 0, tokOut: ds.d.tokens?.output ?? 0, cost: ds.d.cost_usd, acc: ds.d.precision_at_k });
+
+  const n = Math.max(ts.d.ranked?.length || 0, ds.d.ranked?.length || 0, 10);
+  let rows = '';
+  for (let i = 0; i < n; i++) {
+    const t = ts.d.ranked?.[i], d = ds.d.ranked?.[i];
+    rows += `<tr><td>${i + 1}</td><td>${t ? t.file : '—'}</td><td class="num">${t ? t.score.toFixed(2) : '—'}</td><td>${d ? d.file : '—'}</td><td class="num">${d ? d.score.toFixed(2) : '—'}</td></tr>`;
+  }
+  rqBody.innerHTML = rows;
+  rqRunBtn.disabled = false;
+});
+
+loadDocuments();
+loadEmails();
+loadQueries();
+</script>
+</body>
+</html>

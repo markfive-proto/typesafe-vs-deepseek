@@ -1,0 +1,118 @@
+[
+  {
+    "file": "1131w-EXQDv51RXyY.jpg",
+    "vendor_guess": "Invoice",
+    "category": "goods",
+    "invoice_number": "12345",
+    "invoice_date": null,
+    "total_amount": null,
+    "total_confidence": null,
+    "line_items": [
+      "White Basic Tank Top",
+      "Denim Jacket",
+      "Bamboo Underwear",
+      "Striped Pants",
+      "Quantity"
+    ]
+  },
+  {
+    "file": "6271a4e186f9faa5855c08c0_Law-Firm-Invoice-Template-1-G.jpeg",
+    "vendor_guess": "Invoice",
+    "category": "other",
+    "invoice_number": "0000001",
+    "invoice_date": "12/31/20",
+    "total_amount": "$0000.00",
+    "total_confidence": 1.0,
+    "line_items": [
+      "DESCRIPTION",
+      "Item 1",
+      "$O",
+      "0%",
+      "$0000.00",
+      "$O",
+      "0%",
+      "$0000.00",
+      "Item 1",
+      "Item 1",
+      "Description",
+      "Description",
+      "1",
+      "1",
+      "$0",
+      "0%",
+      "$0000.00",
+      "$0",
+      "0%"
+    ]
+  },
+  {
+    "file": "Mau-invoice-packing-list.jpg",
+    "vendor_guess": "MICRODYN-NADIR SINGAPORE PTE LTD",
+    "category": "goods",
+    "invoice_number": "001",
+    "invoice_date": null,
+    "total_amount": "44,780.00",
+    "total_confidence": 1.0,
+    "line_items": []
+  },
+  {
+    "file": "c9901d97d1a412028dd6e3c9bd08fc01467d12c9_2_353x500.png",
+    "vendor_guess": "Quotation",
+    "category": "goods",
+    "invoice_number": "002015",
+    "invoice_date": null,
+    "total_amount": "157,795.00",
+    "total_confidence": 0.6,
+    "line_items": [
+      "430002",
+      "RN3220-100EUS - RN3220-100EUS",
+      "MX-M150-Sec-DNighe EMP-F1.8.",
+      "Notr) Camera IP camera set weh sao",
+      "instated sensor modules \u2022 inage ser",
+      "megapinels, 1x day and ix night - HD",
+      "Premium lerses (Va sensce module): 2x",
+      "super wide-angle (11.8, horizontal Image)",
+      "angle 15 10 180",
+      "LED Monitor 55\u00b0 Fing in Wal",
+      "Camera Fixing, Acusting & Configurarion",
+      "30,500.00",
+      "5%",
+      "950.00",
+      "16.500.00",
+      "1.050.00",
+      "5%",
+      "76,000.00"
+    ]
+  },
+  {
+    "file": "images.jpeg",
+    "vendor_guess": "* RedmineCRM",
+    "category": "services",
+    "invoice_number": "20111209",
+    "invoice_date": "12/08/2011",
+    "total_amount": "901.80",
+    "total_confidence": 0.98,
+    "line_items": [
+      "Visible field in PDF",
+      "INVOICE"
+    ]
+  },
+  {
+    "file": "numbers_invoice_template.png",
+    "vendor_guess": "Your Company Name",
+    "category": "other",
+    "invoice_number": "00001",
+    "invoice_date": "01/12/2020",
+    "total_amount": "$8,039.64",
+    "total_confidence": 0.97,
+    "line_items": [
+      "Item 1",
+      "Item 2",
+      "Item 3",
+      "Item 4",
+      "Item 5",
+      "Item 6",
+      "Item 7"
+    ]
+  }
+]

@@ -1,0 +1,292 @@
+<title>Invoice Ledger</title>
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #1c1a17;
+  --muted: #736b5c;
+  --border: #e6ded0;
+  --accent: #2a5d50;
+  --accent-soft: #e4efe9;
+  --warn: #a8501c;
+  --warn-soft: #f6e6d9;
+  --bad: #9c3b3b;
+  --bad-soft: #f5e3e1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15130f;
+    --surface: #1e1b16;
+    --ink: #ede6d9;
+    --muted: #a89b85;
+    --border: #35301f;
+    --accent: #5fa38d;
+    --accent-soft: #223a32;
+    --warn: #e0925a;
+    --warn-soft: #3a2a1c;
+    --bad: #d97b7b;
+    --bad-soft: #3a2222;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15130f;
+  --surface: #1e1b16;
+  --ink: #ede6d9;
+  --muted: #a89b85;
+  --border: #35301f;
+  --accent: #5fa38d;
+  --accent-soft: #223a32;
+  --warn: #e0925a;
+  --warn-soft: #3a2a1c;
+  --bad: #d97b7b;
+  --bad-soft: #3a2222;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, sans-serif;
+  padding: 32px 16px 48px;
+}
+.wrap { max-width: 980px; margin: 0 auto; }
+
+header.top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 20px;
+  margin-bottom: 28px;
+}
+header.top h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 600;
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+header.top p.sub { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+.stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 18px;
+  min-width: 130px;
+}
+.stat .n {
+  font-family: "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.stat .l { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.card-error { border-color: var(--bad); }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.card-head h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  text-wrap: balance;
+}
+.file-name { margin: 2px 0 0; font-size: 0.75rem; color: var(--muted); word-break: break-all; }
+
+.pill {
+  flex: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.conf-high { background: var(--accent-soft); color: var(--accent); }
+.conf-mid  { background: var(--warn-soft); color: var(--warn); }
+.conf-low  { background: var(--bad-soft); color: var(--bad); }
+.conf-none { background: var(--border); color: var(--muted); }
+.pill-error { background: var(--bad-soft); color: var(--bad); }
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+.fields dt { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 2px; }
+.fields dd { margin: 0; font-size: 0.9rem; }
+.fields dd.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+.fields dd.total { font-weight: 600; color: var(--accent); }
+
+.items h4 { margin: 0 0 8px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.items ul { margin: 0; padding: 0 0 0 18px; font-size: 0.85rem; line-height: 1.55; }
+.items li.empty { list-style: none; padding-left: -18px; margin-left: -18px; color: var(--muted); font-style: italic; }
+.error-msg { font-size: 0.85rem; color: var(--bad); margin: 0; }
+
+footer { margin-top: 36px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
+footer code { font-family: "IBM Plex Mono", monospace; background: var(--accent-soft); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Invoice Ledger</h1>
+      <p class="sub">6 invoices · OCR (Vision.framework) → TypeSafe Jev classification &amp; extraction</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">6</div><div class="l">Invoices</div></div>
+      <div class="stat"><div class="n">$211,516.44</div><div class="l">Total detected</div></div>
+      <div class="stat"><div class="n">91%</div><div class="l">Avg. total confidence</div></div>
+    </div>
+  </header>
+
+  <section class="grid">
+    
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>Invoice</h3>
+              <p class="file-name">1131w-EXQDv51RXyY.jpg</p>
+            </div>
+            <span class="pill conf-none">— conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Goods</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">12345</dd></div>
+            <div><dt>Date</dt><dd class="num">—</dd></div>
+            <div><dt>Total</dt><dd class="num total">—</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (5)</h4>
+            <ul><li>White Basic Tank Top</li><li>Denim Jacket</li><li>Bamboo Underwear</li><li>Striped Pants</li><li>Quantity</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>Invoice</h3>
+              <p class="file-name">6271a4e186f9faa5855c08c0_Law-Firm-Invoice-Template-1-G.jpeg</p>
+            </div>
+            <span class="pill conf-high">100% conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Other</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">0000001</dd></div>
+            <div><dt>Date</dt><dd class="num">12/31/20</dd></div>
+            <div><dt>Total</dt><dd class="num total">$0000.00</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (19)</h4>
+            <ul><li>DESCRIPTION</li><li>Item 1</li><li>$O</li><li>0%</li><li>$0000.00</li><li>$O</li><li>0%</li><li>$0000.00</li><li>Item 1</li><li>Item 1</li><li>Description</li><li>Description</li><li>1</li><li>1</li><li>$0</li><li>0%</li><li>$0000.00</li><li>$0</li><li>0%</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>MICRODYN-NADIR SINGAPORE PTE LTD</h3>
+              <p class="file-name">Mau-invoice-packing-list.jpg</p>
+            </div>
+            <span class="pill conf-high">100% conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Goods</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">001</dd></div>
+            <div><dt>Date</dt><dd class="num">—</dd></div>
+            <div><dt>Total</dt><dd class="num total">44,780.00</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (0)</h4>
+            <ul><li class='empty'>none detected</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>Quotation</h3>
+              <p class="file-name">c9901d97d1a412028dd6e3c9bd08fc01467d12c9_2_353x500.png</p>
+            </div>
+            <span class="pill conf-mid">60% conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Goods</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">002015</dd></div>
+            <div><dt>Date</dt><dd class="num">—</dd></div>
+            <div><dt>Total</dt><dd class="num total">157,795.00</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (18)</h4>
+            <ul><li>430002</li><li>RN3220-100EUS - RN3220-100EUS</li><li>MX-M150-Sec-DNighe EMP-F1.8.</li><li>Notr) Camera IP camera set weh sao</li><li>instated sensor modules • inage ser</li><li>megapinels, 1x day and ix night - HD</li><li>Premium lerses (Va sensce module): 2x</li><li>super wide-angle (11.8, horizontal Image)</li><li>angle 15 10 180</li><li>LED Monitor 55° Fing in Wal</li><li>Camera Fixing, Acusting &amp; Configurarion</li><li>30,500.00</li><li>5%</li><li>950.00</li><li>16.500.00</li><li>1.050.00</li><li>5%</li><li>76,000.00</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>* RedmineCRM</h3>
+              <p class="file-name">images.jpeg</p>
+            </div>
+            <span class="pill conf-high">98% conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Services</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">20111209</dd></div>
+            <div><dt>Date</dt><dd class="num">12/08/2011</dd></div>
+            <div><dt>Total</dt><dd class="num total">901.80</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (2)</h4>
+            <ul><li>Visible field in PDF</li><li>INVOICE</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h3>Your Company Name</h3>
+              <p class="file-name">numbers_invoice_template.png</p>
+            </div>
+            <span class="pill conf-high">97% conf.</span>
+          </div>
+          <dl class="fields">
+            <div><dt>Category</dt><dd>Other</dd></div>
+            <div><dt>Invoice #</dt><dd class="num">00001</dd></div>
+            <div><dt>Date</dt><dd class="num">01/12/2020</dd></div>
+            <div><dt>Total</dt><dd class="num total">$8,039.64</dd></div>
+          </dl>
+          <div class="items">
+            <h4>Line items (7)</h4>
+            <ul><li>Item 1</li><li>Item 2</li><li>Item 3</li><li>Item 4</li><li>Item 5</li><li>Item 6</li><li>Item 7</li></ul>
+          </div>
+        </article>
+  </section>
+
+  <footer>
+    Pipeline: <code>ocr.swift</code> (native Vision OCR, no deps) → <code>pipeline.py</code>
+    (TypeSafe <code>Choice</code> questions classify each OCR line as line-item / header / total / noise,
+    and pick invoice number / date / total from regex-found candidates) → this report.
+    Multi-column tables can interleave in OCR line order — verify totals against the source image.
+  </footer>
+</div>

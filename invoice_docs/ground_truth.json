@@ -1,0 +1,1578 @@
+{
+  "01_services.pdf": {
+    "vendor": "Loom Design Studio",
+    "invoice_number": "INV-69222",
+    "date": "09/28/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Litigation support (hrs)",
+        "qty": 3,
+        "price": 324.5,
+        "amount": 973.5
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 11,
+        "price": 251.37,
+        "amount": 2765.07
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 2,
+        "price": 186.94,
+        "amount": 373.88
+      }
+    ],
+    "subtotal": 4112.45,
+    "tax": 329.0,
+    "total": 4441.45
+  },
+  "02_goods.xlsx": {
+    "vendor": "Northwind Supply Co",
+    "invoice_number": "INV-88045",
+    "date": "07/15/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 10,
+        "price": 20.78,
+        "amount": 207.8
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 2,
+        "price": 37.93,
+        "amount": 75.86
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 4,
+        "price": 245.85,
+        "amount": 983.4
+      }
+    ],
+    "subtotal": 1267.06,
+    "tax": 101.36,
+    "total": 1368.42
+  },
+  "03_services.pdf": {
+    "vendor": "Loom Design Studio",
+    "invoice_number": "INV-87458",
+    "date": "04/17/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 11,
+        "price": 128.25,
+        "amount": 1410.75
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 11,
+        "price": 47.72,
+        "amount": 524.92
+      },
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 7,
+        "price": 399.1,
+        "amount": 2793.7
+      }
+    ],
+    "subtotal": 4729.37,
+    "tax": 378.35,
+    "total": 5107.72
+  },
+  "04_utilities_subscription.xlsx": {
+    "vendor": "Attic Robotics Cloud",
+    "invoice_number": "INV-51324",
+    "date": "04/17/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 1,
+        "price": 42.04,
+        "amount": 42.04
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 7,
+        "price": 56.5,
+        "amount": 395.5
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 7,
+        "price": 40.73,
+        "amount": 285.11
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 11,
+        "price": 15.21,
+        "amount": 167.31
+      }
+    ],
+    "subtotal": 889.96,
+    "tax": 71.2,
+    "total": 961.16
+  },
+  "05_goods.pdf": {
+    "vendor": "Cobalt Outfitters",
+    "invoice_number": "INV-59212",
+    "date": "12/13/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Packing crates",
+        "qty": 2,
+        "price": 233.0,
+        "amount": 466.0
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 11,
+        "price": 118.86,
+        "amount": 1307.46
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 5,
+        "price": 143.05,
+        "amount": 715.25
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 2,
+        "price": 66.82,
+        "amount": 133.64
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 1,
+        "price": 38.06,
+        "amount": 38.06
+      }
+    ],
+    "subtotal": 2660.41,
+    "tax": 212.83,
+    "total": 2873.24
+  },
+  "06_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-68644",
+    "date": "09/07/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 7,
+        "price": 262.83,
+        "amount": 1839.81
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 7,
+        "price": 176.99,
+        "amount": 1238.93
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 1,
+        "price": 118.87,
+        "amount": 118.87
+      }
+    ],
+    "subtotal": 3197.61,
+    "tax": 255.81,
+    "total": 3453.42
+  },
+  "07_services.pdf": {
+    "vendor": "Ridgeline Legal Partners",
+    "invoice_number": "INV-37618",
+    "date": "03/13/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 1,
+        "price": 395.88,
+        "amount": 395.88
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 8,
+        "price": 114.44,
+        "amount": 915.52
+      }
+    ],
+    "subtotal": 1311.4,
+    "tax": 104.91,
+    "total": 1416.31
+  },
+  "08_services.xlsx": {
+    "vendor": "Harbor & Co Advisory",
+    "invoice_number": "INV-60616",
+    "date": "02/03/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 4,
+        "price": 239.35,
+        "amount": 957.4
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 1,
+        "price": 246.49,
+        "amount": 246.49
+      }
+    ],
+    "subtotal": 1203.89,
+    "tax": 96.31,
+    "total": 1300.2
+  },
+  "09_utilities_subscription.pdf": {
+    "vendor": "Nimbus Utilities",
+    "invoice_number": "INV-26675",
+    "date": "10/16/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "API calls (overage)",
+        "qty": 7,
+        "price": 85.39,
+        "amount": 597.73
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 5,
+        "price": 364.74,
+        "amount": 1823.7
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 4,
+        "price": 294.28,
+        "amount": 1177.12
+      }
+    ],
+    "subtotal": 3598.55,
+    "tax": 287.88,
+    "total": 3886.43
+  },
+  "10_utilities_subscription.xlsx": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-60883",
+    "date": "08/20/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 7,
+        "price": 33.25,
+        "amount": 232.75
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 1,
+        "price": 212.26,
+        "amount": 212.26
+      }
+    ],
+    "subtotal": 445.01,
+    "tax": 35.6,
+    "total": 480.61
+  },
+  "11_goods.pdf": {
+    "vendor": "Cobalt Outfitters",
+    "invoice_number": "INV-43683",
+    "date": "07/27/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 5,
+        "price": 215.23,
+        "amount": 1076.15
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 3,
+        "price": 102.93,
+        "amount": 308.79
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 11,
+        "price": 343.17,
+        "amount": 3774.87
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 2,
+        "price": 122.88,
+        "amount": 245.76
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 12,
+        "price": 21.38,
+        "amount": 256.56
+      }
+    ],
+    "subtotal": 5662.13,
+    "tax": 452.97,
+    "total": 6115.1
+  },
+  "12_services.xlsx": {
+    "vendor": "Loom Design Studio",
+    "invoice_number": "INV-42645",
+    "date": "01/02/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Onboarding workshop",
+        "qty": 5,
+        "price": 156.98,
+        "amount": 784.9
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 3,
+        "price": 50.49,
+        "amount": 151.47
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 8,
+        "price": 392.49,
+        "amount": 3139.92
+      }
+    ],
+    "subtotal": 4076.29,
+    "tax": 326.1,
+    "total": 4402.39
+  },
+  "13_utilities_subscription.pdf": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-87316",
+    "date": "01/01/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 6,
+        "price": 284.87,
+        "amount": 1709.22
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 1,
+        "price": 245.37,
+        "amount": 245.37
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 8,
+        "price": 40.9,
+        "amount": 327.2
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 6,
+        "price": 67.59,
+        "amount": 405.54
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 2,
+        "price": 189.44,
+        "amount": 378.88
+      }
+    ],
+    "subtotal": 3066.21,
+    "tax": 245.3,
+    "total": 3311.51
+  },
+  "14_utilities_subscription.xlsx": {
+    "vendor": "BrightRoute Hosting",
+    "invoice_number": "INV-26979",
+    "date": "06/12/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 11,
+        "price": 197.21,
+        "amount": 2169.31
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 7,
+        "price": 378.53,
+        "amount": 2649.71
+      }
+    ],
+    "subtotal": 4819.02,
+    "tax": 385.52,
+    "total": 5204.54
+  },
+  "15_services.pdf": {
+    "vendor": "Ridgeline Legal Partners",
+    "invoice_number": "INV-91914",
+    "date": "11/13/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 10,
+        "price": 19.79,
+        "amount": 197.9
+      },
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 2,
+        "price": 49.9,
+        "amount": 99.8
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 5,
+        "price": 353.72,
+        "amount": 1768.6
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 7,
+        "price": 374.69,
+        "amount": 2622.83
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 8,
+        "price": 184.6,
+        "amount": 1476.8
+      }
+    ],
+    "subtotal": 6165.93,
+    "tax": 493.27,
+    "total": 6659.2
+  },
+  "16_goods.xlsx": {
+    "vendor": "Northwind Supply Co",
+    "invoice_number": "INV-50663",
+    "date": "10/03/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 1,
+        "price": 103.64,
+        "amount": 103.64
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 8,
+        "price": 315.28,
+        "amount": 2522.24
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 5,
+        "price": 360.12,
+        "amount": 1800.6
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 5,
+        "price": 70.14,
+        "amount": 350.7
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 4,
+        "price": 214.58,
+        "amount": 858.32
+      }
+    ],
+    "subtotal": 5635.5,
+    "tax": 450.84,
+    "total": 6086.34
+  },
+  "17_utilities_subscription.pdf": {
+    "vendor": "Nimbus Utilities",
+    "invoice_number": "INV-75314",
+    "date": "04/11/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Support plan",
+        "qty": 11,
+        "price": 111.48,
+        "amount": 1226.28
+      },
+      {
+        "desc": "Support plan",
+        "qty": 4,
+        "price": 353.9,
+        "amount": 1415.6
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 4,
+        "price": 239.5,
+        "amount": 958.0
+      },
+      {
+        "desc": "Support plan",
+        "qty": 4,
+        "price": 67.43,
+        "amount": 269.72
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 6,
+        "price": 337.28,
+        "amount": 2023.68
+      }
+    ],
+    "subtotal": 5893.28,
+    "tax": 471.46,
+    "total": 6364.74
+  },
+  "18_utilities_subscription.xlsx": {
+    "vendor": "BrightRoute Hosting",
+    "invoice_number": "INV-46280",
+    "date": "03/04/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "API calls (overage)",
+        "qty": 8,
+        "price": 120.94,
+        "amount": 967.52
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 7,
+        "price": 162.28,
+        "amount": 1135.96
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 8,
+        "price": 273.78,
+        "amount": 2190.24
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 8,
+        "price": 138.33,
+        "amount": 1106.64
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 5,
+        "price": 351.04,
+        "amount": 1755.2
+      }
+    ],
+    "subtotal": 7155.56,
+    "tax": 572.44,
+    "total": 7728.0
+  },
+  "19_utilities_subscription.pdf": {
+    "vendor": "Attic Robotics Cloud",
+    "invoice_number": "INV-84787",
+    "date": "06/10/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Support plan",
+        "qty": 11,
+        "price": 67.31,
+        "amount": 740.41
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 4,
+        "price": 24.52,
+        "amount": 98.08
+      }
+    ],
+    "subtotal": 838.49,
+    "tax": 67.08,
+    "total": 905.57
+  },
+  "20_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-16152",
+    "date": "11/04/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 2,
+        "price": 257.54,
+        "amount": 515.08
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 2,
+        "price": 278.53,
+        "amount": 557.06
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 8,
+        "price": 113.58,
+        "amount": 908.64
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 8,
+        "price": 220.92,
+        "amount": 1767.36
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 3,
+        "price": 102.19,
+        "amount": 306.57
+      }
+    ],
+    "subtotal": 4054.71,
+    "tax": 324.38,
+    "total": 4379.09
+  },
+  "21_utilities_subscription.pdf": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-61578",
+    "date": "12/08/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Support plan",
+        "qty": 7,
+        "price": 374.05,
+        "amount": 2618.35
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 3,
+        "price": 188.44,
+        "amount": 565.32
+      }
+    ],
+    "subtotal": 3183.67,
+    "tax": 254.69,
+    "total": 3438.36
+  },
+  "22_utilities_subscription.xlsx": {
+    "vendor": "BrightRoute Hosting",
+    "invoice_number": "INV-59388",
+    "date": "09/19/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "API calls (overage)",
+        "qty": 8,
+        "price": 140.69,
+        "amount": 1125.52
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 2,
+        "price": 292.95,
+        "amount": 585.9
+      },
+      {
+        "desc": "Support plan",
+        "qty": 4,
+        "price": 108.28,
+        "amount": 433.12
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 2,
+        "price": 391.28,
+        "amount": 782.56
+      }
+    ],
+    "subtotal": 2927.1,
+    "tax": 234.17,
+    "total": 3161.27
+  },
+  "23_services.pdf": {
+    "vendor": "Harbor & Co Advisory",
+    "invoice_number": "INV-12051",
+    "date": "06/17/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Onboarding workshop",
+        "qty": 1,
+        "price": 184.75,
+        "amount": 184.75
+      },
+      {
+        "desc": "Litigation support (hrs)",
+        "qty": 7,
+        "price": 310.77,
+        "amount": 2175.39
+      }
+    ],
+    "subtotal": 2360.14,
+    "tax": 188.81,
+    "total": 2548.95
+  },
+  "24_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-18396",
+    "date": "07/26/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Packing crates",
+        "qty": 3,
+        "price": 220.25,
+        "amount": 660.75
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 8,
+        "price": 72.24,
+        "amount": 577.92
+      }
+    ],
+    "subtotal": 1238.67,
+    "tax": 99.09,
+    "total": 1337.76
+  },
+  "25_utilities_subscription.pdf": {
+    "vendor": "Nimbus Utilities",
+    "invoice_number": "INV-74563",
+    "date": "10/23/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 4,
+        "price": 184.18,
+        "amount": 736.72
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 5,
+        "price": 335.0,
+        "amount": 1675.0
+      }
+    ],
+    "subtotal": 2411.72,
+    "tax": 192.94,
+    "total": 2604.66
+  },
+  "26_utilities_subscription.xlsx": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-78522",
+    "date": "09/27/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 5,
+        "price": 273.45,
+        "amount": 1367.25
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 4,
+        "price": 132.22,
+        "amount": 528.88
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 9,
+        "price": 216.83,
+        "amount": 1951.47
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 8,
+        "price": 92.37,
+        "amount": 738.96
+      }
+    ],
+    "subtotal": 4586.56,
+    "tax": 366.92,
+    "total": 4953.48
+  },
+  "27_goods.pdf": {
+    "vendor": "Northwind Supply Co",
+    "invoice_number": "INV-89328",
+    "date": "07/01/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 9,
+        "price": 368.18,
+        "amount": 3313.62
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 10,
+        "price": 61.94,
+        "amount": 619.4
+      }
+    ],
+    "subtotal": 3933.02,
+    "tax": 314.64,
+    "total": 4247.66
+  },
+  "28_utilities_subscription.xlsx": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-18637",
+    "date": "09/15/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Support plan",
+        "qty": 7,
+        "price": 118.65,
+        "amount": 830.55
+      },
+      {
+        "desc": "Support plan",
+        "qty": 8,
+        "price": 63.88,
+        "amount": 511.04
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 8,
+        "price": 217.12,
+        "amount": 1736.96
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 4,
+        "price": 176.52,
+        "amount": 706.08
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 5,
+        "price": 64.84,
+        "amount": 324.2
+      }
+    ],
+    "subtotal": 4108.83,
+    "tax": 328.71,
+    "total": 4437.54
+  },
+  "29_goods.pdf": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-30385",
+    "date": "04/01/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Packing crates",
+        "qty": 6,
+        "price": 293.59,
+        "amount": 1761.54
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 10,
+        "price": 207.05,
+        "amount": 2070.5
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 12,
+        "price": 239.16,
+        "amount": 2869.92
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 10,
+        "price": 111.46,
+        "amount": 1114.6
+      }
+    ],
+    "subtotal": 7816.56,
+    "tax": 625.32,
+    "total": 8441.88
+  },
+  "30_utilities_subscription.xlsx": {
+    "vendor": "Nimbus Utilities",
+    "invoice_number": "INV-13047",
+    "date": "07/21/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 9,
+        "price": 252.08,
+        "amount": 2268.72
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 4,
+        "price": 347.58,
+        "amount": 1390.32
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 11,
+        "price": 99.06,
+        "amount": 1089.66
+      },
+      {
+        "desc": "API calls (overage)",
+        "qty": 9,
+        "price": 250.51,
+        "amount": 2254.59
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 4,
+        "price": 367.21,
+        "amount": 1468.84
+      }
+    ],
+    "subtotal": 8472.13,
+    "tax": 677.77,
+    "total": 9149.9
+  },
+  "31_goods.pdf": {
+    "vendor": "Fernway Retail",
+    "invoice_number": "INV-89053",
+    "date": "06/07/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Packing crates",
+        "qty": 4,
+        "price": 356.7,
+        "amount": 1426.8
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 4,
+        "price": 66.03,
+        "amount": 264.12
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 5,
+        "price": 164.34,
+        "amount": 821.7
+      }
+    ],
+    "subtotal": 2512.62,
+    "tax": 201.01,
+    "total": 2713.63
+  },
+  "32_services.xlsx": {
+    "vendor": "Vertex Consulting",
+    "invoice_number": "INV-36299",
+    "date": "07/21/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 2,
+        "price": 92.36,
+        "amount": 184.72
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 6,
+        "price": 59.43,
+        "amount": 356.58
+      }
+    ],
+    "subtotal": 541.3,
+    "tax": 43.3,
+    "total": 584.6
+  },
+  "33_utilities_subscription.pdf": {
+    "vendor": "Attic Robotics Cloud",
+    "invoice_number": "INV-75901",
+    "date": "11/27/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 2,
+        "price": 200.6,
+        "amount": 401.2
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 1,
+        "price": 308.37,
+        "amount": 308.37
+      },
+      {
+        "desc": "Support plan",
+        "qty": 9,
+        "price": 363.46,
+        "amount": 3271.14
+      }
+    ],
+    "subtotal": 3980.71,
+    "tax": 318.46,
+    "total": 4299.17
+  },
+  "34_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-34187",
+    "date": "02/07/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 3,
+        "price": 396.27,
+        "amount": 1188.81
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 10,
+        "price": 38.85,
+        "amount": 388.5
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 2,
+        "price": 309.42,
+        "amount": 618.84
+      }
+    ],
+    "subtotal": 2196.15,
+    "tax": 175.69,
+    "total": 2371.84
+  },
+  "35_services.pdf": {
+    "vendor": "Loom Design Studio",
+    "invoice_number": "INV-65894",
+    "date": "09/12/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 4,
+        "price": 246.36,
+        "amount": 985.44
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 11,
+        "price": 284.9,
+        "amount": 3133.9
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 3,
+        "price": 172.06,
+        "amount": 516.18
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 12,
+        "price": 157.52,
+        "amount": 1890.24
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 10,
+        "price": 78.55,
+        "amount": 785.5
+      }
+    ],
+    "subtotal": 7311.26,
+    "tax": 584.9,
+    "total": 7896.16
+  },
+  "36_goods.xlsx": {
+    "vendor": "Fernway Retail",
+    "invoice_number": "INV-21118",
+    "date": "12/28/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 10,
+        "price": 245.85,
+        "amount": 2458.5
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 10,
+        "price": 393.33,
+        "amount": 3933.3
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 5,
+        "price": 365.85,
+        "amount": 1829.25
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 7,
+        "price": 66.29,
+        "amount": 464.03
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 9,
+        "price": 282.5,
+        "amount": 2542.5
+      }
+    ],
+    "subtotal": 11227.58,
+    "tax": 898.21,
+    "total": 12125.79
+  },
+  "37_goods.pdf": {
+    "vendor": "Cobalt Outfitters",
+    "invoice_number": "INV-37109",
+    "date": "12/06/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 6,
+        "price": 131.15,
+        "amount": 786.9
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 1,
+        "price": 356.9,
+        "amount": 356.9
+      }
+    ],
+    "subtotal": 1143.8,
+    "tax": 91.5,
+    "total": 1235.3
+  },
+  "38_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-45779",
+    "date": "11/10/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 4,
+        "price": 269.01,
+        "amount": 1076.04
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 3,
+        "price": 220.24,
+        "amount": 660.72
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 9,
+        "price": 399.96,
+        "amount": 3599.64
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 12,
+        "price": 61.05,
+        "amount": 732.6
+      }
+    ],
+    "subtotal": 6069.0,
+    "tax": 485.52,
+    "total": 6554.52
+  },
+  "39_utilities_subscription.pdf": {
+    "vendor": "BrightRoute Hosting",
+    "invoice_number": "INV-25042",
+    "date": "10/04/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 5,
+        "price": 185.8,
+        "amount": 929.0
+      },
+      {
+        "desc": "Support plan",
+        "qty": 1,
+        "price": 308.1,
+        "amount": 308.1
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 1,
+        "price": 52.9,
+        "amount": 52.9
+      }
+    ],
+    "subtotal": 1290.0,
+    "tax": 103.2,
+    "total": 1393.2
+  },
+  "40_services.xlsx": {
+    "vendor": "Harbor & Co Advisory",
+    "invoice_number": "INV-82097",
+    "date": "09/17/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 9,
+        "price": 233.67,
+        "amount": 2103.03
+      },
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 11,
+        "price": 186.07,
+        "amount": 2046.77
+      },
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 9,
+        "price": 245.05,
+        "amount": 2205.45
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 7,
+        "price": 373.11,
+        "amount": 2611.77
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 7,
+        "price": 196.63,
+        "amount": 1376.41
+      }
+    ],
+    "subtotal": 10343.43,
+    "tax": 827.47,
+    "total": 11170.9
+  },
+  "41_services.pdf": {
+    "vendor": "Ridgeline Legal Partners",
+    "invoice_number": "INV-66305",
+    "date": "08/14/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 9,
+        "price": 168.45,
+        "amount": 1516.05
+      },
+      {
+        "desc": "Litigation support (hrs)",
+        "qty": 6,
+        "price": 219.21,
+        "amount": 1315.26
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 11,
+        "price": 118.86,
+        "amount": 1307.46
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 11,
+        "price": 290.89,
+        "amount": 3199.79
+      }
+    ],
+    "subtotal": 7338.56,
+    "tax": 587.08,
+    "total": 7925.64
+  },
+  "42_goods.xlsx": {
+    "vendor": "Northwind Supply Co",
+    "invoice_number": "INV-42115",
+    "date": "10/02/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 7,
+        "price": 305.54,
+        "amount": 2138.78
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 1,
+        "price": 360.55,
+        "amount": 360.55
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 1,
+        "price": 238.97,
+        "amount": 238.97
+      }
+    ],
+    "subtotal": 2738.3,
+    "tax": 219.06,
+    "total": 2957.36
+  },
+  "43_goods.pdf": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-66297",
+    "date": "12/16/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 4,
+        "price": 32.49,
+        "amount": 129.96
+      },
+      {
+        "desc": "Packing crates",
+        "qty": 12,
+        "price": 365.15,
+        "amount": 4381.8
+      },
+      {
+        "desc": "Steel brackets (box of 50)",
+        "qty": 4,
+        "price": 247.39,
+        "amount": 989.56
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 1,
+        "price": 255.34,
+        "amount": 255.34
+      }
+    ],
+    "subtotal": 5756.66,
+    "tax": 460.53,
+    "total": 6217.19
+  },
+  "44_goods.xlsx": {
+    "vendor": "Atlas Hardware",
+    "invoice_number": "INV-16823",
+    "date": "06/17/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Packing crates",
+        "qty": 2,
+        "price": 154.87,
+        "amount": 309.74
+      },
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 11,
+        "price": 175.53,
+        "amount": 1930.83
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 5,
+        "price": 261.24,
+        "amount": 1306.2
+      }
+    ],
+    "subtotal": 3546.77,
+    "tax": 283.74,
+    "total": 3830.51
+  },
+  "45_services.pdf": {
+    "vendor": "Vertex Consulting",
+    "invoice_number": "INV-48027",
+    "date": "12/05/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 8,
+        "price": 58.84,
+        "amount": 470.72
+      },
+      {
+        "desc": "Design sprint facilitation",
+        "qty": 9,
+        "price": 255.62,
+        "amount": 2300.58
+      },
+      {
+        "desc": "Onboarding workshop",
+        "qty": 5,
+        "price": 119.53,
+        "amount": 597.65
+      }
+    ],
+    "subtotal": 3368.95,
+    "tax": 269.52,
+    "total": 3638.47
+  },
+  "46_utilities_subscription.xlsx": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-92981",
+    "date": "05/25/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 4,
+        "price": 381.48,
+        "amount": 1525.92
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 11,
+        "price": 367.55,
+        "amount": 4043.05
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 11,
+        "price": 38.4,
+        "amount": 422.4
+      }
+    ],
+    "subtotal": 5991.37,
+    "tax": 479.31,
+    "total": 6470.68
+  },
+  "47_services.pdf": {
+    "vendor": "Loom Design Studio",
+    "invoice_number": "INV-13526",
+    "date": "10/02/2026",
+    "category": "services",
+    "items": [
+      {
+        "desc": "Contract review (hrs)",
+        "qty": 4,
+        "price": 223.53,
+        "amount": 894.12
+      },
+      {
+        "desc": "Consulting \u2014 Q3 strategy",
+        "qty": 2,
+        "price": 366.46,
+        "amount": 732.92
+      }
+    ],
+    "subtotal": 1627.04,
+    "tax": 130.16,
+    "total": 1757.2
+  },
+  "48_utilities_subscription.xlsx": {
+    "vendor": "CloudSync Inc",
+    "invoice_number": "INV-92720",
+    "date": "06/16/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 6,
+        "price": 96.09,
+        "amount": 576.54
+      },
+      {
+        "desc": "Hosting \u2014 Pro plan",
+        "qty": 8,
+        "price": 301.76,
+        "amount": 2414.08
+      },
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 2,
+        "price": 187.21,
+        "amount": 374.42
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 4,
+        "price": 186.07,
+        "amount": 744.28
+      },
+      {
+        "desc": "Storage (GB/mo)",
+        "qty": 7,
+        "price": 326.8,
+        "amount": 2287.6
+      }
+    ],
+    "subtotal": 6396.92,
+    "tax": 511.75,
+    "total": 6908.67
+  },
+  "49_goods.pdf": {
+    "vendor": "Fernway Retail",
+    "invoice_number": "INV-48126",
+    "date": "09/25/2026",
+    "category": "goods",
+    "items": [
+      {
+        "desc": "Pallet wrap rolls",
+        "qty": 7,
+        "price": 266.72,
+        "amount": 1867.04
+      },
+      {
+        "desc": "Safety gloves (case)",
+        "qty": 2,
+        "price": 192.88,
+        "amount": 385.76
+      },
+      {
+        "desc": "Warehouse shelving unit",
+        "qty": 2,
+        "price": 224.3,
+        "amount": 448.6
+      }
+    ],
+    "subtotal": 2701.4,
+    "tax": 216.11,
+    "total": 2917.51
+  },
+  "50_utilities_subscription.xlsx": {
+    "vendor": "Nimbus Utilities",
+    "invoice_number": "INV-99827",
+    "date": "08/10/2026",
+    "category": "utilities_subscription",
+    "items": [
+      {
+        "desc": "Bandwidth (TB)",
+        "qty": 2,
+        "price": 134.41,
+        "amount": 268.82
+      },
+      {
+        "desc": "Support plan",
+        "qty": 2,
+        "price": 282.62,
+        "amount": 565.24
+      }
+    ],
+    "subtotal": 834.06,
+    "tax": 66.72,
+    "total": 900.78
+  }
+}
