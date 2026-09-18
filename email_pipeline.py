@@ -72,6 +72,8 @@ def classify(name: str) -> dict:
         "needs_reply": answers.get("needs_reply", {}).get("noul"),
         "tokens": {"input": usage.get("input_tokens"), "output": usage.get("output_tokens")},
         "cost_usd": P.typesafe_cost(usage),
+        # Choice only ever returns one of the criteria keys you gave it — structurally can't invent a category.
+        "hallucinated": False,
     }
 
 
@@ -131,4 +133,26 @@ def classify_via_deepseek(name: str) -> dict:
         "needs_reply": parsed.get("needs_reply"),
         "tokens": {"input": usage.get("prompt_tokens"), "output": usage.get("completion_tokens")},
         "cost_usd": round(cost, 6),
+        # free-text-then-parse can name a category that was never in the list it was given.
+        "hallucinated": parsed.get("category") not in CATEGORY_CRITERIA,
+    }
+
+
+OPENAI_PROMPT = DEEPSEEK_PROMPT  # identical task/shape, different model
+
+
+def classify_via_openai(name: str) -> dict:
+    """Same classification task again, this time via gpt-5-nano direct prompt-and-parse."""
+    text = (EMAILS / name).read_text()
+    prompt = OPENAI_PROMPT.format(categories=", ".join(CATEGORY_CRITERIA), email=text)
+    parsed, usage = P.call_openai_json(prompt)
+    return {
+        "file": name,
+        "ground_truth": ground_truth(name),
+        "category": parsed.get("category"),
+        "urgency": parsed.get("urgency"),
+        "needs_reply": parsed.get("needs_reply"),
+        "tokens": {"input": usage.get("prompt_tokens"), "output": usage.get("completion_tokens")},
+        "cost_usd": P.openai_cost(usage),
+        "hallucinated": parsed.get("category") not in CATEGORY_CRITERIA,
     }

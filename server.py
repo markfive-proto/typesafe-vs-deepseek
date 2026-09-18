@@ -1,4 +1,7 @@
-"""Local dev server: serves index.html, lists sample docs/emails, runs TypeSafe vs DeepSeek pipelines per-file with timing/token/cost capture."""
+"""Local dev server: serves index.html, lists sample docs/emails, runs TypeSafe vs DeepSeek vs
+OpenAI pipelines per-file with timing/token/cost/hallucination capture. Mirrors api/*.py (the
+Vercel deployment), just as one process instead of one file per route.
+"""
 import base64
 import json
 import mimetypes
@@ -7,12 +10,13 @@ import re
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 import pipeline as P
 import email_pipeline as E
 import doc_pipeline as D
 import retrieval_pipeline as R
+import kb_pipeline as K
 
 P.load_env()
 
@@ -21,6 +25,7 @@ DOCS = ROOT / "invoice_docs"
 EMAILS = ROOT / "emails_samples"
 PORT = int(os.environ.get("PORT", 8420))
 DOC_EXTS = (".pdf", ".xlsx")
+CORPORA = {"emails": R, "kb": K}
 
 
 def list_docs():
@@ -86,7 +91,9 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/api/emails":
             return self._json({"files": list_emails()})
         if parsed.path == "/api/queries":
-            return self._json({"queries": {k: v["text"] for k, v in R.QUERIES.items()}})
+            corpus = parse_qs(parsed.query).get("corpus", ["emails"])[0]
+            mod = CORPORA.get(corpus, CORPORA["emails"])
+            return self._json({"queries": {k: v["text"] for k, v in mod.QUERIES.items()}})
         if parsed.path.startswith("/emails_samples/"):
             fname = parsed.path.removeprefix("/emails_samples/")
             fpath = EMAILS / fname
@@ -111,8 +118,10 @@ class Handler(BaseHTTPRequestHandler):
         routes = {
             "/api/process_document": (D.classify, name),
             "/api/process_document_deepseek": (D.classify_via_deepseek, name),
+            "/api/process_document_openai": (D.classify_via_openai, name),
             "/api/classify_email": (E.classify, name),
             "/api/classify_email_deepseek": (E.classify_via_deepseek, name),
+            "/api/classify_email_openai": (E.classify_via_openai, name),
         }
         if parsed.path in routes:
             fn, arg = routes[parsed.path]
@@ -128,9 +137,10 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as e:
                 return self._json({"ok": False, "error": str(e)}, 400)
 
-        if parsed.path in ("/api/rerank_typesafe", "/api/rerank_deepseek"):
+        if parsed.path in ("/api/rerank_typesafe", "/api/rerank_deepseek", "/api/rerank_openai"):
             query = body.get("query", "")
-            fn = R.rerank_typesafe if parsed.path.endswith("typesafe") else R.rerank_deepseek
+            mod = CORPORA.get(body.get("corpus", "emails"), CORPORA["emails"])
+            fn = {"typesafe": mod.rerank_typesafe, "deepseek": mod.rerank_deepseek, "openai": mod.rerank_openai}[parsed.path.rsplit("_", 1)[-1]]
             try:
                 return self._json(timed(fn, query))
             except Exception as e:

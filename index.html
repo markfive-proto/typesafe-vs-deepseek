@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TypeSafe vs DeepSeek</title>
+<title>TypeSafe vs DeepSeek vs OpenAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -11,12 +11,13 @@
   --bg: #f7f5f0; --surface: #ffffff; --ink: #1c1a17; --muted: #736b5c;
   --border: #e6ded0; --accent: #2a5d50; --accent-soft: #e4efe9;
   --accent2: #6d3fae; --accent2-soft: #eee4f9;
+  --accent3: #1f6fb2; --accent3-soft: #e1eef8;
   --warn: #a8501c; --warn-soft: #f6e6d9; --bad: #9c3b3b; --bad-soft: #f5e3e1;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", -apple-system, sans-serif; padding: 28px 16px 60px; }
-body.has-cmpbar { padding-bottom: 190px; }
-.wrap { max-width: 1200px; margin: 0 auto; }
+body.has-cmpbar { padding-bottom: 220px; }
+.wrap { max-width: 1300px; margin: 0 auto; }
 h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 600; margin: 0 0 4px; }
 p.sub { margin: 0 0 20px; color: var(--muted); font-size: 0.92rem; }
 
@@ -51,32 +52,38 @@ button.primary:disabled { opacity: 0.5; cursor: default; }
 button.ghost { font-family: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; cursor: pointer; color: var(--ink); }
 input[type=file] { display: none; }
 .upload-status { font-size: 0.8rem; color: var(--muted); }
-select#rq-select { font-family: inherit; font-size: 0.88rem; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); min-width: 320px; }
+select { font-family: inherit; font-size: 0.88rem; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); }
+select#rq-select { min-width: 320px; }
 
 .cmpbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
   display: flex; background: var(--surface); border-top: 2px solid var(--ink);
-  box-shadow: 0 -6px 20px rgba(0,0,0,.10); max-height: 45vh; overflow-y: auto;
+  box-shadow: 0 -6px 20px rgba(0,0,0,.10); max-height: 50vh; overflow-y: auto;
 }
 .cmpbar[hidden] { display: none; }
-.cmpbar-engine { flex: 1; min-width: 0; padding: 10px 18px; border-top: 3px solid transparent; }
-.cmpbar-engine.ts { border-top-color: var(--accent); border-right: 1px solid var(--border); }
+.cmpbar-engine { flex: 1; min-width: 0; padding: 10px 16px; border-top: 3px solid transparent; border-right: 1px solid var(--border); }
+.cmpbar-engine:last-child { border-right: none; }
+.cmpbar-engine.ts { border-top-color: var(--accent); }
 .cmpbar-engine.ds { border-top-color: var(--accent2); }
+.cmpbar-engine.oa { border-top-color: var(--accent3); }
 .cmpbar-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
-.cmpbar-head span:first-child { font-weight: 600; font-size: 0.85rem; }
-.cmpbar-head .count { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 0.78rem; color: var(--muted); }
+.cmpbar-head span:first-child { font-weight: 600; font-size: 0.82rem; }
+.cmpbar-head .count { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 0.76rem; color: var(--muted); }
 .progress { height: 7px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
 .progress-fill { height: 100%; width: 0%; border-radius: 99px; transition: width .25s ease; }
 .cmpbar-engine.ts .progress-fill { background: var(--accent); }
 .cmpbar-engine.ds .progress-fill { background: var(--accent2); }
-.cmpbar-stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.78rem; }
+.cmpbar-engine.oa .progress-fill { background: var(--accent3); }
+.cmpbar-stats { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.74rem; }
 .cmpbar-stats span b { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; display: block; color: var(--ink); }
 .cmpbar-stats span { color: var(--muted); }
+.cmpbar-stats .halluc-hot b { color: var(--bad); }
 
 table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 0.82rem; }
 thead th { text-align: left; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
 thead th.grp-ts { background: var(--accent-soft); color: var(--accent); }
 thead th.grp-ds { background: var(--accent2-soft); color: var(--accent2); }
+thead th.grp-oa { background: var(--accent3-soft); color: var(--accent3); }
 tbody td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
 tbody tr:last-child td { border-bottom: none; }
 td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -87,14 +94,14 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
 .table-wrap { overflow-x: auto; }
 .ok-mark { color: var(--accent); font-weight: 700; }
 .bad-mark { color: var(--bad); font-weight: 700; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 0.7rem; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.halluc-mark { color: var(--bad); font-weight: 700; cursor: help; }
 footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>TypeSafe vs DeepSeek-flash</h1>
-  <p class="sub">Same task, two engines, side by side — speed, tokens, cost, and accuracy against known ground truth.</p>
+  <h1>TypeSafe vs DeepSeek vs OpenAI</h1>
+  <p class="sub">Same task, three engines, side by side — speed, tokens, cost, accuracy, and hallucination rate against known ground truth.</p>
 
   <nav class="tabs">
     <button id="tab-documents" class="active">Documents</button>
@@ -115,17 +122,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
     <div class="table-wrap">
       <table id="doc-results" hidden>
-        <thead>
-          <tr>
-            <th rowspan="2">File</th><th rowspan="2">Ground truth</th><th rowspan="2">Status</th>
-            <th class="grp-ts" colspan="4">TypeSafe (Jev)</th>
-            <th class="grp-ds" colspan="4">DeepSeek-flash</th>
-          </tr>
-          <tr>
-            <th class="grp-ts">Category</th><th class="grp-ts">Total</th><th class="grp-ts num">ms</th><th class="grp-ts num">tokens</th>
-            <th class="grp-ds">Category</th><th class="grp-ds">Total</th><th class="grp-ds num">ms</th><th class="grp-ds num">tokens/cost</th>
-          </tr>
-        </thead>
+        <thead id="doc-thead"></thead>
         <tbody id="doc-results-body"></tbody>
       </table>
     </div>
@@ -133,7 +130,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
 
   <!-- EMAILS -->
   <section id="view-emails" class="view">
-    <p class="sub" style="margin-bottom:12px;">50 synthetic emails across 7 categories — select some, classify with both engines.</p>
+    <p class="sub" style="margin-bottom:12px;">50 synthetic emails across 7 categories — select some, classify with all three engines.</p>
     <div class="picker" id="em-picker"></div>
     <div class="controls">
       <button class="ghost" id="em-selall">Select all</button>
@@ -141,17 +138,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
     <div class="table-wrap">
       <table id="em-results" hidden>
-        <thead>
-          <tr>
-            <th rowspan="2">File</th><th rowspan="2">Ground truth</th><th rowspan="2">Status</th>
-            <th class="grp-ts" colspan="3">TypeSafe (Jev)</th>
-            <th class="grp-ds" colspan="3">DeepSeek-flash</th>
-          </tr>
-          <tr>
-            <th class="grp-ts">Category</th><th class="grp-ts num">ms</th><th class="grp-ts num">tokens</th>
-            <th class="grp-ds">Category</th><th class="grp-ds num">ms</th><th class="grp-ds num">tokens/cost</th>
-          </tr>
-        </thead>
+        <thead id="em-thead"></thead>
         <tbody id="em-results-body"></tbody>
       </table>
     </div>
@@ -159,16 +146,18 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
 
   <!-- RETRIEVAL -->
   <section id="view-retrieval" class="view">
-    <p class="sub" style="margin-bottom:12px;">Rerank all 50 sample emails by relevance to a query. TypeSafe asks all 50 relevance questions in <b>one call</b> (true intra-request parallelism); DeepSeek ranks all 50 in one generative pass.</p>
+    <p class="sub" style="margin-bottom:12px;">Rerank a corpus by relevance to a query. TypeSafe asks all N relevance questions in <b>one call</b> (true intra-request parallelism); DeepSeek/gpt-5-nano each rank all N candidates in one generative pass.</p>
     <div class="controls">
+      <select id="rq-corpus">
+        <option value="emails">Corpus: 50 sample emails</option>
+        <option value="kb">Corpus: 100-doc AI infra knowledge base</option>
+      </select>
       <select id="rq-select"></select>
       <button class="primary" id="rq-run">Run comparison</button>
     </div>
     <div class="table-wrap">
       <table id="rq-results" hidden>
-        <thead>
-          <tr><th>#</th><th class="grp-ts">TypeSafe top match</th><th class="grp-ts num">score</th><th class="grp-ds">DeepSeek top match</th><th class="grp-ds num">score</th></tr>
-        </thead>
+        <thead id="rq-thead"></thead>
         <tbody id="rq-results-body"></tbody>
       </table>
     </div>
@@ -176,66 +165,64 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
 
   <footer class="note">
     Wall time = actual elapsed time for the whole batch (requests fire concurrently). Sum ms = if every
-    call had run one-after-another — the gap between the two is the parallelism payoff.
-    Cost: TypeSafe Jev $42/Btok input (output free); DeepSeek-flash off-peak cache-hit/miss + output pricing.
+    call had run one-after-another — the gap is the parallelism payoff.
+    Hallucinated: TypeSafe's <code>Choice</code> only ever returns a value from the candidates/criteria it
+    was given, so it's structurally grounded (always 0%). DeepSeek/OpenAI free-text-then-parse can invent
+    a category outside the given list, an invoice number/total not present in the source text, or a
+    candidate id in reranking that doesn't correspond to any real candidate — each counted here as a hallucination.
+    Cost: TypeSafe Jev $42/Btok input (output free); DeepSeek-flash off-peak cache pricing; gpt-5-nano $0.05/$0.40 per Mtok in/out.
   </footer>
 </div>
 
-<div class="cmpbar" id="cmpbar" hidden>
-  <div class="cmpbar-engine ts">
-    <div class="cmpbar-head"><span>TypeSafe (Jev)</span><span class="count" id="cmp-ts-count">0/0</span></div>
-    <div class="progress"><div class="progress-fill" id="cmp-ts-fill"></div></div>
-    <div class="cmpbar-stats">
-      <span>Wall<b id="cmp-ts-wall">—</b></span>
-      <span>Sum of latencies<b id="cmp-ts-sum">—</b></span>
-      <span>Tokens in/out<b id="cmp-ts-tok">—</b></span>
-      <span>Cost<b id="cmp-ts-cost">—</b></span>
-      <span>Accuracy<b id="cmp-ts-acc">—</b></span>
-    </div>
-  </div>
-  <div class="cmpbar-engine ds">
-    <div class="cmpbar-head"><span>DeepSeek-flash</span><span class="count" id="cmp-ds-count">0/0</span></div>
-    <div class="progress"><div class="progress-fill" id="cmp-ds-fill"></div></div>
-    <div class="cmpbar-stats">
-      <span>Wall<b id="cmp-ds-wall">—</b></span>
-      <span>Sum of latencies<b id="cmp-ds-sum">—</b></span>
-      <span>Tokens in/out<b id="cmp-ds-tok">—</b></span>
-      <span>Cost<b id="cmp-ds-cost">—</b></span>
-      <span>Accuracy<b id="cmp-ds-acc">—</b></span>
-    </div>
-  </div>
-</div>
+<div class="cmpbar" id="cmpbar" hidden></div>
 
 <script>
+const ENGINES = [
+  { key: 'ts', cls: 'ts', label: 'TypeSafe (Jev)' },
+  { key: 'ds', cls: 'ds', label: 'DeepSeek-flash' },
+  { key: 'oa', cls: 'oa', label: 'gpt-5-nano' },
+];
+
 function cssEscape(s) { return s.replace(/[^a-zA-Z0-9_-]/g, '_'); }
 function mark(ok) { return ok ? '<span class="ok-mark">✓</span>' : '<span class="bad-mark">✗</span>'; }
+function hallucMark(h) { return h ? ' <span class="halluc-mark" title="hallucinated: value not grounded in what it was given">⚠</span>' : ''; }
 function setRunning(id) {
   const tr = document.getElementById(id);
   if (tr) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-run">running…</span>';
 }
+
 // ---------- shared fixed bottom comparison bar ----------
 const cmpbar = document.getElementById('cmpbar');
-function cmpbarShow(tsTitle, dsTitle) {
+function cmpbarShow(titles) {
   document.body.classList.add('has-cmpbar');
   cmpbar.hidden = false;
-  cmpbar.querySelector('.ts .cmpbar-head span:first-child').textContent = tsTitle || 'TypeSafe (Jev)';
-  cmpbar.querySelector('.ds .cmpbar-head span:first-child').textContent = dsTitle || 'DeepSeek-flash';
-  ['ts', 'ds'].forEach(e => {
-    document.getElementById(`cmp-${e}-count`).textContent = '0/0';
-    document.getElementById(`cmp-${e}-fill`).style.width = '0%';
-    ['wall', 'sum', 'tok', 'cost', 'acc'].forEach(k => document.getElementById(`cmp-${e}-${k}`).textContent = '—');
-  });
+  cmpbar.innerHTML = ENGINES.map(e => `
+    <div class="cmpbar-engine ${e.cls}">
+      <div class="cmpbar-head"><span>${titles?.[e.key] || e.label}</span><span class="count" id="cmp-${e.key}-count">0/0</span></div>
+      <div class="progress"><div class="progress-fill" id="cmp-${e.key}-fill"></div></div>
+      <div class="cmpbar-stats">
+        <span>Wall<b id="cmp-${e.key}-wall">—</b></span>
+        <span>Sum latencies<b id="cmp-${e.key}-sum">—</b></span>
+        <span>Tokens in/out<b id="cmp-${e.key}-tok">—</b></span>
+        <span>Cost<b id="cmp-${e.key}-cost">—</b></span>
+        <span>Accuracy<b id="cmp-${e.key}-acc">—</b></span>
+        <span class="halluc-stat"><span id="cmp-${e.key}-halluc-wrap">Hallucinated<b id="cmp-${e.key}-halluc">—</b></span></span>
+      </div>
+    </div>`).join('');
 }
 function cmpbarProgress(engine, done, total) {
   document.getElementById(`cmp-${engine}-count`).textContent = `${done}/${total}`;
   document.getElementById(`cmp-${engine}-fill`).style.width = total ? Math.round((done / total) * 100) + '%' : '0%';
 }
-function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc }) {
+function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n }) {
   document.getElementById(`cmp-${engine}-wall`).textContent = Math.round(wall) + 'ms';
   document.getElementById(`cmp-${engine}-sum`).textContent = Math.round(sum) + 'ms';
   document.getElementById(`cmp-${engine}-tok`).textContent = `${tokIn} / ${tokOut}`;
   document.getElementById(`cmp-${engine}-cost`).textContent = cost == null ? '—' : '$' + cost.toFixed(4);
   document.getElementById(`cmp-${engine}-acc`).textContent = acc == null ? '—' : Math.round(acc * 100) + '%';
+  const hEl = document.getElementById(`cmp-${engine}-halluc`);
+  hEl.textContent = n ? `${halluc}/${n}` : '0';
+  hEl.parentElement.parentElement.classList.toggle('halluc-hot', halluc > 0);
 }
 
 // ---------- tabs ----------
@@ -280,49 +267,57 @@ function makePicker({ picker, selAllBtn, runBtn }) {
   return { get selected() { return selected; }, setFiles(files) { allFiles = files; }, toggle };
 }
 
-// ---------- generic dual-engine comparison runner ----------
-// fires TS+DS requests for every selected file concurrently, fills the table as each resolves,
+// ---------- generic table head builder ----------
+// fieldLabels: array of {label, num?} per engine, same shape for every engine.
+function buildThead(theadEl, fieldLabels) {
+  const row1 = ['<th rowspan="2">File</th>', '<th rowspan="2">Ground truth</th>', '<th rowspan="2">Status</th>']
+    .concat(ENGINES.map(e => `<th class="grp-${e.key}" colspan="${fieldLabels.length}">${e.label}</th>`)).join('');
+  const row2 = ENGINES.map(e => fieldLabels.map(f => `<th class="grp-${e.key}${f.num ? ' num' : ''}">${f.label}</th>`).join('')).join('');
+  theadEl.innerHTML = `<tr>${row1}</tr><tr>${row2}</tr>`;
+}
+
+// ---------- generic N-engine comparison runner ----------
+// fires every engine × every selected file concurrently, fills the table as each resolves,
 // drives the fixed bottom progress bars live, and computes wall-clock vs summed-latency +
-// token/cost/accuracy totals per engine once everything settles.
-async function runComparison({ files, tsUrl, dsUrl, tableBody, rowHtml, fillRow, tsTitle, dsTitle, isCorrect }) {
-  cmpbarShow(tsTitle, dsTitle);
-  cmpbarProgress('ts', 0, files.length);
-  cmpbarProgress('ds', 0, files.length);
+// token/cost/accuracy/hallucination totals per engine once everything settles.
+async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles, isCorrect }) {
+  cmpbarShow(titles);
+  ENGINES.forEach(e => cmpbarProgress(e.key, 0, files.length));
   tableBody.innerHTML = files.map(rowHtml).join('');
-
-  const tsAgg = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, n: 0, done: 0 };
-  const dsAgg = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, n: 0, done: 0 };
-  const wallStart = performance.now();
-
   files.forEach(f => setRunning(`row-${cssEscape(f)}`));
+
+  const agg = {};
+  ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0 });
+  const wallStart = performance.now();
 
   const post = (url, payload) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(r => r.json());
 
-  await Promise.all(files.flatMap(file => [
-    post(tsUrl, { file }).then(data => {
+  await Promise.all(files.flatMap(file => ENGINES.map(e => {
+    const a = agg[e.key];
+    return post(urls[e.key], { file }).then(data => {
       if (!data.error) {
-        tsAgg.sum += data.timing_ms.total; tsAgg.tokIn += data.tokens?.input || 0; tsAgg.tokOut += data.tokens?.output || 0;
-        tsAgg.cost += data.cost_usd || 0; tsAgg.n++; if (isCorrect('ts', data)) tsAgg.correct++;
+        a.sum += data.timing_ms.total; a.tokIn += data.tokens?.input || 0; a.tokOut += data.tokens?.output || 0;
+        a.cost += data.cost_usd || 0; a.n++;
+        if (isCorrect(e.key, data)) a.correct++;
+        if (data.hallucinated) a.halluc++;
       }
-      tsAgg.done++; cmpbarProgress('ts', tsAgg.done, files.length);
-      fillRow(file, 'ts', data);
-    }),
-    post(dsUrl, { file }).then(data => {
-      if (!data.error) {
-        dsAgg.sum += data.timing_ms.total; dsAgg.tokIn += data.tokens?.input || 0; dsAgg.tokOut += data.tokens?.output || 0;
-        dsAgg.cost += data.cost_usd || 0; dsAgg.n++; if (isCorrect('ds', data)) dsAgg.correct++;
-      }
-      dsAgg.done++; cmpbarProgress('ds', dsAgg.done, files.length);
-      fillRow(file, 'ds', data);
-    }),
-  ]));
+      a.done++; cmpbarProgress(e.key, a.done, files.length);
+      fillRow(file, e.key, data);
+    });
+  })));
 
   const wall = performance.now() - wallStart;
-  cmpbarFinal('ts', { wall, sum: tsAgg.sum, tokIn: tsAgg.tokIn, tokOut: tsAgg.tokOut, cost: tsAgg.cost, acc: tsAgg.n ? tsAgg.correct / tsAgg.n : null });
-  cmpbarFinal('ds', { wall, sum: dsAgg.sum, tokIn: dsAgg.tokIn, tokOut: dsAgg.tokOut, cost: dsAgg.cost, acc: dsAgg.n ? dsAgg.correct / dsAgg.n : null });
+  ENGINES.forEach(e => {
+    const a = agg[e.key];
+    cmpbarFinal(e.key, { wall, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
+  });
 }
 
 // ================= DOCUMENTS =================
+const DOC_FIELDS = [{ label: 'Category' }, { label: 'Total' }, { label: 'ms', num: true }, { label: 'tokens/cost', num: true }];
+const docThead = document.getElementById('doc-thead');
+buildThead(docThead, DOC_FIELDS);
+
 const docPicker = document.getElementById('doc-picker');
 const docRunBtn = document.getElementById('doc-run');
 const docSelAllBtn = document.getElementById('doc-selall');
@@ -367,11 +362,11 @@ docFileInput.addEventListener('change', async () => {
 });
 
 function docRowHtml(file) {
-  return `<tr id="row-${cssEscape(file)}">
-    <td>${file}</td><td id="gt-${cssEscape(file)}">—</td><td class="status-pending">queued</td>
-    <td id="ts-cat-${cssEscape(file)}">—</td><td id="ts-tot-${cssEscape(file)}">—</td><td class="num" id="ts-ms-${cssEscape(file)}">—</td><td class="num" id="ts-tok-${cssEscape(file)}">—</td>
-    <td id="ds-cat-${cssEscape(file)}">—</td><td id="ds-tot-${cssEscape(file)}">—</td><td class="num" id="ds-ms-${cssEscape(file)}">—</td><td class="num" id="ds-tok-${cssEscape(file)}">—</td>
-  </tr>`;
+  const id = cssEscape(file);
+  const cells = ENGINES.map(e => `
+    <td id="${e.key}-cat-${id}">—</td><td id="${e.key}-tot-${id}">—</td>
+    <td class="num" id="${e.key}-ms-${id}">—</td><td class="num" id="${e.key}-tok-${id}">—</td>`).join('');
+  return `<tr id="row-${id}"><td>${file}</td><td id="gt-${id}">—</td><td class="status-pending">queued</td>${cells}</tr>`;
 }
 function docFillRow(file, engine, data) {
   const id = cssEscape(file);
@@ -384,14 +379,14 @@ function docFillRow(file, engine, data) {
   }
   const catOk = data.ground_truth && data.category === data.ground_truth.category;
   const totOk = data.ground_truth && Math.abs(parseFloat(String(data.total_amount).replace(/[^0-9.]/g, '')) - data.ground_truth.total) < 0.01;
-  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}`;
+  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}${hallucMark(data.hallucinated)}`;
   document.getElementById(`${engine}-tot-${id}`).innerHTML = `${data.total_amount ?? '—'} ${data.ground_truth ? mark(totOk) : ''}`;
   document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
-  document.getElementById(`${engine}-tok-${id}`).textContent = engine === 'ds' && data.cost_usd != null
+  document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
     ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
     : `${data.tokens.input}/${data.tokens.output}`;
-  const bothDone = document.getElementById(`ts-ms-${id}`).textContent !== '—' && document.getElementById(`ds-ms-${id}`).textContent !== '—';
-  if (bothDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+  const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
+  if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
 }
 
 docRunBtn.addEventListener('click', () => {
@@ -399,14 +394,17 @@ docRunBtn.addEventListener('click', () => {
   docRunBtn.disabled = true;
   docTable.hidden = false;
   runComparison({
-    files, tsUrl: '/api/process_document', dsUrl: '/api/process_document_deepseek',
+    files,
+    urls: { ts: '/api/process_document', ds: '/api/process_document_deepseek', oa: '/api/process_document_openai' },
     tableBody: docBody, rowHtml: docRowHtml, fillRow: docFillRow,
-    tsTitle: 'TypeSafe (Jev)', dsTitle: 'DeepSeek-flash',
     isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth.category,
   }).finally(() => { docRunBtn.disabled = false; });
 });
 
 // ================= EMAILS =================
+const EMAIL_FIELDS = [{ label: 'Category' }, { label: 'ms', num: true }, { label: 'tokens/cost', num: true }];
+buildThead(document.getElementById('em-thead'), EMAIL_FIELDS);
+
 const emPicker = document.getElementById('em-picker');
 const emRunBtn = document.getElementById('em-run');
 const emSelAllBtn = document.getElementById('em-selall');
@@ -436,11 +434,10 @@ async function loadEmails() {
 }
 
 function emRowHtml(file) {
-  return `<tr id="row-${cssEscape(file)}">
-    <td>${file}</td><td id="gt-${cssEscape(file)}">—</td><td class="status-pending">queued</td>
-    <td id="ts-cat-${cssEscape(file)}">—</td><td class="num" id="ts-ms-${cssEscape(file)}">—</td><td class="num" id="ts-tok-${cssEscape(file)}">—</td>
-    <td id="ds-cat-${cssEscape(file)}">—</td><td class="num" id="ds-ms-${cssEscape(file)}">—</td><td class="num" id="ds-tok-${cssEscape(file)}">—</td>
-  </tr>`;
+  const id = cssEscape(file);
+  const cells = ENGINES.map(e => `
+    <td id="${e.key}-cat-${id}">—</td><td class="num" id="${e.key}-ms-${id}">—</td><td class="num" id="${e.key}-tok-${id}">—</td>`).join('');
+  return `<tr id="row-${id}"><td>${file}</td><td id="gt-${id}">—</td><td class="status-pending">queued</td>${cells}</tr>`;
 }
 function emFillRow(file, engine, data) {
   const id = cssEscape(file);
@@ -452,13 +449,13 @@ function emFillRow(file, engine, data) {
     return;
   }
   const catOk = data.ground_truth && data.category === data.ground_truth;
-  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}`;
+  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}${hallucMark(data.hallucinated)}`;
   document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
-  document.getElementById(`${engine}-tok-${id}`).textContent = engine === 'ds' && data.cost_usd != null
+  document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
     ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
     : `${data.tokens.input}/${data.tokens.output}`;
-  const bothDone = document.getElementById(`ts-ms-${id}`).textContent !== '—' && document.getElementById(`ds-ms-${id}`).textContent !== '—';
-  if (bothDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+  const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
+  if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
 }
 
 emRunBtn.addEventListener('click', () => {
@@ -466,51 +463,78 @@ emRunBtn.addEventListener('click', () => {
   emRunBtn.disabled = true;
   emTable.hidden = false;
   runComparison({
-    files, tsUrl: '/api/classify_email', dsUrl: '/api/classify_email_deepseek',
+    files,
+    urls: { ts: '/api/classify_email', ds: '/api/classify_email_deepseek', oa: '/api/classify_email_openai' },
     tableBody: emBody, rowHtml: emRowHtml, fillRow: emFillRow,
-    tsTitle: 'TypeSafe (Jev)', dsTitle: 'DeepSeek-flash',
     isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth,
   }).finally(() => { emRunBtn.disabled = false; });
 });
 
 // ================= RETRIEVAL =================
+const rqCorpus = document.getElementById('rq-corpus');
 const rqSelect = document.getElementById('rq-select');
 const rqRunBtn = document.getElementById('rq-run');
 const rqTable = document.getElementById('rq-results');
+const rqThead = document.getElementById('rq-thead');
 const rqBody = document.getElementById('rq-results-body');
 
+function buildRqThead() {
+  const cells = ENGINES.map(e => `<th class="grp-${e.key}">${e.label} match</th><th class="grp-${e.key} num">score</th>`).join('');
+  rqThead.innerHTML = `<tr><th>#</th>${cells}</tr>`;
+}
+buildRqThead();
+
 async function loadQueries() {
-  const res = await fetch('/api/queries');
+  const res = await fetch(`/api/queries?corpus=${rqCorpus.value}`);
   const { queries } = await res.json();
   rqSelect.innerHTML = Object.entries(queries).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
 }
+rqCorpus.addEventListener('change', loadQueries);
 
 rqRunBtn.addEventListener('click', async () => {
   rqRunBtn.disabled = true;
   rqTable.hidden = false;
-  cmpbarShow('TypeSafe (Jev) — 1 call, 50 parallel questions', 'DeepSeek-flash — 1 call, generates all 50 scores');
-  cmpbarProgress('ts', 0, 1); cmpbarProgress('ds', 0, 1);
-  rqBody.innerHTML = '<tr><td colspan="5" class="status-run">running…</td></tr>';
+  const corpus = rqCorpus.value;
+  const n = corpus === 'kb' ? 100 : 50;
+  cmpbarShow({
+    ts: `TypeSafe (Jev) — 1 call, ${n} parallel questions`,
+    ds: `DeepSeek-flash — 1 call, generates ${n} scores`,
+    oa: `gpt-5-nano — 1 call, generates ${n} scores`,
+  });
+  ENGINES.forEach(e => cmpbarProgress(e.key, 0, 1));
+  rqBody.innerHTML = `<tr><td colspan="${1 + ENGINES.length * 2}" class="status-run">running…</td></tr>`;
   const query = rqSelect.value;
   const post = (url, engine) => {
     const t0 = performance.now();
-    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }) })
+    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query, corpus }) })
       .then(r => r.json())
       .then(d => { cmpbarProgress(engine, 1, 1); return { d, ms: performance.now() - t0 }; });
   };
 
   const wallStart = performance.now();
-  const [ts, ds] = await Promise.all([post('/api/rerank_typesafe', 'ts'), post('/api/rerank_deepseek', 'ds')]);
+  const results = {};
+  await Promise.all(ENGINES.map(e =>
+    post(`/api/rerank_${e.key === 'ts' ? 'typesafe' : e.key === 'ds' ? 'deepseek' : 'openai'}`, e.key).then(r => results[e.key] = r)
+  ));
   const wall = performance.now() - wallStart;
 
-  cmpbarFinal('ts', { wall, sum: ts.d.timing_ms?.total ?? ts.ms, tokIn: ts.d.tokens?.input ?? 0, tokOut: ts.d.tokens?.output ?? 0, cost: ts.d.cost_usd, acc: ts.d.precision_at_k });
-  cmpbarFinal('ds', { wall, sum: ds.d.timing_ms?.total ?? ds.ms, tokIn: ds.d.tokens?.input ?? 0, tokOut: ds.d.tokens?.output ?? 0, cost: ds.d.cost_usd, acc: ds.d.precision_at_k });
+  ENGINES.forEach(e => {
+    const r = results[e.key];
+    cmpbarFinal(e.key, {
+      wall, sum: r.d.timing_ms?.total ?? r.ms, tokIn: r.d.tokens?.input ?? 0, tokOut: r.d.tokens?.output ?? 0,
+      cost: r.d.cost_usd, acc: r.d.precision_at_k,
+      halluc: r.d.hallucinated_count || 0, n: r.d.hallucinated != null ? 1 : 0,
+    });
+  });
 
-  const n = Math.max(ts.d.ranked?.length || 0, ds.d.ranked?.length || 0, 10);
+  const maxLen = Math.max(...ENGINES.map(e => results[e.key].d.ranked?.length || 0), 10);
   let rows = '';
-  for (let i = 0; i < n; i++) {
-    const t = ts.d.ranked?.[i], d = ds.d.ranked?.[i];
-    rows += `<tr><td>${i + 1}</td><td>${t ? t.file : '—'}</td><td class="num">${t ? t.score.toFixed(2) : '—'}</td><td>${d ? d.file : '—'}</td><td class="num">${d ? d.score.toFixed(2) : '—'}</td></tr>`;
+  for (let i = 0; i < maxLen; i++) {
+    const cells = ENGINES.map(e => {
+      const item = results[e.key].d.ranked?.[i];
+      return `<td>${item ? item.file : '—'}</td><td class="num">${item ? item.score.toFixed(2) : '—'}</td>`;
+    }).join('');
+    rows += `<tr><td>${i + 1}</td>${cells}</tr>`;
   }
   rqBody.innerHTML = rows;
   rqRunBtn.disabled = false;

@@ -27,6 +27,15 @@ CATEGORY_CRITERIA = {
 }
 
 
+def _grounded(value, source_text: str) -> bool:
+    """Is `value` actually present in the source text, or did the model invent it?"""
+    if value is None:
+        return False
+    needle = re.sub(r"[$,]", "", str(value)).strip().lower()
+    haystack = re.sub(r"[$,]", "", source_text).lower()
+    return needle in haystack
+
+
 def extract_lines(path: Path) -> list[str]:
     if path.suffix.lower() == ".pdf":
         with pdfplumber.open(path) as pdf:
@@ -108,6 +117,8 @@ def classify(name: str) -> dict:
         "line_items": line_items,
         "tokens": {"input": usage.get("input_tokens"), "output": usage.get("output_tokens")},
         "cost_usd": P.typesafe_cost(usage),
+        # Choice only ever returns a candidate value it was handed — structurally can't invent one.
+        "hallucinated": False,
     }
 
 
@@ -151,6 +162,11 @@ def classify_via_deepseek(name: str) -> dict:
     cost = cache_hit * DEEPSEEK_PRICE["cache_hit_in"] + cache_miss * DEEPSEEK_PRICE["cache_miss_in"] + completion * DEEPSEEK_PRICE["out"]
 
     gt = GROUND_TRUTH.get(name, {})
+    hallucinated = (
+        parsed.get("category") not in CATEGORY_CRITERIA
+        or not _grounded(parsed.get("invoice_number"), text)
+        or not _grounded(parsed.get("total"), text)
+    )
     return {
         "file": name,
         "ground_truth": {"category": gt.get("category"), "total": gt.get("total"), "invoice_number": gt.get("invoice_number")},
@@ -159,4 +175,29 @@ def classify_via_deepseek(name: str) -> dict:
         "total_amount": parsed.get("total"),
         "tokens": {"input": usage.get("prompt_tokens"), "output": usage.get("completion_tokens")},
         "cost_usd": round(cost, 6),
+        "hallucinated": hallucinated,
+    }
+
+
+def classify_via_openai(name: str) -> dict:
+    path = DOCS / name
+    lines = extract_lines(path)
+    text = "\n".join(lines)
+    prompt = DEEPSEEK_PROMPT.format(categories=", ".join(CATEGORY_CRITERIA), text=text)
+    parsed, usage = P.call_openai_json(prompt)
+    gt = GROUND_TRUTH.get(name, {})
+    hallucinated = (
+        parsed.get("category") not in CATEGORY_CRITERIA
+        or not _grounded(parsed.get("invoice_number"), text)
+        or not _grounded(parsed.get("total"), text)
+    )
+    return {
+        "file": name,
+        "ground_truth": {"category": gt.get("category"), "total": gt.get("total"), "invoice_number": gt.get("invoice_number")},
+        "category": parsed.get("category"),
+        "invoice_number": parsed.get("invoice_number"),
+        "total_amount": parsed.get("total"),
+        "tokens": {"input": usage.get("prompt_tokens"), "output": usage.get("completion_tokens")},
+        "cost_usd": P.openai_cost(usage),
+        "hallucinated": hallucinated,
     }

@@ -18,13 +18,48 @@ ROOT = Path(__file__).parent
 SAMPLES = ROOT / "invoice_samples"
 API_URL = "https://api.typesafe.ai/v1/systemone"
 DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
+OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+OPENAI_MODEL = "gpt-5-nano"
 
 # Jev 1.13: $42 per billion input tokens, output tokens free (https://docs.typesafe.ai/models.md)
 TYPESAFE_PRICE_PER_INPUT_TOKEN = 42 / 1e9
 
+# gpt-5-nano: $0.05/Mtok input (cached input ~50% off), $0.40/Mtok output (https://platform.openai.com/docs/pricing)
+OPENAI_PRICE = {"in": 0.05e-6, "cached_in": 0.025e-6, "out": 0.40e-6}
+
 
 def typesafe_cost(usage: dict) -> float:
     return round(usage.get("input_tokens", 0) * TYPESAFE_PRICE_PER_INPUT_TOKEN, 6)
+
+
+def openai_cost(usage: dict) -> float:
+    cached = usage.get("prompt_tokens_details", {}).get("cached_tokens", 0)
+    fresh = usage.get("prompt_tokens", 0) - cached
+    out = usage.get("completion_tokens", 0)
+    return round(cached * OPENAI_PRICE["cached_in"] + fresh * OPENAI_PRICE["in"] + out * OPENAI_PRICE["out"], 6)
+
+
+def call_openai_json(prompt: str) -> dict:
+    """POSTs a prompt to gpt-5-nano expecting a JSON object back; returns (parsed, usage)."""
+    req = urllib.request.Request(
+        OPENAI_URL,
+        data=json.dumps({
+            "model": OPENAI_MODEL,
+            "messages": [{"role": "user", "content": prompt}],
+            "response_format": {"type": "json_object"},
+        }).encode(),
+        headers={"Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        result = json.load(resp)
+    content = result["choices"][0]["message"]["content"]
+    try:
+        parsed = json.loads(content)
+    except json.JSONDecodeError:
+        m = re.search(r"\{.*\}", content, re.S)
+        parsed = json.loads(m.group()) if m else {}
+    return parsed, result.get("usage", {})
 
 
 def load_env():

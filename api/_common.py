@@ -14,6 +14,9 @@ import pipeline as P
 import email_pipeline as E
 import doc_pipeline as D
 import retrieval_pipeline as R
+import kb_pipeline as K
+
+CORPORA = {"emails": R, "kb": K}
 
 P.load_env()
 
