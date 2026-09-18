@@ -1,0 +1,94 @@
+{
+  "title": "Modal confirm v22",
+  "brief": "Build a destructive-action confirmation modal.",
+  "required_elements": [
+    "modal-title",
+    "button-primary",
+    "button-secondary"
+  ],
+  "review_comment": "Looks great overall, ship it.",
+  "layers": [
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 24
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 64
+    },
+    {
+      "name": "Group 7",
+      "type": "card",
+      "hex": "#F7F5F0",
+      "font": "Roboto",
+      "spacing_px": 40
+    },
+    {
+      "name": "Frame 44",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "Arial",
+      "spacing_px": 15
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 24
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 24
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 64
+    },
+    {
+      "name": "Group 7",
+      "type": "card",
+      "hex": "#F7F5F0",
+      "font": "Roboto",
+      "spacing_px": 40
+    },
+    {
+      "name": "Frame 44",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "Arial",
+      "spacing_px": 15
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Group 7",
+      "Frame 44"
+    ],
+    "breaking_change": false,
+    "comment_category": "other",
+    "brief_match_fraction": 0.0
+  }
+}

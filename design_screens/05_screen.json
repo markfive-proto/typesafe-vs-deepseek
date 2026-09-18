@@ -1,0 +1,182 @@
+{
+  "title": "Pricing v5",
+  "brief": "Build a pricing page that makes the recommended plan obvious.",
+  "required_elements": [
+    "price-tag",
+    "badge-status",
+    "button-primary",
+    "cta-urgency"
+  ],
+  "review_comment": "The CTA blue looks off-brand, feels too saturated.",
+  "layers": [
+    {
+      "name": "Layer 3 copy",
+      "type": "image",
+      "hex": "#00FF00",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "text",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "price-tag",
+      "type": "input",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "Frame 44",
+      "type": "image",
+      "hex": "#3366CC",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "asdasd",
+      "type": "input",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "input",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 10
+    },
+    {
+      "name": "button-primary",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "price-tag",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "badge-status",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "cta-urgency",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Layer 3 copy",
+      "type": "image",
+      "hex": "#00FF00",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "text",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "price-tag",
+      "type": "input",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "Frame 44",
+      "type": "image",
+      "hex": "#3366CC",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "asdasd",
+      "type": "input",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "input",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 10
+    },
+    {
+      "name": "button-primary",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "price-tag",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "badge-status",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "cta-urgency",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Layer 3 copy",
+      "Untitled Layer",
+      "Frame 44",
+      "asdasd",
+      "Ellipse 2"
+    ],
+    "breaking_change": false,
+    "comment_category": "color",
+    "brief_match_fraction": 1.0
+  }
+}

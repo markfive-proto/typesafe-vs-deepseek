@@ -147,6 +147,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     <button id="tab-emails">Emails</button>
     <button id="tab-retrieval">Retrieval</button>
     <button id="tab-gategen">Gate → Generate</button>
+    <button id="tab-design">Design Audit</button>
   </nav>
 
   <!-- DOCUMENTS -->
@@ -265,6 +266,33 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
   </section>
 
+  <!-- DESIGN AUDIT -->
+  <section id="view-design" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      24 synthetic design screens as structured layer metadata (hex/font/spacing/name — never
+      pixels). One call bundles five checks: brand-token compliance, naming convention,
+      breaking-change risk (vs previous version), review-comment triage, and brief-match scoring.
+    </p>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="dz-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="dz-selall">Select all</button>
+          <button class="primary" id="dz-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="dz-placeholder">Pick screens on the left, then run — audits stream in here live.</p>
+        <div class="table-wrap">
+          <table id="dz-results" hidden>
+            <thead id="dz-thead"></thead>
+            <tbody id="dz-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="note">
     Time to output = when that engine's own last response actually landed (its real, per-engine finish
     time — not a shared clock dominated by whichever engine is slowest). Sum latencies = if every one of
@@ -338,8 +366,8 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
 }
 
 // ---------- tabs ----------
-const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen' };
-const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen' };
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design' };
 Object.keys(tabs).forEach(name => {
   document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
 });
@@ -750,10 +778,86 @@ ggRunBtn.addEventListener('click', async () => {
   ggRunBtn.disabled = false;
 });
 
+// ================= DESIGN AUDIT =================
+const DZ_FIELDS = [{ label: 'Compliant' }, { label: 'Breaking' }, { label: 'Comment cat.' }, { label: 'Brief match', num: true }, { label: 'ms', num: true }, { label: 'tokens/cost', num: true }];
+buildThead(document.getElementById('dz-thead'), DZ_FIELDS);
+
+const dzPicker = document.getElementById('dz-picker');
+const dzRunBtn = document.getElementById('dz-run');
+const dzSelAllBtn = document.getElementById('dz-selall');
+const dzTable = document.getElementById('dz-results');
+const dzBody = document.getElementById('dz-results-body');
+const dzP = makePicker({ picker: dzPicker, selAllBtn: dzSelAllBtn, runBtn: dzRunBtn });
+
+async function loadDesignScreens() {
+  const res = await fetch('/api/design_screens');
+  const { files } = await res.json();
+  dzP.setFiles(files);
+  dzPicker.innerHTML = files.map(f => `
+    <div class="pick-card" data-file="${f}">
+      <div class="check"></div>
+      <div class="doc-icon">🎨</div>
+      <div class="row-main"><div class="name">${f}</div></div>
+      <div class="gt">screen</div>
+    </div>`).join('');
+  dzPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => dzP.toggle(card.dataset.file, card)));
+}
+
+function dzRowHtml(file) {
+  const id = cssEscape(file);
+  const cells = ENGINES.map(e => `
+    <td id="${e.key}-compliant-${id}">—</td><td id="${e.key}-breaking-${id}">—</td>
+    <td id="${e.key}-cat-${id}">—</td><td class="num" id="${e.key}-brief-${id}">—</td>
+    <td class="num" id="${e.key}-ms-${id}">—</td><td class="num" id="${e.key}-tok-${id}">—</td>`).join('');
+  return `<tr id="row-${id}"><td>${file}</td><td id="gt-${id}">—</td><td class="status-pending">queued</td>${cells}</tr>`;
+}
+function dzFillRow(file, engine, data) {
+  const id = cssEscape(file);
+  const tr = document.getElementById(`row-${id}`);
+  if (!tr) return;
+  const gt = data.ground_truth;
+  if (gt) {
+    tr.querySelector(`#gt-${id}`).textContent = gt.all_layers_compliant
+      ? 'compliant' + (gt.breaking_change ? ' · breaking' : '')
+      : `${gt.noncompliant_layers.length} issue(s)` + (gt.breaking_change ? ' · breaking' : '');
+  }
+  if (data.error) {
+    tr.querySelectorAll('td')[2].innerHTML = '<span class="status-err">error</span>';
+    return;
+  }
+  const compliantOk = gt && data.all_layers_compliant === gt.all_layers_compliant;
+  const breakingOk = gt && data.breaking_change === gt.breaking_change;
+  const catOk = gt && data.comment_category === gt.comment_category;
+  document.getElementById(`${engine}-compliant-${id}`).innerHTML = `${data.all_layers_compliant ? 'yes' : 'no'} ${gt ? mark(compliantOk) : ''}${hallucMark(data.hallucinated)}`;
+  document.getElementById(`${engine}-breaking-${id}`).innerHTML = `${data.breaking_change ? 'yes' : 'no'} ${gt ? mark(breakingOk) : ''}`;
+  document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.comment_category ?? '—'} ${gt ? mark(catOk) : ''}`;
+  document.getElementById(`${engine}-brief-${id}`).textContent = data.brief_match != null ? data.brief_match.toFixed(2) : '—';
+  document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
+  document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
+    ? `${data.tokens.input}/${data.tokens.output} (${fmtCost(data.cost_usd)})`
+    : `${data.tokens.input}/${data.tokens.output}`;
+  const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
+  if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+}
+
+dzRunBtn.addEventListener('click', () => {
+  const files = Array.from(dzP.selected);
+  dzRunBtn.disabled = true;
+  dzTable.hidden = false;
+  document.getElementById('dz-placeholder').hidden = true;
+  runComparison({
+    files,
+    urls: { ts: '/api/audit_design', ds: '/api/audit_design_deepseek', oa: '/api/audit_design_openai' },
+    tableBody: dzBody, rowHtml: dzRowHtml, fillRow: dzFillRow,
+    isCorrect: (engine, data) => data.ground_truth && data.all_layers_compliant === data.ground_truth.all_layers_compliant,
+  }).finally(() => { dzRunBtn.disabled = false; });
+});
+
 loadDocuments();
 loadEmails();
 loadQueries();
 loadGateGenerate();
+loadDesignScreens();
 </script>
 </body>
 </html>

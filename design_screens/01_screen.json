@@ -1,0 +1,115 @@
+{
+  "title": "Login v1",
+  "brief": "Build a login screen that feels fast and trustworthy, minimal fields.",
+  "required_elements": [
+    "input-email",
+    "input-password",
+    "button-primary",
+    "trust-badge"
+  ],
+  "review_comment": "The CTA is buried below the fold.",
+  "layers": [
+    {
+      "name": "input-password",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "button-primary",
+      "type": "text",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    },
+    {
+      "name": "badge-status",
+      "type": "card",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "nav-item",
+      "type": "nav-item",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "cta-urgency",
+      "type": "input",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Arial",
+      "spacing_px": 40
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "input-password",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "button-primary",
+      "type": "text",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    },
+    {
+      "name": "badge-status",
+      "type": "card",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "nav-item",
+      "type": "nav-item",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "header-nav",
+      "type": "icon",
+      "hex": "#1C1A17",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "cta-urgency",
+      "type": "input",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Arial",
+      "spacing_px": 40
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer"
+    ],
+    "breaking_change": true,
+    "comment_category": "layout",
+    "brief_match_fraction": 0.5
+  }
+}

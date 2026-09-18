@@ -15,6 +15,7 @@ import email_pipeline as E
 import doc_pipeline as D
 import retrieval_pipeline as R
 import kb_pipeline as K
+import design_pipeline as G
 
 CORPORA = {"emails": R, "kb": K}
 
@@ -32,6 +33,10 @@ def list_docs():
 
 def list_emails():
     return sorted(p.name for p in EMAILS.glob("*.md"))
+
+
+def list_design_screens():
+    return G.list_screens()
 
 
 def safe_filename(name: str) -> str:

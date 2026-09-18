@@ -1,0 +1,154 @@
+{
+  "title": "Settings v16",
+  "brief": "Build a settings screen organized into clear sections.",
+  "required_elements": [
+    "divider-section",
+    "nav-item",
+    "button-secondary"
+  ],
+  "review_comment": "Feels cramped near the footer, needs more breathing room.",
+  "layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 16
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "container",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "asdasd",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Roboto",
+      "spacing_px": 8
+    },
+    {
+      "name": "divider-section",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "Helvetica",
+      "spacing_px": 32
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "image",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 22
+    },
+    {
+      "name": "button-secondary",
+      "type": "image",
+      "hex": "#111111",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "divider-section",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 24
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    },
+    {
+      "name": "button-secondary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 20
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 30
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "container",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "asdasd",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Roboto",
+      "spacing_px": 8
+    },
+    {
+      "name": "divider-section",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "Helvetica",
+      "spacing_px": 32
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "image",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 22
+    },
+    {
+      "name": "button-secondary",
+      "type": "image",
+      "hex": "#111111",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "divider-section",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 24
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    },
+    {
+      "name": "button-secondary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 20
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer",
+      "Ellipse 2",
+      "asdasd",
+      "divider-section",
+      "Ellipse 2",
+      "button-secondary"
+    ],
+    "breaking_change": false,
+    "comment_category": "spacing",
+    "brief_match_fraction": 1.0
+  }
+}

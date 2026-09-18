@@ -1,0 +1,106 @@
+{
+  "title": "Checkout v2",
+  "brief": "Build a checkout screen emphasizing trust and urgency with one clear primary CTA.",
+  "required_elements": [
+    "trust-badge",
+    "cta-urgency",
+    "button-primary",
+    "price-tag"
+  ],
+  "review_comment": "Looks great overall, ship it.",
+  "layers": [
+    {
+      "name": "cta-urgency",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "cta-urgency",
+      "type": "badge",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    },
+    {
+      "name": "hero-heading",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "input-email",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "cta-urgency",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 64
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "cta-urgency",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "cta-urgency",
+      "type": "badge",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    },
+    {
+      "name": "hero-heading",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "input-email",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "cta-urgency",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 64
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": true,
+    "noncompliant_layers": [],
+    "breaking_change": false,
+    "comment_category": "other",
+    "brief_match_fraction": 0.25
+  }
+}

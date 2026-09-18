@@ -1,0 +1,140 @@
+{
+  "title": "Search results v7",
+  "brief": "Build a search results screen that's easy to scan.",
+  "required_elements": [
+    "card-title",
+    "card-body",
+    "icon-close"
+  ],
+  "review_comment": "Minor polish only, approve as-is.",
+  "layers": [
+    {
+      "name": "badge-status",
+      "type": "button",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "footer-links",
+      "type": "icon",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "modal-title",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "header-nav",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 12
+    },
+    {
+      "name": "hero-heading",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "card-title",
+      "type": "layer",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "card-body",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "icon-close",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "badge-status",
+      "type": "button",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "footer-links",
+      "type": "icon",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "modal-title",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "card-body",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "header-nav",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 12
+    },
+    {
+      "name": "hero-heading",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "card-title",
+      "type": "layer",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "card-body",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "icon-close",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": true,
+    "noncompliant_layers": [],
+    "breaking_change": true,
+    "comment_category": "other",
+    "brief_match_fraction": 1.0
+  }
+}

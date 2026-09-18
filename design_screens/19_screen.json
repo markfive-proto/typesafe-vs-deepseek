@@ -1,0 +1,115 @@
+{
+  "title": "Search results v19",
+  "brief": "Build a search results screen that's easy to scan.",
+  "required_elements": [
+    "card-title",
+    "card-body",
+    "icon-close"
+  ],
+  "review_comment": "Typo in the button label.",
+  "layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Times New Roman",
+      "spacing_px": 16
+    },
+    {
+      "name": "input-password",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "card-body",
+      "type": "card",
+      "hex": "#3366CC",
+      "font": "Fraunces",
+      "spacing_px": 70
+    },
+    {
+      "name": "cta-urgency",
+      "type": "button",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 20
+    },
+    {
+      "name": "card-title",
+      "type": "card",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "header-nav",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Times New Roman",
+      "spacing_px": 16
+    },
+    {
+      "name": "input-email",
+      "type": "button",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "input-password",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "card-body",
+      "type": "card",
+      "hex": "#3366CC",
+      "font": "Fraunces",
+      "spacing_px": 70
+    },
+    {
+      "name": "cta-urgency",
+      "type": "button",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 20
+    },
+    {
+      "name": "card-title",
+      "type": "card",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "header-nav",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer",
+      "card-body"
+    ],
+    "breaking_change": true,
+    "comment_category": "copy",
+    "brief_match_fraction": 0.67
+  }
+}

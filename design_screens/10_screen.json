@@ -1,0 +1,93 @@
+{
+  "title": "Modal confirm v10",
+  "brief": "Build a destructive-action confirmation modal.",
+  "required_elements": [
+    "modal-title",
+    "button-primary",
+    "button-secondary"
+  ],
+  "review_comment": "Too much whitespace between the header and content.",
+  "layers": [
+    {
+      "name": "icon-close",
+      "type": "container",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    },
+    {
+      "name": "card-body",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "button-secondary",
+      "type": "image",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "price-tag",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "icon-close",
+      "type": "container",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "card-body",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "button-secondary",
+      "type": "image",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "price-tag",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Layer 3 copy"
+    ],
+    "breaking_change": false,
+    "comment_category": "spacing",
+    "brief_match_fraction": 0.33
+  }
+}

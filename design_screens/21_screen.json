@@ -1,0 +1,104 @@
+{
+  "title": "Notification v21",
+  "brief": "Build a success confirmation moment.",
+  "required_elements": [
+    "toast-success",
+    "icon-close"
+  ],
+  "review_comment": "This breaks on tablet width, elements overlap.",
+  "layers": [
+    {
+      "name": "toast-success",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 20
+    },
+    {
+      "name": "avatar-user",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    },
+    {
+      "name": "button-primary",
+      "type": "divider",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "cta-urgency",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "icon-close",
+      "type": "icon",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "toast-success",
+      "type": "badge",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "toast-success",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "avatar-user",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    },
+    {
+      "name": "button-primary",
+      "type": "divider",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "cta-urgency",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "icon-close",
+      "type": "icon",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "toast-success",
+      "type": "badge",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": true,
+    "noncompliant_layers": [],
+    "breaking_change": false,
+    "comment_category": "layout",
+    "brief_match_fraction": 1.0
+  }
+}

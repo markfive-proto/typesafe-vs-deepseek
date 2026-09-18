@@ -1,0 +1,154 @@
+{
+  "title": "Onboarding v18",
+  "brief": "Build a welcoming first-run onboarding flow.",
+  "required_elements": [
+    "hero-heading",
+    "hero-subhead",
+    "button-primary"
+  ],
+  "review_comment": "The CTA is buried below the fold.",
+  "layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "nav-item",
+      "hex": "#808080",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Rectangle 12",
+      "type": "container",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "hero-heading",
+      "type": "container",
+      "hex": "#A8501C",
+      "font": "Roboto",
+      "spacing_px": 20
+    },
+    {
+      "name": "asdasd",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Times New Roman",
+      "spacing_px": 70
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "container",
+      "hex": "#00FF00",
+      "font": "Fraunces",
+      "spacing_px": 5
+    },
+    {
+      "name": "Rectangle 12",
+      "type": "badge",
+      "hex": "#111111",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    },
+    {
+      "name": "hero-heading",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 48
+    },
+    {
+      "name": "hero-subhead",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 16
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "nav-item",
+      "hex": "#808080",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "Rectangle 12",
+      "type": "container",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "hero-heading",
+      "type": "container",
+      "hex": "#A8501C",
+      "font": "Roboto",
+      "spacing_px": 20
+    },
+    {
+      "name": "asdasd",
+      "type": "image",
+      "hex": "#A8501C",
+      "font": "Times New Roman",
+      "spacing_px": 70
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "container",
+      "hex": "#00FF00",
+      "font": "Fraunces",
+      "spacing_px": 5
+    },
+    {
+      "name": "Rectangle 12",
+      "type": "badge",
+      "hex": "#111111",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    },
+    {
+      "name": "hero-heading",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 48
+    },
+    {
+      "name": "hero-subhead",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 16
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 32
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer",
+      "Rectangle 12",
+      "hero-heading",
+      "asdasd",
+      "Untitled Layer",
+      "Rectangle 12"
+    ],
+    "breaking_change": false,
+    "comment_category": "layout",
+    "brief_match_fraction": 1.0
+  }
+}

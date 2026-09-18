@@ -1,0 +1,136 @@
+{
+  "title": "Nav bar v24",
+  "brief": "Build a primary navigation bar.",
+  "required_elements": [
+    "header-nav",
+    "nav-item",
+    "avatar-user"
+  ],
+  "review_comment": "Too much whitespace between the header and content.",
+  "layers": [
+    {
+      "name": "Group 7",
+      "type": "text",
+      "hex": "#FF0000",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "badge-status",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "container",
+      "hex": "#00FF00",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "trust-badge",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "header-nav",
+      "type": "layer",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 32
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Group 7",
+      "type": "text",
+      "hex": "#FF0000",
+      "font": "IBM Plex Sans",
+      "spacing_px": 40
+    },
+    {
+      "name": "avatar-user",
+      "type": "text",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    },
+    {
+      "name": "badge-status",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 32
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "container",
+      "hex": "#00FF00",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "card-title",
+      "type": "image",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "trust-badge",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 40
+    },
+    {
+      "name": "header-nav",
+      "type": "layer",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 4
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 32
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Group 7",
+      "Untitled Layer"
+    ],
+    "breaking_change": true,
+    "comment_category": "spacing",
+    "brief_match_fraction": 1.0
+  }
+}

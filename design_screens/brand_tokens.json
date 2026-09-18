@@ -1,0 +1,28 @@
+{
+  "colors": {
+    "ink": "#1C1A17",
+    "surface": "#F7F5F0",
+    "accent-teal": "#2A5D50",
+    "accent-purple": "#6D3FAE",
+    "accent-blue": "#1F6FB2",
+    "warn": "#A8501C"
+  },
+  "fonts": [
+    "Fraunces",
+    "IBM Plex Sans",
+    "IBM Plex Mono"
+  ],
+  "spacing_scale": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64
+  ],
+  "naming_rule": "lowercase-kebab-case describing the layer's role (e.g. 'button-primary', 'card-title') \u2014 not a generic default name like 'Rectangle 12' or 'Group 7'"
+}

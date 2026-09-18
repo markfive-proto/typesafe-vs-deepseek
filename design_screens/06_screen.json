@@ -1,0 +1,138 @@
+{
+  "title": "Onboarding v6",
+  "brief": "Build a welcoming first-run onboarding flow.",
+  "required_elements": [
+    "hero-heading",
+    "hero-subhead",
+    "button-primary"
+  ],
+  "review_comment": "Typo in the button label.",
+  "layers": [
+    {
+      "name": "hero-subhead",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "card",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 20
+    },
+    {
+      "name": "Frame 44",
+      "type": "card",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "hero-heading",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 45
+    },
+    {
+      "name": "asdasd",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "hero-heading",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "hero-subhead",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 64
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "hero-subhead",
+      "type": "badge",
+      "hex": "#A8501C",
+      "font": "Fraunces",
+      "spacing_px": 15
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "card",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 20
+    },
+    {
+      "name": "Frame 44",
+      "type": "card",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "hero-heading",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 45
+    },
+    {
+      "name": "asdasd",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "hero-heading",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "hero-subhead",
+      "type": "layer",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "button-primary",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 64
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer",
+      "Frame 44",
+      "hero-heading",
+      "asdasd"
+    ],
+    "breaking_change": false,
+    "comment_category": "copy",
+    "brief_match_fraction": 1.0
+  }
+}

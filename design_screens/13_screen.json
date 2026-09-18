@@ -1,0 +1,109 @@
+{
+  "title": "Login v13",
+  "brief": "Build a login screen that feels fast and trustworthy, minimal fields.",
+  "required_elements": [
+    "input-email",
+    "input-password",
+    "button-primary",
+    "trust-badge"
+  ],
+  "review_comment": "That warning badge color doesn't match our palette.",
+  "layers": [
+    {
+      "name": "Layer 3 copy",
+      "type": "button",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-primary",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "icon-close",
+      "type": "text",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "trust-badge",
+      "type": "card",
+      "hex": "#808080",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 20
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Layer 3 copy",
+      "type": "button",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Mono",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-primary",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 12
+    },
+    {
+      "name": "icon-close",
+      "type": "text",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "trust-badge",
+      "type": "card",
+      "hex": "#808080",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "input-password",
+      "type": "icon",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "input-email",
+      "type": "button",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 40
+    },
+    {
+      "name": "input-email",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 20
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Layer 3 copy",
+      "trust-badge"
+    ],
+    "breaking_change": true,
+    "comment_category": "color",
+    "brief_match_fraction": 0.75
+  }
+}

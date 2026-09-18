@@ -1,0 +1,169 @@
+{
+  "title": "Nav bar v12",
+  "brief": "Build a primary navigation bar.",
+  "required_elements": [
+    "header-nav",
+    "nav-item",
+    "avatar-user"
+  ],
+  "review_comment": "This breaks on tablet width, elements overlap.",
+  "layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "Roboto",
+      "spacing_px": 12
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "divider",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 20
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "text",
+      "hex": "#FF0000",
+      "font": "Helvetica",
+      "spacing_px": 32
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "badge",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 22
+    },
+    {
+      "name": "avatar-user",
+      "type": "input",
+      "hex": "#FF0000",
+      "font": "IBM Plex Sans",
+      "spacing_px": 5
+    },
+    {
+      "name": "avatar-user",
+      "type": "icon",
+      "hex": "#F7F5F0",
+      "font": "Arial",
+      "spacing_px": 16
+    },
+    {
+      "name": "header-nav",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Untitled Layer",
+      "type": "input",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 30
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "container",
+      "hex": "#2A5D50",
+      "font": "Roboto",
+      "spacing_px": 12
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "divider",
+      "hex": "#2A5D50",
+      "font": "IBM Plex Sans",
+      "spacing_px": 20
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "text",
+      "hex": "#FF0000",
+      "font": "Helvetica",
+      "spacing_px": 32
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "badge",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Mono",
+      "spacing_px": 22
+    },
+    {
+      "name": "avatar-user",
+      "type": "input",
+      "hex": "#FF0000",
+      "font": "IBM Plex Sans",
+      "spacing_px": 5
+    },
+    {
+      "name": "avatar-user",
+      "type": "icon",
+      "hex": "#F7F5F0",
+      "font": "Arial",
+      "spacing_px": 16
+    },
+    {
+      "name": "header-nav",
+      "type": "layer",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "nav-item",
+      "type": "layer",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Mono",
+      "spacing_px": 16
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#A8501C",
+      "font": "IBM Plex Sans",
+      "spacing_px": 16
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Untitled Layer",
+      "Ellipse 2",
+      "Ellipse 2",
+      "Layer 3 copy",
+      "Ellipse 2",
+      "avatar-user",
+      "avatar-user"
+    ],
+    "breaking_change": false,
+    "comment_category": "layout",
+    "brief_match_fraction": 1.0
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "title": "Settings v4",
+  "brief": "Build a settings screen organized into clear sections.",
+  "required_elements": [
+    "divider-section",
+    "nav-item",
+    "button-secondary"
+  ],
+  "review_comment": "Background feels like the wrong shade.",
+  "layers": [
+    {
+      "name": "divider-section",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 64
+    },
+    {
+      "name": "button-secondary",
+      "type": "card",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 12
+    },
+    {
+      "name": "button-secondary",
+      "type": "button",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Frame 44",
+      "type": "container",
+      "hex": "#808080",
+      "font": "Helvetica",
+      "spacing_px": 10
+    },
+    {
+      "name": "button-secondary",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 15
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "divider-section",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 48
+    },
+    {
+      "name": "button-secondary",
+      "type": "card",
+      "hex": "#F7F5F0",
+      "font": "Fraunces",
+      "spacing_px": 12
+    },
+    {
+      "name": "button-secondary",
+      "type": "button",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Frame 44",
+      "type": "container",
+      "hex": "#808080",
+      "font": "Helvetica",
+      "spacing_px": 10
+    },
+    {
+      "name": "button-secondary",
+      "type": "badge",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 15
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Frame 44",
+      "button-secondary"
+    ],
+    "breaking_change": false,
+    "comment_category": "color",
+    "brief_match_fraction": 0.67
+  }
+}

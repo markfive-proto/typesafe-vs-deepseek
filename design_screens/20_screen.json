@@ -1,0 +1,95 @@
+{
+  "title": "Profile v20",
+  "brief": "Build a profile screen showing identity and status clearly.",
+  "required_elements": [
+    "avatar-user",
+    "badge-status",
+    "button-secondary"
+  ],
+  "review_comment": "Nice work on this one, no notes.",
+  "layers": [
+    {
+      "name": "Group 7",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 15
+    },
+    {
+      "name": "avatar-user",
+      "type": "text",
+      "hex": "#00FF00",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    },
+    {
+      "name": "button-secondary",
+      "type": "button",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "button",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Group 7",
+      "type": "card",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 15
+    },
+    {
+      "name": "avatar-user",
+      "type": "text",
+      "hex": "#00FF00",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "icon",
+      "hex": "#00FF00",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "button-secondary",
+      "type": "button",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 48
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "divider",
+      "hex": "#3366CC",
+      "font": "IBM Plex Sans",
+      "spacing_px": 10
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "button",
+      "hex": "#F7F5F0",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Group 7",
+      "avatar-user",
+      "Ellipse 2"
+    ],
+    "breaking_change": true,
+    "comment_category": "other",
+    "brief_match_fraction": 0.67
+  }
+}

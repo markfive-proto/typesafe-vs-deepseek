@@ -17,6 +17,7 @@ import email_pipeline as E
 import doc_pipeline as D
 import retrieval_pipeline as R
 import kb_pipeline as K
+import design_pipeline as G
 
 P.load_env()
 
@@ -90,6 +91,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._json({"files": list_docs()})
         if parsed.path == "/api/emails":
             return self._json({"files": list_emails()})
+        if parsed.path == "/api/design_screens":
+            return self._json({"files": G.list_screens()})
         if parsed.path == "/api/queries":
             corpus = parse_qs(parsed.query).get("corpus", ["emails"])[0]
             mod = CORPORA.get(corpus, CORPORA["emails"])
@@ -123,6 +126,9 @@ class Handler(BaseHTTPRequestHandler):
             "/api/classify_email_deepseek": (E.classify_via_deepseek, name),
             "/api/classify_email_openai": (E.classify_via_openai, name),
             "/api/draft_reply": (E.draft_reply, name),
+            "/api/audit_design": (G.classify, name),
+            "/api/audit_design_deepseek": (G.classify_via_deepseek, name),
+            "/api/audit_design_openai": (G.classify_via_openai, name),
         }
         if parsed.path in routes:
             fn, arg = routes[parsed.path]

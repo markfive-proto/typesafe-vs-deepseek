@@ -1,0 +1,150 @@
+{
+  "title": "Profile v8",
+  "brief": "Build a profile screen showing identity and status clearly.",
+  "required_elements": [
+    "avatar-user",
+    "badge-status",
+    "button-secondary"
+  ],
+  "review_comment": "Background feels like the wrong shade.",
+  "layers": [
+    {
+      "name": "Rectangle 12",
+      "type": "nav-item",
+      "hex": "#FFD700",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "trust-badge",
+      "type": "image",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "modal-title",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-secondary",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "hero-subhead",
+      "type": "icon",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "Frame 44",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "badge-status",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    },
+    {
+      "name": "button-secondary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 4
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "Rectangle 12",
+      "type": "nav-item",
+      "hex": "#FFD700",
+      "font": "IBM Plex Mono",
+      "spacing_px": 4
+    },
+    {
+      "name": "trust-badge",
+      "type": "image",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    },
+    {
+      "name": "modal-title",
+      "type": "container",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 8
+    },
+    {
+      "name": "button-secondary",
+      "type": "icon",
+      "hex": "#2A5D50",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "hero-subhead",
+      "type": "icon",
+      "hex": "#A8501C",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "Frame 44",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Sans",
+      "spacing_px": 15
+    },
+    {
+      "name": "avatar-user",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 24
+    },
+    {
+      "name": "badge-status",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    },
+    {
+      "name": "button-secondary",
+      "type": "layer",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 4
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Rectangle 12",
+      "Frame 44"
+    ],
+    "breaking_change": false,
+    "comment_category": "color",
+    "brief_match_fraction": 1.0
+  }
+}

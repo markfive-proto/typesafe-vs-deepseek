@@ -1,0 +1,94 @@
+{
+  "title": "Pricing v17",
+  "brief": "Build a pricing page that makes the recommended plan obvious.",
+  "required_elements": [
+    "price-tag",
+    "badge-status",
+    "button-primary",
+    "cta-urgency"
+  ],
+  "review_comment": "This copy doesn't match our tone of voice.",
+  "layers": [
+    {
+      "name": "nav-item",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    },
+    {
+      "name": "cta-urgency",
+      "type": "icon",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "card",
+      "hex": "#1C1A17",
+      "font": "Helvetica",
+      "spacing_px": 64
+    },
+    {
+      "name": "hero-subhead",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "card-title",
+      "type": "text",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "nav-item",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "cta-urgency",
+      "type": "icon",
+      "hex": "#1F6FB2",
+      "font": "IBM Plex Mono",
+      "spacing_px": 12
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "card",
+      "hex": "#1C1A17",
+      "font": "Helvetica",
+      "spacing_px": 64
+    },
+    {
+      "name": "hero-subhead",
+      "type": "image",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 8
+    },
+    {
+      "name": "card-title",
+      "type": "text",
+      "hex": "#1C1A17",
+      "font": "IBM Plex Sans",
+      "spacing_px": 4
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "Layer 3 copy"
+    ],
+    "breaking_change": false,
+    "comment_category": "copy",
+    "brief_match_fraction": 0.25
+  }
+}

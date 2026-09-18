@@ -1,0 +1,125 @@
+{
+  "title": "Notification v9",
+  "brief": "Build a success confirmation moment.",
+  "required_elements": [
+    "toast-success",
+    "icon-close"
+  ],
+  "review_comment": "Nice work on this one, no notes.",
+  "layers": [
+    {
+      "name": "asdasd",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 8
+    },
+    {
+      "name": "icon-close",
+      "type": "image",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "icon",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 20
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 15
+    },
+    {
+      "name": "icon-close",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "Times New Roman",
+      "spacing_px": 4
+    },
+    {
+      "name": "toast-success",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#2A5D50",
+      "font": "Times New Roman",
+      "spacing_px": 10
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "asdasd",
+      "type": "divider",
+      "hex": "#1F6FB2",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "icon-close",
+      "type": "image",
+      "hex": "#111111",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "Layer 3 copy",
+      "type": "icon",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Sans",
+      "spacing_px": 20
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 15
+    },
+    {
+      "name": "icon-close",
+      "type": "nav-item",
+      "hex": "#F7F5F0",
+      "font": "Times New Roman",
+      "spacing_px": 4
+    },
+    {
+      "name": "toast-success",
+      "type": "text",
+      "hex": "#6D3FAE",
+      "font": "IBM Plex Mono",
+      "spacing_px": 64
+    },
+    {
+      "name": "toast-success",
+      "type": "divider",
+      "hex": "#2A5D50",
+      "font": "Times New Roman",
+      "spacing_px": 10
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "asdasd",
+      "icon-close",
+      "Layer 3 copy",
+      "toast-success",
+      "icon-close",
+      "toast-success"
+    ],
+    "breaking_change": false,
+    "comment_category": "other",
+    "brief_match_fraction": 1.0
+  }
+}

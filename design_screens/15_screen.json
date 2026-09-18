@@ -1,0 +1,96 @@
+{
+  "title": "Dashboard v15",
+  "brief": "Build a dashboard surfacing the 3 most important metrics at a glance.",
+  "required_elements": [
+    "card-title",
+    "card-body",
+    "badge-status"
+  ],
+  "review_comment": "Line height on the subhead is too tight.",
+  "layers": [
+    {
+      "name": "card-title",
+      "type": "input",
+      "hex": "#FFD700",
+      "font": "IBM Plex Mono",
+      "spacing_px": 24
+    },
+    {
+      "name": "Frame 44",
+      "type": "icon",
+      "hex": "#1F6FB2",
+      "font": "Times New Roman",
+      "spacing_px": 20
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "nav-item",
+      "hex": "#FF0000",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "Roboto",
+      "spacing_px": 4
+    },
+    {
+      "name": "card-title",
+      "type": "container",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 40
+    }
+  ],
+  "prev_layers": [
+    {
+      "name": "card-title",
+      "type": "input",
+      "hex": "#FFD700",
+      "font": "IBM Plex Mono",
+      "spacing_px": 8
+    },
+    {
+      "name": "Frame 44",
+      "type": "icon",
+      "hex": "#1F6FB2",
+      "font": "Times New Roman",
+      "spacing_px": 20
+    },
+    {
+      "name": "Ellipse 2",
+      "type": "nav-item",
+      "hex": "#FF0000",
+      "font": "Fraunces",
+      "spacing_px": 32
+    },
+    {
+      "name": "Untitled Layer",
+      "type": "text",
+      "hex": "#1F6FB2",
+      "font": "Roboto",
+      "spacing_px": 4
+    },
+    {
+      "name": "card-title",
+      "type": "container",
+      "hex": "#6D3FAE",
+      "font": "Fraunces",
+      "spacing_px": 40
+    }
+  ],
+  "ground_truth": {
+    "all_layers_compliant": false,
+    "noncompliant_layers": [
+      "card-title",
+      "Frame 44",
+      "Ellipse 2",
+      "Untitled Layer"
+    ],
+    "breaking_change": false,
+    "comment_category": "typography",
+    "brief_match_fraction": 0.33
+  }
+}
