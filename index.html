@@ -164,8 +164,10 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
   </section>
 
   <footer class="note">
-    Wall time = actual elapsed time for the whole batch (requests fire concurrently). Sum ms = if every
-    call had run one-after-another — the gap is the parallelism payoff.
+    Time to output = when that engine's own last response actually landed (its real, per-engine finish
+    time — not a shared clock dominated by whichever engine is slowest). Sum latencies = if every one of
+    that engine's calls had run one-after-another instead of concurrently — the gap between the two is
+    the parallelism payoff.
     Hallucinated: TypeSafe's <code>Choice</code> only ever returns a value from the candidates/criteria it
     was given, so it's structurally grounded (always 0%). DeepSeek/OpenAI free-text-then-parse can invent
     a category outside the given list, an invoice number/total not present in the source text, or a
@@ -201,7 +203,7 @@ function cmpbarShow(titles) {
       <div class="cmpbar-head"><span>${titles?.[e.key] || e.label}</span><span class="count" id="cmp-${e.key}-count">0/0</span></div>
       <div class="progress"><div class="progress-fill" id="cmp-${e.key}-fill"></div></div>
       <div class="cmpbar-stats">
-        <span>Wall<b id="cmp-${e.key}-wall">—</b></span>
+        <span>Time to output<b id="cmp-${e.key}-wall">—</b></span>
         <span>Sum latencies<b id="cmp-${e.key}-sum">—</b></span>
         <span>Tokens in/out<b id="cmp-${e.key}-tok">—</b></span>
         <span>Cost<b id="cmp-${e.key}-cost">—</b></span>
@@ -278,8 +280,10 @@ function buildThead(theadEl, fieldLabels) {
 
 // ---------- generic N-engine comparison runner ----------
 // fires every engine × every selected file concurrently, fills the table as each resolves,
-// drives the fixed bottom progress bars live, and computes wall-clock vs summed-latency +
-// token/cost/accuracy/hallucination totals per engine once everything settles.
+// drives the fixed bottom progress bars live, and computes per-engine time-to-output (when
+// THAT engine's own last response actually landed, not the shared Promise.all finish time —
+// otherwise a fast engine reads as slow just because a different engine is still running) +
+// summed-latency/token/cost/accuracy/hallucination totals once everything settles.
 async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles, isCorrect }) {
   cmpbarShow(titles);
   ENGINES.forEach(e => cmpbarProgress(e.key, 0, files.length));
@@ -287,8 +291,8 @@ async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles,
   files.forEach(f => setRunning(`row-${cssEscape(f)}`));
 
   const agg = {};
-  ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0 });
-  const wallStart = performance.now();
+  ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0, timeToOutput: 0 });
+  const batchStart = performance.now();
 
   const post = (url, payload) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(r => r.json());
 
@@ -302,14 +306,14 @@ async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles,
         if (data.hallucinated) a.halluc++;
       }
       a.done++; cmpbarProgress(e.key, a.done, files.length);
+      if (a.done === files.length) a.timeToOutput = performance.now() - batchStart;
       fillRow(file, e.key, data);
     });
   })));
 
-  const wall = performance.now() - wallStart;
   ENGINES.forEach(e => {
     const a = agg[e.key];
-    cmpbarFinal(e.key, { wall, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
+    cmpbarFinal(e.key, { wall: a.timeToOutput, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
   });
 }
 
@@ -511,17 +515,17 @@ rqRunBtn.addEventListener('click', async () => {
       .then(d => { cmpbarProgress(engine, 1, 1); return { d, ms: performance.now() - t0 }; });
   };
 
-  const wallStart = performance.now();
   const results = {};
   await Promise.all(ENGINES.map(e =>
     post(`/api/rerank_${e.key === 'ts' ? 'typesafe' : e.key === 'ds' ? 'deepseek' : 'openai'}`, e.key).then(r => results[e.key] = r)
   ));
-  const wall = performance.now() - wallStart;
 
+  // one call per engine here, so its own round-trip time IS its time-to-output — no shared batch clock to fake it with.
   ENGINES.forEach(e => {
     const r = results[e.key];
+    const ownTime = r.ms;
     cmpbarFinal(e.key, {
-      wall, sum: r.d.timing_ms?.total ?? r.ms, tokIn: r.d.tokens?.input ?? 0, tokOut: r.d.tokens?.output ?? 0,
+      wall: ownTime, sum: r.d.timing_ms?.total ?? ownTime, tokIn: r.d.tokens?.input ?? 0, tokOut: r.d.tokens?.output ?? 0,
       cost: r.d.cost_usd, acc: r.d.precision_at_k,
       halluc: r.d.hallucinated_count || 0, n: r.d.hallucinated != null ? 1 : 0,
     });
