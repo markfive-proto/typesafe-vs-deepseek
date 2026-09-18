@@ -185,6 +185,14 @@ const ENGINES = [
   { key: 'oa', cls: 'oa', label: 'gpt-5-nano' },
 ];
 
+// toFixed(4) silently rounds a real ~$0.00003 TypeSafe call down to "$0.0000" — looks broken/free
+// when it isn't. Show enough decimals to keep the actual leading digit visible.
+function fmtCost(v) {
+  if (v == null) return '—';
+  if (v === 0) return '$0';
+  return '$' + v.toFixed(v < 0.001 ? 6 : 4);
+}
+
 function cssEscape(s) { return s.replace(/[^a-zA-Z0-9_-]/g, '_'); }
 function mark(ok) { return ok ? '<span class="ok-mark">✓</span>' : '<span class="bad-mark">✗</span>'; }
 function hallucMark(h) { return h ? ' <span class="halluc-mark" title="hallucinated: value not grounded in what it was given">⚠</span>' : ''; }
@@ -220,7 +228,7 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
   document.getElementById(`cmp-${engine}-wall`).textContent = Math.round(wall) + 'ms';
   document.getElementById(`cmp-${engine}-sum`).textContent = Math.round(sum) + 'ms';
   document.getElementById(`cmp-${engine}-tok`).textContent = `${tokIn} / ${tokOut}`;
-  document.getElementById(`cmp-${engine}-cost`).textContent = cost == null ? '—' : '$' + cost.toFixed(4);
+  document.getElementById(`cmp-${engine}-cost`).textContent = fmtCost(cost);
   document.getElementById(`cmp-${engine}-acc`).textContent = acc == null ? '—' : Math.round(acc * 100) + '%';
   const hEl = document.getElementById(`cmp-${engine}-halluc`);
   hEl.textContent = n ? `${halluc}/${n}` : '0';
@@ -387,7 +395,7 @@ function docFillRow(file, engine, data) {
   document.getElementById(`${engine}-tot-${id}`).innerHTML = `${data.total_amount ?? '—'} ${data.ground_truth ? mark(totOk) : ''}`;
   document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
   document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
-    ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
+    ? `${data.tokens.input}/${data.tokens.output} (${fmtCost(data.cost_usd)})`
     : `${data.tokens.input}/${data.tokens.output}`;
   const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
   if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
@@ -456,7 +464,7 @@ function emFillRow(file, engine, data) {
   document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}${hallucMark(data.hallucinated)}`;
   document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
   document.getElementById(`${engine}-tok-${id}`).textContent = data.cost_usd != null
-    ? `${data.tokens.input}/${data.tokens.output} ($${data.cost_usd.toFixed(4)})`
+    ? `${data.tokens.input}/${data.tokens.output} (${fmtCost(data.cost_usd)})`
     : `${data.tokens.input}/${data.tokens.output}`;
   const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
   if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
