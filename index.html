@@ -30,18 +30,34 @@ nav.tabs button.active { color: var(--ink); background: var(--surface); border: 
 .view { display: none; }
 .view.active { display: block; }
 
-.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 18px; max-height: 420px; overflow-y: auto; padding: 4px; }
-.pick-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 10px; cursor: pointer; user-select: none; display: flex; flex-direction: column; gap: 6px;
+.picker {
+  display: flex; flex-direction: column; gap: 1px; margin-bottom: 14px;
+  max-height: 60vh; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); padding: 3px;
 }
-.pick-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
-.pick-card .name { font-size: 0.74rem; font-weight: 600; word-break: break-all; line-height: 1.3; }
-.pick-card .check { font-size: 0.7rem; font-weight: 600; color: var(--accent); }
-.pick-card .snippet { font-size: 0.7rem; color: var(--muted); line-height: 1.35; max-height: 3.6em; overflow: hidden; }
-.pick-card .subject { font-size: 0.78rem; font-weight: 600; line-height: 1.3; }
-.pick-card .gt { font-size: 0.68rem; color: var(--muted); }
-.doc-icon { font-size: 1.5rem; }
+.pick-card {
+  display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px;
+  cursor: pointer; user-select: none; min-width: 0;
+}
+.pick-card:hover { background: var(--bg); }
+.pick-card.selected { background: var(--accent-soft); }
+.pick-card .check {
+  flex: none; width: 15px; height: 15px; border: 1.5px solid var(--border); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; font-size: 0; color: var(--accent);
+}
+.pick-card.selected .check { border-color: var(--accent); background: var(--accent); }
+.pick-card.selected .check::after { content: "✓"; font-size: 10px; color: #fff; }
+.pick-card .doc-icon { flex: none; font-size: 0.95rem; line-height: 1; }
+.pick-card .row-main { min-width: 0; flex: 1; }
+.pick-card .name, .pick-card .subject {
+  font-size: 0.78rem; font-weight: 600; line-height: 1.3;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pick-card .gt {
+  flex: none; max-width: 38%; font-size: 0.66rem; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pick-card .snippet { display: none; }
 
 .controls { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
 button.primary {
@@ -342,11 +358,9 @@ function makePicker({ picker, selAllBtn, runBtn, label = 'Run comparison' }) {
     if (selected.has(file)) {
       selected.delete(file);
       card.classList.remove('selected');
-      card.querySelector('.check').textContent = '☐ select';
     } else {
       selected.add(file);
       card.classList.add('selected');
-      card.querySelector('.check').textContent = '☑ selected';
     }
     runBtn.disabled = selected.size === 0;
     runBtn.textContent = `${label} (${selected.size})`;
@@ -433,10 +447,10 @@ async function loadDocuments() {
     const icon = f.endsWith('.pdf') ? '📄' : '📊';
     const gt = f.replace(/^\d+_/, '').replace(/\.(pdf|xlsx)$/, '');
     return `<div class="pick-card" data-file="${f}">
+      <div class="check"></div>
       <div class="doc-icon">${icon}</div>
-      <div class="name">${f}</div>
-      <div class="gt">true: ${gt}</div>
-      <div class="check">☐ select</div>
+      <div class="row-main"><div class="name">${f}</div></div>
+      <div class="gt">${gt}</div>
     </div>`;
   }).join('');
   docPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => docP.toggle(card.dataset.file, card)));
@@ -523,11 +537,10 @@ async function loadEmails() {
     return { f, subject: subjectMatch ? subjectMatch[1] : f, from: fromMatch ? fromMatch[1] : '', snippet: body.slice(0, 120) };
   }));
   emPicker.innerHTML = cards.map(c => `
-    <div class="pick-card" data-file="${c.f}">
-      <div class="subject">${c.subject}</div>
-      <div class="name">${c.from}</div>
-      <div class="snippet">${c.snippet}</div>
-      <div class="check">☐ select</div>
+    <div class="pick-card" data-file="${c.f}" title="${c.subject} — ${c.from}">
+      <div class="check"></div>
+      <div class="row-main"><div class="subject">${c.subject}</div></div>
+      <div class="gt">${c.from}</div>
     </div>`).join('');
   emPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => emP.toggle(card.dataset.file, card)));
 }
@@ -662,11 +675,10 @@ async function loadGateGenerate() {
     return { f, subject: subjectMatch ? subjectMatch[1] : f, from: fromMatch ? fromMatch[1] : '', snippet: body.slice(0, 120) };
   }));
   ggPicker.innerHTML = cards.map(c => `
-    <div class="pick-card" data-file="${c.f}">
-      <div class="subject">${c.subject}</div>
-      <div class="name">${c.from}</div>
-      <div class="snippet">${c.snippet}</div>
-      <div class="check">☐ select</div>
+    <div class="pick-card" data-file="${c.f}" title="${c.subject} — ${c.from}">
+      <div class="check"></div>
+      <div class="row-main"><div class="subject">${c.subject}</div></div>
+      <div class="gt">${c.from}</div>
     </div>`).join('');
   ggPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => ggP.toggle(card.dataset.file, card)));
 }
