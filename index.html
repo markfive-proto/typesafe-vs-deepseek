@@ -134,6 +134,21 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
   .split-left { flex: 1 1 auto; width: 100%; }
 }
 
+/* ---- process feed: one card per item, appended live as it finishes ---- */
+.stream-feed { display: flex; flex-direction: column; gap: 10px; max-height: 46vh; overflow-y: auto; margin-bottom: 16px; padding: 2px; }
+.stream-feed[hidden] { display: none; }
+.feed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; animation: feedIn .25s ease; }
+@keyframes feedIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.feed-file { font-weight: 600; font-size: 0.82rem; margin-bottom: 8px; }
+.feed-engines { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.feed-engine { border-left: 3px solid var(--border); padding: 4px 0 4px 10px; }
+.feed-engine.ts { border-left-color: var(--accent); }
+.feed-engine.ds { border-left-color: var(--accent2); }
+.feed-engine.oa { border-left-color: var(--accent3); }
+.feed-engine-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 3px; }
+.feed-engine-body { font-size: 0.78rem; line-height: 1.5; }
+.feed-meta { font-size: 0.68rem; color: var(--muted); margin-top: 4px; font-family: "IBM Plex Mono", monospace; }
+
 footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
 
 /* ---- trading cards ---- */
@@ -630,20 +645,59 @@ function buildThead(theadEl, fieldLabels) {
   theadEl.innerHTML = `<tr>${row1}</tr><tr>${row2}</tr>`;
 }
 
+// ---------- process feed: one card per file, appended as soon as all 3 engines finish it ----------
+// Gives a narrative "watch it happen" view alongside the table — same data, just presented as
+// a chronological feed instead of a wall of cells that all fill in silently at once.
+function getOrCreateFeed(tableBody) {
+  const table = tableBody.closest('table');
+  let feed = table.previousElementSibling;
+  if (!feed || !feed.classList.contains('stream-feed')) {
+    feed = document.createElement('div');
+    feed.className = 'stream-feed';
+    table.parentNode.insertBefore(feed, table);
+  }
+  feed.innerHTML = '';
+  feed.hidden = false;
+  return feed;
+}
+function summarizeResult(data) {
+  if (data.error) return `<span class="status-err">error: ${data.error}</span>`;
+  const skip = new Set(['file', 'ground_truth', 'tokens', 'timing_ms', 'cost_usd', 'hallucinated', 'title', 'source_url']);
+  const parts = Object.entries(data).filter(([k, v]) => !skip.has(k) && v != null)
+    .map(([k, v]) => `<b>${k.replace(/_/g, ' ')}:</b> ${typeof v === 'object' ? JSON.stringify(v) : v}`);
+  const meta = `${data.timing_ms.total}ms · ${fmtCost(data.cost_usd)}${data.hallucinated ? ' · <span class="halluc-mark">⚠ hallucinated</span>' : ''}`;
+  return `${parts.join(' · ')}<div class="feed-meta">${meta}</div>`;
+}
+function appendFeedCard(feed, file, resultsByEngine) {
+  const engineBlocks = ENGINES.map(e => `
+    <div class="feed-engine ${e.cls}">
+      <div class="feed-engine-label">${e.label}</div>
+      <div class="feed-engine-body">${summarizeResult(resultsByEngine[e.key])}</div>
+    </div>`).join('');
+  const card = document.createElement('div');
+  card.className = 'feed-card';
+  card.innerHTML = `<div class="feed-file">${file}</div><div class="feed-engines">${engineBlocks}</div>`;
+  feed.appendChild(card);
+  card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
 // ---------- generic N-engine comparison runner ----------
-// fires every engine × every selected file concurrently, fills the table as each resolves,
-// drives the fixed bottom progress bars live, and computes per-engine time-to-output (when
-// THAT engine's own last response actually landed, not the shared Promise.all finish time —
-// otherwise a fast engine reads as slow just because a different engine is still running) +
-// summed-latency/token/cost/accuracy/hallucination totals once everything settles.
+// fires every engine × every selected file concurrently, fills the table AND the process feed
+// as each resolves, drives the fixed bottom bar's progress bar and running totals live (not just
+// once at the very end), and computes per-engine time-to-output (when THAT engine's own last
+// response actually landed, not the shared Promise.all finish time — otherwise a fast engine
+// reads as slow just because a different engine is still running).
 async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles, isCorrect }) {
   cmpbarShow(titles);
   ENGINES.forEach(e => cmpbarProgress(e.key, 0, files.length));
   tableBody.innerHTML = files.map(rowHtml).join('');
   files.forEach(f => setRunning(`row-${cssEscape(f)}`));
+  const feed = getOrCreateFeed(tableBody);
+  const pending = {};
+  files.forEach(f => pending[f] = {});
 
   const agg = {};
-  ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0, timeToOutput: 0 });
+  ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0 });
   const batchStart = performance.now();
 
   const post = (url, payload) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(r => r.json());
@@ -657,16 +711,19 @@ async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles,
         if (isCorrect(e.key, data)) a.correct++;
         if (data.hallucinated) a.halluc++;
       }
-      a.done++; cmpbarProgress(e.key, a.done, files.length);
-      if (a.done === files.length) a.timeToOutput = performance.now() - batchStart;
+      a.done++;
+      cmpbarProgress(e.key, a.done, files.length);
+      // live running totals — updates on every single completion, not just once at the end.
+      const wall = performance.now() - batchStart;
+      cmpbarFinal(e.key, { wall, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
       fillRow(file, e.key, data);
+
+      pending[file][e.key] = data;
+      if (Object.keys(pending[file]).length === ENGINES.length) {
+        appendFeedCard(feed, file, pending[file]);
+      }
     });
   })));
-
-  ENGINES.forEach(e => {
-    const a = agg[e.key];
-    cmpbarFinal(e.key, { wall: a.timeToOutput, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
-  });
 }
 
 // ================= DOCUMENTS =================
