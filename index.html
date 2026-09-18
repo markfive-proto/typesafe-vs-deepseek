@@ -52,8 +52,7 @@ button.primary:disabled { opacity: 0.5; cursor: default; }
 button.ghost { font-family: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; cursor: pointer; color: var(--ink); }
 input[type=file] { display: none; }
 .upload-status { font-size: 0.8rem; color: var(--muted); }
-select { font-family: inherit; font-size: 0.88rem; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); }
-select#rq-select { min-width: 320px; }
+select { font-family: inherit; font-size: 0.88rem; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); max-width: 100%; }
 
 .cmpbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
@@ -80,6 +79,7 @@ select#rq-select { min-width: 320px; }
 .cmpbar-stats .halluc-hot b { color: var(--bad); }
 
 .gg-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.gg-stats[hidden] { display: none; }
 .gg-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; min-width: 130px; }
 .gg-stat b { display: block; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 1.15rem; color: var(--ink); }
 .gg-stat span { font-size: 0.7rem; color: var(--muted); }
@@ -105,6 +105,19 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
 .ok-mark { color: var(--accent); font-weight: 700; }
 .bad-mark { color: var(--bad); font-weight: 700; }
 .halluc-mark { color: var(--bad); font-weight: 700; cursor: help; }
+
+.split { display: flex; gap: 20px; align-items: flex-start; }
+.split-left { flex: 0 0 300px; min-width: 0; }
+.split-right { flex: 1; min-width: 0; }
+.split-placeholder {
+  border: 1px dashed var(--border); border-radius: 10px; padding: 32px 20px;
+  text-align: center; color: var(--muted); font-size: 0.85rem;
+}
+@media (max-width: 860px) {
+  .split { flex-direction: column; }
+  .split-left { flex: 1 1 auto; width: 100%; }
+}
+
 footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
 </style>
 </head>
@@ -123,54 +136,75 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
   <!-- DOCUMENTS -->
   <section id="view-documents" class="view active">
     <p class="sub" style="margin-bottom:12px;">50 synthetic invoices, native PDF/XLSX (no OCR needed — text extracted directly via pdfplumber/openpyxl).</p>
-    <div class="picker" id="doc-picker"></div>
-    <div class="controls">
-      <button class="ghost" id="doc-selall">Select all</button>
-      <label class="ghost" for="doc-file" style="cursor:pointer;">Upload invoice</label>
-      <input type="file" id="doc-file" accept=".pdf,.xlsx">
-      <span class="upload-status" id="doc-upload-status"></span>
-      <button class="primary" id="doc-run" disabled>Run comparison (0)</button>
-    </div>
-    <div class="table-wrap">
-      <table id="doc-results" hidden>
-        <thead id="doc-thead"></thead>
-        <tbody id="doc-results-body"></tbody>
-      </table>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="doc-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="doc-selall">Select all</button>
+          <label class="ghost" for="doc-file" style="cursor:pointer;">Upload invoice</label>
+          <input type="file" id="doc-file" accept=".pdf,.xlsx">
+          <span class="upload-status" id="doc-upload-status"></span>
+          <button class="primary" id="doc-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="doc-placeholder">Pick invoices on the left, then run — results stream in here live.</p>
+        <div class="table-wrap">
+          <table id="doc-results" hidden>
+            <thead id="doc-thead"></thead>
+            <tbody id="doc-results-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- EMAILS -->
   <section id="view-emails" class="view">
     <p class="sub" style="margin-bottom:12px;">50 synthetic emails across 7 categories — select some, classify with all three engines.</p>
-    <div class="picker" id="em-picker"></div>
-    <div class="controls">
-      <button class="ghost" id="em-selall">Select all</button>
-      <button class="primary" id="em-run" disabled>Run comparison (0)</button>
-    </div>
-    <div class="table-wrap">
-      <table id="em-results" hidden>
-        <thead id="em-thead"></thead>
-        <tbody id="em-results-body"></tbody>
-      </table>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="em-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="em-selall">Select all</button>
+          <button class="primary" id="em-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="em-placeholder">Pick emails on the left, then run — results stream in here live.</p>
+        <div class="table-wrap">
+          <table id="em-results" hidden>
+            <thead id="em-thead"></thead>
+            <tbody id="em-results-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- RETRIEVAL -->
   <section id="view-retrieval" class="view">
     <p class="sub" style="margin-bottom:12px;">Rerank a corpus by relevance to a query. TypeSafe asks all N relevance questions in <b>one call</b> (true intra-request parallelism); DeepSeek/gpt-5-nano each rank all N candidates in one generative pass.</p>
-    <div class="controls">
-      <select id="rq-corpus">
-        <option value="emails">Corpus: 50 sample emails</option>
-        <option value="kb">Corpus: 100-doc AI infra knowledge base</option>
-      </select>
-      <select id="rq-select"></select>
-      <button class="primary" id="rq-run">Run comparison</button>
-    </div>
-    <div class="table-wrap">
-      <table id="rq-results" hidden>
-        <thead id="rq-thead"></thead>
-        <tbody id="rq-results-body"></tbody>
-      </table>
+    <div class="split">
+      <div class="split-left">
+        <div class="controls" style="flex-direction:column; align-items:stretch;">
+          <select id="rq-corpus">
+            <option value="emails">Corpus: 50 sample emails</option>
+            <option value="kb">Corpus: 100-doc AI infra knowledge base</option>
+          </select>
+          <select id="rq-select"></select>
+          <button class="primary" id="rq-run">Run comparison</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="rq-placeholder">Pick a corpus and query on the left, then run — rankings stream in here live.</p>
+        <div class="table-wrap">
+          <table id="rq-results" hidden>
+            <thead id="rq-thead"></thead>
+            <tbody id="rq-results-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -181,30 +215,37 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
       flags <code>needs_reply</code> get an expensive DeepSeek-generated draft. Compare that against the
       hypothetical cost of generating a draft for every email regardless.
     </p>
-    <div class="picker" id="gg-picker"></div>
-    <div class="controls">
-      <button class="ghost" id="gg-selall">Select all</button>
-      <button class="primary" id="gg-run" disabled>Run gate → generate (0)</button>
-    </div>
-    <div class="gg-stats" id="gg-stats" hidden>
-      <div class="gg-stat"><b id="gg-s-total">0</b><span>Emails processed</span></div>
-      <div class="gg-stat"><b id="gg-s-drafted">0</b><span>Got a draft</span></div>
-      <div class="gg-stat"><b id="gg-s-skipped">0</b><span>Skipped (gate said no)</span></div>
-      <div class="gg-stat"><b id="gg-s-gatecost">$0</b><span>Gate cost (TypeSafe, all N)</span></div>
-      <div class="gg-stat"><b id="gg-s-gencost">$0</b><span>Generate cost (DeepSeek, only drafted)</span></div>
-      <div class="gg-stat highlight"><b id="gg-s-baseline">$0</b><span>If DeepSeek drafted every email</span></div>
-      <div class="gg-stat highlight"><b id="gg-s-savings">0%</b><span>Saved by gating first</span></div>
-    </div>
-    <div class="table-wrap">
-      <table id="gg-results" hidden>
-        <thead>
-          <tr>
-            <th>File</th><th>Category</th><th class="num">Needs reply</th><th>Action</th>
-            <th>Draft</th><th class="num">Gate cost</th><th class="num">Generate cost</th>
-          </tr>
-        </thead>
-        <tbody id="gg-results-body"></tbody>
-      </table>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="gg-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="gg-selall">Select all</button>
+          <button class="primary" id="gg-run" disabled>Run gate → generate (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="gg-placeholder">Pick emails on the left, then run — gate decisions and drafts stream in here live.</p>
+        <div class="gg-stats" id="gg-stats" hidden>
+          <div class="gg-stat"><b id="gg-s-total">0</b><span>Emails processed</span></div>
+          <div class="gg-stat"><b id="gg-s-drafted">0</b><span>Got a draft</span></div>
+          <div class="gg-stat"><b id="gg-s-skipped">0</b><span>Skipped (gate said no)</span></div>
+          <div class="gg-stat"><b id="gg-s-gatecost">$0</b><span>Gate cost (TypeSafe, all N)</span></div>
+          <div class="gg-stat"><b id="gg-s-gencost">$0</b><span>Generate cost (DeepSeek, only drafted)</span></div>
+          <div class="gg-stat highlight"><b id="gg-s-baseline">$0</b><span>If DeepSeek drafted every email</span></div>
+          <div class="gg-stat highlight"><b id="gg-s-savings">0%</b><span>Saved by gating first</span></div>
+        </div>
+        <div class="table-wrap">
+          <table id="gg-results" hidden>
+            <thead>
+              <tr>
+                <th>File</th><th>Category</th><th class="num">Needs reply</th><th>Action</th>
+                <th>Draft</th><th class="num">Gate cost</th><th class="num">Generate cost</th>
+              </tr>
+            </thead>
+            <tbody id="gg-results-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -450,6 +491,7 @@ docRunBtn.addEventListener('click', () => {
   const files = Array.from(docP.selected);
   docRunBtn.disabled = true;
   docTable.hidden = false;
+  document.getElementById('doc-placeholder').hidden = true;
   runComparison({
     files,
     urls: { ts: '/api/process_document', ds: '/api/process_document_deepseek', oa: '/api/process_document_openai' },
@@ -519,6 +561,7 @@ emRunBtn.addEventListener('click', () => {
   const files = Array.from(emP.selected);
   emRunBtn.disabled = true;
   emTable.hidden = false;
+  document.getElementById('em-placeholder').hidden = true;
   runComparison({
     files,
     urls: { ts: '/api/classify_email', ds: '/api/classify_email_deepseek', oa: '/api/classify_email_openai' },
@@ -551,6 +594,7 @@ rqCorpus.addEventListener('change', loadQueries);
 rqRunBtn.addEventListener('click', async () => {
   rqRunBtn.disabled = true;
   rqTable.hidden = false;
+  document.getElementById('rq-placeholder').hidden = true;
   const corpus = rqCorpus.value;
   const n = corpus === 'kb' ? 100 : 50;
   cmpbarShow({
@@ -641,6 +685,7 @@ ggRunBtn.addEventListener('click', async () => {
   const files = Array.from(ggP.selected);
   ggRunBtn.disabled = true;
   ggTable.hidden = false;
+  document.getElementById('gg-placeholder').hidden = true;
   ggStats.hidden = false;
   ggBody.innerHTML = files.map(ggRowHtml).join('');
 
