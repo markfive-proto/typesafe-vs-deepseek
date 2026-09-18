@@ -11,7 +11,7 @@ import sys
 import time
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -83,24 +83,25 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
-    def do_GET(self):
+    def _route(self):
+        """vercel.json rewrites /api/<x> to /api/index?route=<x> (the rewrite collapses the
+        real path), so recover the intended route from that query param."""
         parsed = urlparse(self.path)
-        if parsed.path == "/api/documents":
+        route = parse_qs(parsed.query).get("route", [""])[0]
+        return f"/api/{route}" if route else parsed.path
+
+    def do_GET(self):
+        route = self._route()
+        if route == "/api/documents":
             return self._json({"files": list_docs()})
-        if parsed.path == "/api/emails":
+        if route == "/api/emails":
             return self._json({"files": list_emails()})
-        if parsed.path == "/api/queries":
+        if route == "/api/queries":
             return self._json({"queries": {k: v["text"] for k, v in R.QUERIES.items()}})
-        if parsed.path.startswith("/emails_samples/"):
-            fname = parsed.path.removeprefix("/emails_samples/")
-            fpath = EMAILS / fname
-            if fpath.is_file() and fpath.resolve().parent == EMAILS.resolve():
-                return self._file(fpath, "text/plain; charset=utf-8")
-            return self._json({"error": "not found"}, 404)
         self._json({"error": "not found"}, 404)
 
     def do_POST(self):
-        parsed = urlparse(self.path)
+        route = self._route()
         length = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(length) or b"{}") if length else {}
         name = body.get("file", "")
@@ -111,23 +112,23 @@ class handler(BaseHTTPRequestHandler):
             "/api/classify_email": (E.classify, name),
             "/api/classify_email_deepseek": (E.classify_via_deepseek, name),
         }
-        if parsed.path in routes:
-            fn, arg = routes[parsed.path]
+        if route in routes:
+            fn, arg = routes[route]
             try:
                 return self._json(timed(fn, arg))
             except Exception as e:
                 return self._json({"file": name, "error": str(e)}, 500)
 
-        if parsed.path == "/api/upload":
+        if route == "/api/upload":
             try:
                 saved = save_doc_upload(body.get("filename", ""), body.get("data", ""))
                 return self._json({"ok": True, "file": saved})
             except Exception as e:
                 return self._json({"ok": False, "error": str(e)}, 400)
 
-        if parsed.path in ("/api/rerank_typesafe", "/api/rerank_deepseek"):
+        if route in ("/api/rerank_typesafe", "/api/rerank_deepseek"):
             query = body.get("query", "")
-            fn = R.rerank_typesafe if parsed.path.endswith("typesafe") else R.rerank_deepseek
+            fn = R.rerank_typesafe if route.endswith("typesafe") else R.rerank_deepseek
             try:
                 return self._json(timed(fn, query))
             except Exception as e:

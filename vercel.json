@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index" }
+    { "source": "/api/:route*", "destination": "/api/index?route=:route*" }
   ],
   "functions": {
     "api/index.py": {
