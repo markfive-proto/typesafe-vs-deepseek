@@ -135,6 +135,63 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
 }
 
 footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
+
+/* ---- trading cards ---- */
+.card-gallery { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; padding: 20px 0 8px; }
+.tcard {
+  width: 300px; border-radius: 22px; padding: 5px;
+  box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.08);
+}
+.tcard.ts { background: linear-gradient(150deg, var(--accent), var(--accent-soft) 70%); }
+.tcard.ds { background: linear-gradient(150deg, var(--accent2), var(--accent2-soft) 70%); }
+.tcard.oa { background: linear-gradient(150deg, var(--accent3), var(--accent3-soft) 70%); }
+.tcard-inner { background: var(--surface); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.tcard-head { display: flex; justify-content: space-between; align-items: baseline; }
+.tcard-name { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.25rem; }
+.tcard-spd { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 0.95rem; }
+.tcard.ts .tcard-spd { color: var(--accent); }
+.tcard.ds .tcard-spd { color: var(--accent2); }
+.tcard.oa .tcard-spd { color: var(--accent3); }
+.tcard-art { height: 120px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 3.4rem; }
+.tcard.ts .tcard-art { background: var(--accent-soft); }
+.tcard.ds .tcard-art { background: var(--accent2-soft); }
+.tcard.oa .tcard-art { background: var(--accent3-soft); }
+.tcard-type { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.tcard-stats { display: flex; flex-direction: column; gap: 7px; }
+.tcard-stat-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); margin-bottom: 2px; }
+.tcard-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.tcard-bar-fill { height: 100%; border-radius: 99px; }
+.tcard.ts .tcard-bar-fill { background: var(--accent); }
+.tcard.ds .tcard-bar-fill { background: var(--accent2); }
+.tcard.oa .tcard-bar-fill { background: var(--accent3); }
+.tcard-flavor { font-size: 0.74rem; font-style: italic; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 9px; line-height: 1.4; }
+.tcard-rarity { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; align-self: flex-start; }
+.tcard.ts .tcard-rarity { background: var(--accent-soft); color: var(--accent); }
+.tcard.ds .tcard-rarity { background: var(--accent2-soft); color: var(--accent2); }
+.tcard.oa .tcard-rarity { background: var(--accent3-soft); color: var(--accent3); }
+
+/* ---- use cases ---- */
+.uc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.uc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.uc-card .uc-icon { font-size: 1.4rem; margin-bottom: 6px; }
+.uc-card h3 { font-family: "Fraunces", Georgia, serif; font-size: 1rem; font-weight: 600; margin: 0 0 6px; }
+.uc-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.45; margin: 0; }
+.uc-section-title { font-family: "Fraunces", Georgia, serif; font-size: 1.3rem; font-weight: 600; margin: 28px 0 12px; }
+.uc-accordion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 8px; background: var(--surface); }
+.uc-accordion summary {
+  padding: 12px 16px; cursor: pointer; font-weight: 600; font-size: 0.88rem; list-style: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.uc-accordion summary::-webkit-details-marker { display: none; }
+.uc-accordion summary::before { content: "▸"; color: var(--accent); font-size: 0.75rem; transition: transform .15s; }
+.uc-accordion[open] summary::before { transform: rotate(90deg); }
+.uc-accordion .uc-body { padding: 0 16px 14px 38px; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+.uc-accordion .uc-body ul { margin: 0; padding-left: 18px; }
+.uc-table-wrap { overflow-x: auto; margin-top: 8px; }
+.uc-table-wrap table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 0.82rem; }
+.uc-table-wrap th { text-align: left; background: var(--accent-soft); color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; padding: 9px 12px; }
+.uc-table-wrap td { padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+.uc-table-wrap td:first-child { font-weight: 600; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -148,6 +205,8 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     <button id="tab-retrieval">Retrieval</button>
     <button id="tab-gategen">Gate → Generate</button>
     <button id="tab-design">Design Audit</button>
+    <button id="tab-card">Trading Card</button>
+    <button id="tab-usecases">Use Cases</button>
   </nav>
 
   <!-- DOCUMENTS -->
@@ -293,6 +352,82 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
   </section>
 
+  <!-- TRADING CARD -->
+  <section id="view-card" class="view">
+    <p class="sub" style="margin-bottom:12px;">Stats pulled from real measurements taken earlier in this comparison — not marketing numbers.</p>
+    <div class="card-gallery">
+      <div class="tcard ts">
+        <div class="tcard-inner">
+          <span class="tcard-rarity">Structurally grounded</span>
+          <div class="tcard-head"><span class="tcard-name">Jev</span><span class="tcard-spd">150ms</span></div>
+          <div class="tcard-art">⚡</div>
+          <div class="tcard-type">TypeSafe · System One · jev-1.13</div>
+          <div class="tcard-stats">
+            <div><div class="tcard-stat-label"><span>Speed</span><span>95</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:95%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Cost efficiency</span><span>90</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:90%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Grounding</span><span>100</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:100%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Generation</span><span>0</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:0%"></div></div></div>
+          </div>
+          <div class="tcard-flavor">"Doesn't write, doesn't reason out loud — just answers. $42/Btok in, output free."</div>
+        </div>
+      </div>
+      <div class="tcard ds">
+        <div class="tcard-inner">
+          <span class="tcard-rarity">Reasoning model</span>
+          <div class="tcard-head"><span class="tcard-name">DeepSeek-flash</span><span class="tcard-spd">~1.2s</span></div>
+          <div class="tcard-art">🌊</div>
+          <div class="tcard-type">DeepSeek · chat completions</div>
+          <div class="tcard-stats">
+            <div><div class="tcard-stat-label"><span>Speed</span><span>55</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:55%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Cost efficiency</span><span>60</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:60%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Grounding</span><span>70</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:70%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Generation</span><span>85</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:85%"></div></div></div>
+          </div>
+          <div class="tcard-flavor">"Thinks before it speaks — sometimes for a very long time. Can hallucinate a category you never gave it."</div>
+        </div>
+      </div>
+      <div class="tcard oa">
+        <div class="tcard-inner">
+          <span class="tcard-rarity">Small but chatty</span>
+          <div class="tcard-head"><span class="tcard-name">gpt-5-nano</span><span class="tcard-spd">~4-40s</span></div>
+          <div class="tcard-art">🌀</div>
+          <div class="tcard-type">OpenAI · chat completions</div>
+          <div class="tcard-stats">
+            <div><div class="tcard-stat-label"><span>Speed</span><span>25</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:25%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Cost efficiency</span><span>40</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:40%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Grounding</span><span>65</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:65%"></div></div></div>
+            <div><div class="tcard-stat-label"><span>Generation</span><span>80</span></div><div class="tcard-bar"><div class="tcard-bar-fill" style="width:80%"></div></div></div>
+          </div>
+          <div class="tcard-flavor">"Small name, big thoughts — most of its output tokens are hidden reasoning, not the answer."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="view-usecases" class="view">
+    <p class="sub" style="margin-bottom:12px;">From TypeSafe's own use-case map — scan for where it could fit in your workflow.</p>
+
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-icon">🧩</div><h3>AI Automation Software</h3><p>Interleave AI with reliable software you can run a million times unattended. Code owns control flow; TypeSafe handles the semantic decisions.</p></div>
+      <div class="uc-card"><div class="uc-icon">⚡</div><h3>Real-time applications</h3><p>Frontier intelligence at ~150ms — fast and smart enough to embed into a UI or program into a game loop.</p></div>
+      <div class="uc-card"><div class="uc-icon">🗄️</div><h3>AI Map-Reduce over Big Data</h3><p>100x cheaper means processing giant datasets: search huge corpora, classify giant agent traces, extract features at scale.</p></div>
+      <div class="uc-card"><div class="uc-icon">✅</div><h3>Universal Verification</h3><p>Verify any AI's prompt, extraction, reasoning trace, or tool call — jailbreaks, citation errors, hallucinations — for a fraction of the original call's cost.</p></div>
+      <div class="uc-card"><div class="uc-icon">🔧</div><h3>Harness Engineering</h3><p>Model routing, semantic context retrieval, LLM error detection and guardrails, reasoning-trace classification — at lightspeed and a fraction of the cost.</p></div>
+    </div>
+
+    <h2 class="uc-section-title">Example automation use cases</h2>
+    <div id="uc-accordions"></div>
+
+    <h2 class="uc-section-title">Example task categories</h2>
+    <div class="uc-table-wrap">
+      <table>
+        <thead><tr><th>Decision shape</th><th>Reach for it when</th><th>Examples</th></tr></thead>
+        <tbody id="uc-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
   <footer class="note">
     Time to output = when that engine's own last response actually landed (its real, per-engine finish
     time — not a shared clock dominated by whichever engine is slowest). Sum latencies = if every one of
@@ -366,8 +501,8 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
 }
 
 // ---------- tabs ----------
-const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design' };
-const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design' };
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design', card: 'tab-card', usecases: 'tab-usecases' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design', card: 'view-card', usecases: 'view-usecases' };
 Object.keys(tabs).forEach(name => {
   document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
 });
@@ -852,6 +987,135 @@ dzRunBtn.addEventListener('click', () => {
     isCorrect: (engine, data) => data.ground_truth && data.all_layers_compliant === data.ground_truth.all_layers_compliant,
   }).finally(() => { dzRunBtn.disabled = false; });
 });
+
+// ================= USE CASES (static reference content) =================
+const USE_CASES = [
+  { icon: '🔍', title: 'Search and retrieval', items: [
+    'Replace or supplement embeddings in RAG pipelines with semantic search, scoring, and ranking.',
+    'Score query-to-candidate relevance.', 'Rerank results with pairwise comparisons.',
+    'Cross-encode queries and candidates for higher precision.', 'Select useful context for downstream AI workflows.',
+  ]},
+  { icon: '🧪', title: 'Scientific discovery', items: [
+    'Screen papers against inclusion and exclusion criteria for systematic reviews.',
+    'Label passages in interview transcripts, surveys, and field notes using predefined themes.',
+    'Check whether cited passages support claims in manuscripts and generated summaries.',
+    'Flag missing methodological details — controls, dataset descriptions, experimental settings.',
+    'Identify entities and relationships across papers to build research knowledge graphs.',
+  ]},
+  { icon: '🧭', title: 'Model routing', items: [
+    'Build a custom router that chooses which LLM receives each prompt.',
+    'Set routing rules and thresholds for your specific workflow.', 'Classify intent and domain.',
+    'Estimate difficulty and risk.', 'Escalate requests that need a more expensive model.',
+  ]},
+  { icon: '🛡️', title: 'LLM guardrails', items: [
+    'Place semantic checks on every LLM input, output, and tool call at a fraction of the LLM call cost.',
+    'Detect jailbreaks and prompt injection.', 'Identify policy violations and sensitive-data exposure.',
+    'Detect tool-call errors and response-quality failures in real time.',
+    'Log structured check results and probabilities to trace AI system/harness failures.',
+  ]},
+  { icon: '📝', title: 'Semantic code linting', items: [
+    "Add automated semantic lints to code and writing.", "Define checks for your team's coding conventions and writing guidelines.",
+    'Run these checks in CI and flag violations for review.',
+  ]},
+  { icon: '📈', title: 'Feature extraction for predictive modeling', items: [
+    'Extract probabilistic features from natural-language data.',
+    'Combine with structured data to train models for tasks with ground-truth outcomes.',
+    'Use autoresearch workflows to propose feature definitions and evaluate predictive value.',
+  ]},
+  { icon: '👥', title: 'Recruiting', items: [
+    'Evaluate resumes, applications, and interview feedback against explicit, job-related criteria.',
+    'Identify relevant experience.', 'Score evidence for required competencies.', 'Match candidates to roles.',
+    'Route candidates to hiring managers or recruiters.', 'Escalate uncertain cases for human review.',
+  ]},
+  { icon: '🔎', title: 'Lead generation', items: [
+    'Match company profiles, executive bios, and inbound messages to an ideal customer profile.',
+    'Score industry fit and company maturity.', 'Detect buyer relevance, pain points, and purchase intent.',
+    'Prioritize and route leads.',
+  ]},
+  { icon: '🎧', title: 'Customer support', items: [
+    'Classify incoming tickets by issue, product area, and customer intent.',
+    'Process call transcripts to extract issues, commitments, and follow-up actions.',
+    'Detect urgency, frustration, churn risk, and refund requests.',
+    'Route cases to the right team, queue, or automated workflow.',
+    "Verify support responses against policies and the customer's request.",
+  ]},
+  { icon: '📋', title: 'Insurance claims', items: [
+    'Classify first-notice-of-loss reports, adjuster notes, and supporting documents.',
+    'Detect claim complexity, missing information, and potential fraud indicators.',
+    'Prioritize claims for straight-through processing or specialist review.',
+    'Escalate uncertain or high-risk cases to a human adjuster.',
+  ]},
+  { icon: '🏦', title: 'Financial crime', items: [
+    'Evaluate transaction narratives, KYC documents, and alert histories for suspicious characteristics.',
+    'Match entities across inconsistent names, profiles, and records.',
+    'Prioritize alerts by risk, relevance, and evidence quality.', 'Route ambiguous cases to investigators for review.',
+  ]},
+  { icon: '⚖️', title: 'Legal and compliance', items: [
+    'Classify contracts, policies, regulatory filings, and marketing claims.',
+    'Detect missing clauses, prohibited claims, and policy violations.',
+    'Verify documents against explicit legal or compliance requirements.',
+    'Escalate high-risk or uncertain findings to counsel or compliance teams.',
+  ]},
+  { icon: '🏪', title: 'E-commerce marketplaces', items: [
+    'Classify and normalize product listings across inconsistent seller catalogs.',
+    'Extract product attributes from titles and descriptions.',
+    'Detect prohibited listings, counterfeit signals, review abuse, and policy violations.',
+    'Rank products and route uncertain listings for human review.',
+  ]},
+  { icon: '🚨', title: 'Moderation and trust & safety', items: [
+    'Apply company-specific, nuanced criteria to decide which posts meet your moderation standards.',
+    'Moderate user content and automated conversations across communities, support, and SDR workflows.',
+    'Detect toxicity, harassment, spam, fraud, unsafe advice, personal-data exposure, opt-out requests.',
+    'Combine severity and confidence to allow, warn, review, or block content.',
+  ]},
+  { icon: '📣', title: 'Advertising', items: [
+    'Evaluate creative assets, campaign copy, landing pages, and placement context.',
+    'Classify brand safety and audience suitability.', 'Check regulatory compliance and prohibited claims.',
+    'Evaluate creative quality and ad-to-landing-page alignment.',
+  ]},
+  { icon: '🎮', title: 'Gaming', items: [
+    'Evaluate player reports, in-game chat, reviews, and support conversations.',
+    'Moderate chat and detect abuse, toxicity, or suspicious behavior.',
+    'Annotate content and score frustration or engagement.', 'Detect churn signals and route player-support requests.',
+  ]},
+  { icon: '⚠️', title: 'Risk assessment', items: [
+    'Convert incident reports, claims notes, transaction descriptions, and vendor assessments into probabilistic risk indicators.',
+    'Use these indicators in insurance and underwriting workflows.', 'Classify risk types and detect suspicious characteristics.',
+    'Score severity and prioritize review.', 'Extract features for broader risk models.',
+  ]},
+  { icon: '📊', title: 'Demand forecasting', items: [
+    'Enrich forecasting models with semantic signals from inquiries, sales notes, reviews, tickets, market reports.',
+    'Extract purchase intent, urgency, and product interest.',
+    'Detect supply concerns, competitive pressure, and emerging demand themes.',
+    'Feed those features into a forecasting model alongside historical time-series data.',
+  ]},
+  { icon: '🕸️', title: 'Graphs and knowledge graphs', items: [
+    'Annotate and verify knowledge graphs with typed semantic decisions.',
+    'Classify relationships and entity types.', 'Detect contradictions between records or claims.',
+    'Support probabilistic traversal and hierarchical classification.',
+  ]},
+];
+
+document.getElementById('uc-accordions').innerHTML = USE_CASES.map(c => `
+  <details class="uc-accordion">
+    <summary>${c.icon} ${c.title}</summary>
+    <div class="uc-body"><ul>${c.items.map(i => `<li>${i}</li>`).join('')}</ul></div>
+  </details>`).join('');
+
+const TASK_SHAPES = [
+  ['Classification', 'One known category should win', 'Intent, topic, department, risk type, entity type'],
+  ['Detection', 'You need a probability that one property is present', 'Spam, fraud, urgency, jailbreaks, sensitive data'],
+  ['Scoring', 'The answer belongs on an ordered rubric', 'Severity, relevance, quality, frustration, suitability'],
+  ['Routing', 'A category selects the next code path', 'Tool use, escalation, model routing, support queues'],
+  ['Search', 'You need to find items that match a natural-language query', 'Semantic search, document discovery, candidate generation'],
+  ['Retrieval', 'A workflow needs the most relevant context or records', 'RAG context, evidence retrieval, knowledge lookup'],
+  ['Ranking', 'Items need to be ordered by semantic relevance or quality', 'Search results, recommendations, candidate prioritization'],
+  ['Verification', 'An artifact must be checked for specific failure modes', 'Citation support, policy violations, tool-call errors, response quality'],
+  ['ML Feature Extraction', 'A downstream classical ML model needs semantic signals', 'Purchase intent, product interest, competitive pressure, churn signals'],
+  ['Structured Data Extraction', 'Known fields must be recovered from unstructured input', 'Candidate attributes, order fields, document labels'],
+];
+document.getElementById('uc-table-body').innerHTML = TASK_SHAPES.map(([shape, when, ex]) =>
+  `<tr><td>${shape}</td><td>${when}</td><td>${ex}</td></tr>`).join('');
 
 loadDocuments();
 loadEmails();
