@@ -122,6 +122,7 @@ class Handler(BaseHTTPRequestHandler):
             "/api/classify_email": (E.classify, name),
             "/api/classify_email_deepseek": (E.classify_via_deepseek, name),
             "/api/classify_email_openai": (E.classify_via_openai, name),
+            "/api/draft_reply": (E.draft_reply, name),
         }
         if parsed.path in routes:
             fn, arg = routes[parsed.path]

@@ -138,6 +138,45 @@ def classify_via_deepseek(name: str) -> dict:
     }
 
 
+DRAFT_REPLY_PROMPT = """Draft a short, professional reply to this email. 2-4 sentences, no subject \
+line, no greeting boilerplate like "I hope this finds you well" — just the actual reply content.
+
+Email:
+{email}"""
+
+
+def draft_reply(name: str) -> dict:
+    """The 'generate' half of the gate-then-generate pattern: only ever called for emails
+    TypeSafe's needs_reply gate already flagged as actually needing one."""
+    text = (EMAILS / name).read_text()
+    prompt = DRAFT_REPLY_PROMPT.format(email=text)
+    req = urllib.request.Request(
+        P.DEEPSEEK_URL,
+        data=json.dumps({
+            "model": "deepseek-flash",
+            "messages": [{"role": "user", "content": prompt}],
+        }).encode(),
+        headers={"Authorization": f"Bearer {os.environ['DEEPSEEK_API_KEY']}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        result = json.load(resp)
+
+    reply = result["choices"][0]["message"]["content"].strip()
+    usage = result.get("usage", {})
+    cache_hit = usage.get("prompt_cache_hit_tokens", 0)
+    cache_miss = usage.get("prompt_cache_miss_tokens", usage.get("prompt_tokens", 0))
+    completion = usage.get("completion_tokens", 0)
+    cost = cache_hit * DEEPSEEK_PRICE["cache_hit_in"] + cache_miss * DEEPSEEK_PRICE["cache_miss_in"] + completion * DEEPSEEK_PRICE["out"]
+
+    return {
+        "file": name,
+        "reply": reply,
+        "tokens": {"input": usage.get("prompt_tokens"), "output": usage.get("completion_tokens")},
+        "cost_usd": round(cost, 6),
+    }
+
+
 OPENAI_PROMPT = DEEPSEEK_PROMPT  # identical task/shape, different model
 
 

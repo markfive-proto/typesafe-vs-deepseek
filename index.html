@@ -79,6 +79,16 @@ select#rq-select { min-width: 320px; }
 .cmpbar-stats span { color: var(--muted); }
 .cmpbar-stats .halluc-hot b { color: var(--bad); }
 
+.gg-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.gg-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; min-width: 130px; }
+.gg-stat b { display: block; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 1.15rem; color: var(--ink); }
+.gg-stat span { font-size: 0.7rem; color: var(--muted); }
+.gg-stat.highlight { border-color: var(--accent); background: var(--accent-soft); }
+.gg-stat.highlight b { color: var(--accent); }
+.action-drafted { color: var(--accent); font-weight: 600; }
+.action-skipped { color: var(--muted); }
+.draft-cell { max-width: 320px; font-size: 0.78rem; line-height: 1.4; }
+
 table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 0.82rem; }
 thead th { text-align: left; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
 thead th.grp-ts { background: var(--accent-soft); color: var(--accent); }
@@ -107,6 +117,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     <button id="tab-documents" class="active">Documents</button>
     <button id="tab-emails">Emails</button>
     <button id="tab-retrieval">Retrieval</button>
+    <button id="tab-gategen">Gate → Generate</button>
   </nav>
 
   <!-- DOCUMENTS -->
@@ -159,6 +170,40 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
       <table id="rq-results" hidden>
         <thead id="rq-thead"></thead>
         <tbody id="rq-results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GATE + GENERATE -->
+  <section id="view-gategen" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      A real support-inbox pattern: TypeSafe gates every email (cheap, always runs) — only the ones it
+      flags <code>needs_reply</code> get an expensive DeepSeek-generated draft. Compare that against the
+      hypothetical cost of generating a draft for every email regardless.
+    </p>
+    <div class="picker" id="gg-picker"></div>
+    <div class="controls">
+      <button class="ghost" id="gg-selall">Select all</button>
+      <button class="primary" id="gg-run" disabled>Run gate → generate (0)</button>
+    </div>
+    <div class="gg-stats" id="gg-stats" hidden>
+      <div class="gg-stat"><b id="gg-s-total">0</b><span>Emails processed</span></div>
+      <div class="gg-stat"><b id="gg-s-drafted">0</b><span>Got a draft</span></div>
+      <div class="gg-stat"><b id="gg-s-skipped">0</b><span>Skipped (gate said no)</span></div>
+      <div class="gg-stat"><b id="gg-s-gatecost">$0</b><span>Gate cost (TypeSafe, all N)</span></div>
+      <div class="gg-stat"><b id="gg-s-gencost">$0</b><span>Generate cost (DeepSeek, only drafted)</span></div>
+      <div class="gg-stat highlight"><b id="gg-s-baseline">$0</b><span>If DeepSeek drafted every email</span></div>
+      <div class="gg-stat highlight"><b id="gg-s-savings">0%</b><span>Saved by gating first</span></div>
+    </div>
+    <div class="table-wrap">
+      <table id="gg-results" hidden>
+        <thead>
+          <tr>
+            <th>File</th><th>Category</th><th class="num">Needs reply</th><th>Action</th>
+            <th>Draft</th><th class="num">Gate cost</th><th class="num">Generate cost</th>
+          </tr>
+        </thead>
+        <tbody id="gg-results-body"></tbody>
       </table>
     </div>
   </section>
@@ -236,8 +281,8 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
 }
 
 // ---------- tabs ----------
-const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval' };
-const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval' };
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen' };
 Object.keys(tabs).forEach(name => {
   document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
 });
@@ -249,7 +294,7 @@ function switchTab(active) {
 }
 
 // ---------- generic picker ----------
-function makePicker({ picker, selAllBtn, runBtn }) {
+function makePicker({ picker, selAllBtn, runBtn, label = 'Run comparison' }) {
   let selected = new Set();
   let allFiles = [];
   function toggle(file, card) {
@@ -263,7 +308,7 @@ function makePicker({ picker, selAllBtn, runBtn }) {
       card.querySelector('.check').textContent = '☑ selected';
     }
     runBtn.disabled = selected.size === 0;
-    runBtn.textContent = `Run comparison (${selected.size})`;
+    runBtn.textContent = `${label} (${selected.size})`;
   }
   selAllBtn.addEventListener('click', () => {
     const cards = picker.querySelectorAll('.pick-card');
@@ -552,9 +597,106 @@ rqRunBtn.addEventListener('click', async () => {
   rqRunBtn.disabled = false;
 });
 
+// ================= GATE + GENERATE =================
+const ggPicker = document.getElementById('gg-picker');
+const ggRunBtn = document.getElementById('gg-run');
+const ggSelAllBtn = document.getElementById('gg-selall');
+const ggTable = document.getElementById('gg-results');
+const ggBody = document.getElementById('gg-results-body');
+const ggStats = document.getElementById('gg-stats');
+const ggP = makePicker({ picker: ggPicker, selAllBtn: ggSelAllBtn, runBtn: ggRunBtn, label: 'Run gate → generate' });
+
+async function loadGateGenerate() {
+  const res = await fetch('/api/emails');
+  const { files } = await res.json();
+  ggP.setFiles(files);
+  const cards = await Promise.all(files.map(async f => {
+    const text = await (await fetch(`/emails_samples/${encodeURIComponent(f)}`)).text();
+    const subjectMatch = text.match(/^subject:\s*(.+)$/m);
+    const fromMatch = text.match(/^from:\s*(.+)$/m);
+    const body = text.replace(/^---[\s\S]*?---/, '').trim();
+    return { f, subject: subjectMatch ? subjectMatch[1] : f, from: fromMatch ? fromMatch[1] : '', snippet: body.slice(0, 120) };
+  }));
+  ggPicker.innerHTML = cards.map(c => `
+    <div class="pick-card" data-file="${c.f}">
+      <div class="subject">${c.subject}</div>
+      <div class="name">${c.from}</div>
+      <div class="snippet">${c.snippet}</div>
+      <div class="check">☐ select</div>
+    </div>`).join('');
+  ggPicker.querySelectorAll('.pick-card').forEach(card => card.addEventListener('click', () => ggP.toggle(card.dataset.file, card)));
+}
+
+function ggRowHtml(file) {
+  const id = cssEscape(file);
+  return `<tr id="gg-row-${id}">
+    <td>${file}</td><td id="gg-cat-${id}">—</td><td class="num" id="gg-needs-${id}">—</td>
+    <td id="gg-action-${id}"><span class="status-pending">queued</span></td>
+    <td class="draft-cell" id="gg-draft-${id}">—</td>
+    <td class="num" id="gg-gatecost-${id}">—</td><td class="num" id="gg-gencost-${id}">—</td>
+  </tr>`;
+}
+
+ggRunBtn.addEventListener('click', async () => {
+  const files = Array.from(ggP.selected);
+  ggRunBtn.disabled = true;
+  ggTable.hidden = false;
+  ggStats.hidden = false;
+  ggBody.innerHTML = files.map(ggRowHtml).join('');
+
+  const post = (url, payload) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(r => r.json());
+
+  let drafted = 0, skipped = 0, gateCost = 0, genCost = 0;
+
+  await Promise.all(files.map(async file => {
+    const id = cssEscape(file);
+    const gate = await post('/api/classify_email', { file });
+    if (gate.error) {
+      document.getElementById(`gg-action-${id}`).innerHTML = '<span class="status-err">gate error</span>';
+      return;
+    }
+    gateCost += gate.cost_usd || 0;
+    document.getElementById(`gg-cat-${id}`).textContent = gate.category ?? '—';
+    document.getElementById(`gg-needs-${id}`).textContent = gate.needs_reply != null ? Math.round(gate.needs_reply * 100) + '%' : '—';
+    document.getElementById(`gg-gatecost-${id}`).textContent = fmtCost(gate.cost_usd);
+
+    if (gate.needs_reply != null && gate.needs_reply > 0.5) {
+      document.getElementById(`gg-action-${id}`).innerHTML = '<span class="status-run">drafting…</span>';
+      const draft = await post('/api/draft_reply', { file });
+      if (draft.error) {
+        document.getElementById(`gg-action-${id}`).innerHTML = '<span class="status-err">generate error</span>';
+        return;
+      }
+      drafted++; genCost += draft.cost_usd || 0;
+      document.getElementById(`gg-action-${id}`).innerHTML = '<span class="action-drafted">✓ drafted</span>';
+      document.getElementById(`gg-draft-${id}`).textContent = draft.reply;
+      document.getElementById(`gg-gencost-${id}`).textContent = fmtCost(draft.cost_usd);
+    } else {
+      skipped++;
+      document.getElementById(`gg-action-${id}`).innerHTML = '<span class="action-skipped">— skipped</span>';
+      document.getElementById(`gg-draft-${id}`).textContent = '(gate said no reply needed — generation never called)';
+      document.getElementById(`gg-gencost-${id}`).textContent = '$0';
+    }
+
+    document.getElementById('gg-s-total').textContent = drafted + skipped;
+    document.getElementById('gg-s-drafted').textContent = drafted;
+    document.getElementById('gg-s-skipped').textContent = skipped;
+    document.getElementById('gg-s-gatecost').textContent = fmtCost(gateCost);
+    document.getElementById('gg-s-gencost').textContent = fmtCost(genCost);
+    const avgGenCost = drafted ? genCost / drafted : 0;
+    const baseline = avgGenCost * (drafted + skipped) + gateCost;
+    const actual = gateCost + genCost;
+    document.getElementById('gg-s-baseline').textContent = fmtCost(baseline);
+    document.getElementById('gg-s-savings').textContent = baseline > 0 ? Math.round((1 - actual / baseline) * 100) + '%' : '0%';
+  }));
+
+  ggRunBtn.disabled = false;
+});
+
 loadDocuments();
 loadEmails();
 loadQueries();
+loadGateGenerate();
 </script>
 </body>
 </html>
