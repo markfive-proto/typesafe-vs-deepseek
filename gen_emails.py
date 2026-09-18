@@ -1,4 +1,11 @@
-"""Generate 50 synthetic sample emails as .md files for the classifier demo."""
+"""Generate 50 synthetic sample emails as .md files for the classifier demo.
+
+Filenames are neutral (email_NNN.md, shuffled) and ground truth lives in a separate
+manifest — never in the filename or the file content the model actually sees — so
+the category can't be guessed from the file list, and no accuracy number here is
+inflated by a giveaway name.
+"""
+import json
 import random
 from pathlib import Path
 
@@ -111,23 +118,31 @@ Need this looked at ASAP, customers are asking.
     )),
 ]
 
-count = 0
 per_cat = 50 // len(TEMPLATES)
 remainder = 50 - per_cat * len(TEMPLATES)
 
+emails = []
 for idx, (label, gen) in enumerate(TEMPLATES):
     n = per_cat + (1 if idx < remainder else 0)
     for _ in range(n):
-        count += 1
         subject, sender, body = gen()
         date = f"2026-{random.randint(1,9):02d}-{random.randint(1,28):02d}"
-        md = f"""---
+        emails.append((label, subject, sender, date, body))
+
+random.shuffle(emails)  # so sequential filenames don't cluster by category either
+
+manifest = {}
+for i, (label, subject, sender, date, body) in enumerate(emails, start=1):
+    fname = f"email_{i:03d}.md"
+    md = f"""---
 from: {sender}
 subject: {subject}
 date: {date}
 ---
 
 {body}"""
-        (OUT / f"{count:02d}_{label}.md").write_text(md)
+    (OUT / fname).write_text(md)
+    manifest[fname] = label
 
-print(f"wrote {count} sample emails to {OUT}")
+(OUT / "ground_truth.json").write_text(json.dumps(manifest, indent=2))
+print(f"wrote {len(manifest)} sample emails + ground_truth.json to {OUT}")

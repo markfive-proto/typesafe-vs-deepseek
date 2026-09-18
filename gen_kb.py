@@ -1,8 +1,15 @@
 """Generate a 100-file markdown knowledge base on AI infrastructure: Products, Harness,
 Runtime, Eval, Observability (20 real, distinct topics each) — for the retrieval/rerank demo.
+
+Filenames are neutral (doc_NNN.md, shuffled) and ground truth lives in a separate manifest —
+never in the filename or the doc content itself — so the category can't be guessed from the
+file list.
 """
+import json
+import random
 from pathlib import Path
 
+random.seed(66)
 ROOT = Path(__file__).parent
 OUT = ROOT / "kb_docs"
 OUT.mkdir(exist_ok=True)
@@ -120,12 +127,15 @@ KB = {
     ],
 }
 
-count = 0
-for category, items in KB.items():
-    for title, body in items:
-        count += 1
-        fname = f"{count:03d}_{category}.md"
-        md = f"# {title}\n\n{body}\n"
-        (OUT / fname).write_text(md)
+docs = [(category, title, body) for category, items in KB.items() for title, body in items]
+random.shuffle(docs)  # so sequential filenames don't cluster by category either
 
-print(f"wrote {count} KB docs to {OUT}")
+manifest = {}
+for i, (category, title, body) in enumerate(docs, start=1):
+    fname = f"doc_{i:03d}.md"
+    md = f"# {title}\n\n{body}\n"
+    (OUT / fname).write_text(md)
+    manifest[fname] = category
+
+(OUT / "ground_truth.json").write_text(json.dumps(manifest, indent=2))
+print(f"wrote {len(manifest)} KB docs + ground_truth.json to {OUT}")

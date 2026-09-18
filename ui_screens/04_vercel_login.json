@@ -1,0 +1,12 @@
+{
+  "source_url": "https://vercel.com/login",
+  "screen_type": "login / authentication screen",
+  "description": {
+    "layout": "Full-bleed black background, small triangle logo top-left, 'Sign Up' button top-right. Vertically centered form block: H1 'Log in to Vercel', an email input field, a primary 'Continue with Email' button, a divider line, then four secondary SSO buttons stacked (Google, GitHub, ChatGPT, SAML SSO, Passkey — five total), a 'Show other options' text link, and a bottom 'Don't have an account? Sign Up' line. Terms/Privacy Policy links in the page footer.",
+    "color_scheme": "Pure black background, white/near-white primary button and heading text, dark-gray secondary buttons with white icon+label, blue link color for 'Sign Up'.",
+    "typography": "Large centered white H1, medium-weight button labels, small gray footer links. Each SSO button pairs a brand icon with plain-language label.",
+    "spacing_alignment": "Form block is narrow and centered both horizontally and vertically, large empty black space above and below on this tall viewport — the form itself occupies roughly the middle third of the screen. Buttons are consistently full-width within the form column and evenly spaced.",
+    "accessibility_signals": "High contrast (white text on black). Five distinct SSO options plus email is a lot of choices presented with equal visual weight — no clear primary path is emphasized beyond 'Continue with Email' being first. Icons (Google G, GitHub cat, OpenAI mark, lock, passkey icon) are paired with text labels, which helps.",
+    "notable_elements": "Stacked SSO button list, large vertical whitespace above/below the centered form, an unusually high number (5) of alternative sign-in methods visible before any scrolling or 'show more' interaction."
+  }
+}

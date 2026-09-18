@@ -1,13 +1,14 @@
 """Reranking demo over the 100-file AI-infra knowledge base. Thin wrapper over rerank_core,
 same pattern as retrieval_pipeline.py but a different corpus and query set.
 """
-import re
+import json
 from pathlib import Path
 
 import rerank_core as core
 
 ROOT = Path(__file__).parent
 KB_DOCS = ROOT / "kb_docs"
+_GROUND_TRUTH = json.loads((KB_DOCS / "ground_truth.json").read_text()) if (KB_DOCS / "ground_truth.json").exists() else {}
 
 QUERIES = {
     "AI products": {
@@ -34,9 +35,8 @@ QUERIES = {
 
 
 def ground_truth(name: str) -> str | None:
-    """Filenames are `NNN_<category>.md`."""
-    m = re.match(r"^\d+_(.+)\.md$", name)
-    return m.group(1) if m else None
+    """Ground truth lives in a separate manifest, never in the filename or doc content itself."""
+    return _GROUND_TRUTH.get(name)
 
 
 def load_candidates() -> list[dict]:

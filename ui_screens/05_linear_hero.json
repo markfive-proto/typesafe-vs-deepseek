@@ -1,0 +1,12 @@
+{
+  "source_url": "https://linear.app",
+  "screen_type": "marketing homepage hero",
+  "description": {
+    "layout": "Top nav bar: logo+wordmark left, 'Log in' text link and 'Sign up' pill button right, hamburger menu icon far right. Below the nav is a very large mostly-empty black hero area (likely reserved for a scroll-triggered animation not visible in this static capture) before a row of customer logos (Salesforce, Figma, Cursor, Coinbase, Ramp, and one cut off) under the label 'POWERING THE COMPANIES BUILDING THE FUTURE', followed by a headline paragraph 'A new species of product tool...' with the first sentence in white and the rest in dimmer gray.",
+    "color_scheme": "Pure black background throughout, white primary text, medium-gray secondary text (nav 'Log in' link and the second half of the hero paragraph), white pill button for 'Sign up' with black label text.",
+    "typography": "Small nav text, then a large serif-free headline sentence mixing full-white and dimmed-gray runs in the same paragraph to create emphasis without a separate heading, small uppercase tracked-out label above the logo row.",
+    "spacing_alignment": "Roughly 700-800px of empty vertical space between the nav bar and the first visible content (logo row) at this viewport — a large content gap in this particular scroll position. Customer logos are left-aligned in a single row with consistent vertical centering but inconsistent logo widths (wordmarks vs. icon+wordmark).",
+    "accessibility_signals": "High contrast for primary white text; the dimmed-gray portion of the hero paragraph and the uppercase tracking label are notably lower contrast against black and may be hard to read for low-vision users. No visible focus indicators in this static capture.",
+    "notable_elements": "Large empty hero space above the fold (possibly animation-dependent content not rendering here), two-tone emphasis technique within a single paragraph instead of a separate bold headline, customer-logo social proof row."
+  }
+}

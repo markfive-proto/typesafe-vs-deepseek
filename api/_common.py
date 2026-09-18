@@ -19,6 +19,7 @@ import design_pipeline as G
 import fraud_pipeline as F
 import recon_pipeline as N
 import guardrail_pipeline as S
+import ux_pipeline as U
 
 CORPORA = {"emails": R, "kb": K}
 
@@ -52,6 +53,10 @@ def list_recon_pairs():
 
 def list_security_requests():
     return S.list_requests()
+
+
+def list_ui_screens():
+    return U.list_screens()
 
 
 def safe_filename(name: str) -> str:

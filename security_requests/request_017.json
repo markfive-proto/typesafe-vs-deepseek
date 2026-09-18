@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0017",
+  "payload": "POST /api/login {\"username\": \"admin'--\", \"password\": \"x\"}",
+  "ground_truth": {
+    "threat_category": "sqli",
+    "is_sqli": true,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

@@ -51,23 +51,25 @@ PII_LEAK = [
 
 CATEGORY_SOURCES = {"benign": BENIGN, "sqli": SQLI, "prompt_injection": PROMPT_INJECTION, "pii_leak": PII_LEAK}
 
+all_items = [(category, text) for category, items in CATEGORY_SOURCES.items() for text in items]
+random.shuffle(all_items)  # so sequential filenames don't cluster by category either
+
 manifest = {}
 count = 0
-for category, items in CATEGORY_SOURCES.items():
-    for text in items:
-        count += 1
-        req = {
-            "request_id": f"req_{count:04d}",
-            "payload": text,
-            "ground_truth": {
-                "threat_category": category,
-                "is_sqli": category == "sqli",
-                "is_prompt_injection": category == "prompt_injection",
-                "contains_pii": category == "pii_leak",
-            },
-        }
-        fname = f"{count:02d}_{category}.json"
-        (OUT / fname).write_text(json.dumps(req, indent=2))
-        manifest[fname] = req["ground_truth"]
+for category, text in all_items:
+    count += 1
+    req = {
+        "request_id": f"req_{count:04d}",
+        "payload": text,
+        "ground_truth": {
+            "threat_category": category,
+            "is_sqli": category == "sqli",
+            "is_prompt_injection": category == "prompt_injection",
+            "contains_pii": category == "pii_leak",
+        },
+    }
+    fname = f"request_{count:03d}.json"
+    (OUT / fname).write_text(json.dumps(req, indent=2))
+    manifest[fname] = req["ground_truth"]
 
 print(f"wrote {count} requests to {OUT}")

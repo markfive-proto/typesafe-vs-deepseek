@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0023",
+  "payload": "POST /api/reviews {\"rating\": 5, \"text\": \"Great product, fast shipping!\"}",
+  "ground_truth": {
+    "threat_category": "benign",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

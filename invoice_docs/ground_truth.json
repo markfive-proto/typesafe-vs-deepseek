@@ -1,5 +1,5 @@
 {
-  "01_services.pdf": {
+  "invoice_001.pdf": {
     "vendor": "Loom Design Studio",
     "invoice_number": "INV-69222",
     "date": "09/28/2026",
@@ -28,7 +28,7 @@
     "tax": 329.0,
     "total": 4441.45
   },
-  "02_goods.xlsx": {
+  "invoice_002.xlsx": {
     "vendor": "Northwind Supply Co",
     "invoice_number": "INV-88045",
     "date": "07/15/2026",
@@ -57,7 +57,7 @@
     "tax": 101.36,
     "total": 1368.42
   },
-  "03_services.pdf": {
+  "invoice_003.pdf": {
     "vendor": "Loom Design Studio",
     "invoice_number": "INV-87458",
     "date": "04/17/2026",
@@ -86,7 +86,7 @@
     "tax": 378.35,
     "total": 5107.72
   },
-  "04_utilities_subscription.xlsx": {
+  "invoice_004.xlsx": {
     "vendor": "Attic Robotics Cloud",
     "invoice_number": "INV-51324",
     "date": "04/17/2026",
@@ -121,7 +121,7 @@
     "tax": 71.2,
     "total": 961.16
   },
-  "05_goods.pdf": {
+  "invoice_005.pdf": {
     "vendor": "Cobalt Outfitters",
     "invoice_number": "INV-59212",
     "date": "12/13/2026",
@@ -162,7 +162,7 @@
     "tax": 212.83,
     "total": 2873.24
   },
-  "06_goods.xlsx": {
+  "invoice_006.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-68644",
     "date": "09/07/2026",
@@ -191,7 +191,7 @@
     "tax": 255.81,
     "total": 3453.42
   },
-  "07_services.pdf": {
+  "invoice_007.pdf": {
     "vendor": "Ridgeline Legal Partners",
     "invoice_number": "INV-37618",
     "date": "03/13/2026",
@@ -214,7 +214,7 @@
     "tax": 104.91,
     "total": 1416.31
   },
-  "08_services.xlsx": {
+  "invoice_008.xlsx": {
     "vendor": "Harbor & Co Advisory",
     "invoice_number": "INV-60616",
     "date": "02/03/2026",
@@ -237,7 +237,7 @@
     "tax": 96.31,
     "total": 1300.2
   },
-  "09_utilities_subscription.pdf": {
+  "invoice_009.pdf": {
     "vendor": "Nimbus Utilities",
     "invoice_number": "INV-26675",
     "date": "10/16/2026",
@@ -266,7 +266,7 @@
     "tax": 287.88,
     "total": 3886.43
   },
-  "10_utilities_subscription.xlsx": {
+  "invoice_010.xlsx": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-60883",
     "date": "08/20/2026",
@@ -289,7 +289,7 @@
     "tax": 35.6,
     "total": 480.61
   },
-  "11_goods.pdf": {
+  "invoice_011.pdf": {
     "vendor": "Cobalt Outfitters",
     "invoice_number": "INV-43683",
     "date": "07/27/2026",
@@ -330,7 +330,7 @@
     "tax": 452.97,
     "total": 6115.1
   },
-  "12_services.xlsx": {
+  "invoice_012.xlsx": {
     "vendor": "Loom Design Studio",
     "invoice_number": "INV-42645",
     "date": "01/02/2026",
@@ -359,7 +359,7 @@
     "tax": 326.1,
     "total": 4402.39
   },
-  "13_utilities_subscription.pdf": {
+  "invoice_013.pdf": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-87316",
     "date": "01/01/2026",
@@ -400,7 +400,7 @@
     "tax": 245.3,
     "total": 3311.51
   },
-  "14_utilities_subscription.xlsx": {
+  "invoice_014.xlsx": {
     "vendor": "BrightRoute Hosting",
     "invoice_number": "INV-26979",
     "date": "06/12/2026",
@@ -423,7 +423,7 @@
     "tax": 385.52,
     "total": 5204.54
   },
-  "15_services.pdf": {
+  "invoice_015.pdf": {
     "vendor": "Ridgeline Legal Partners",
     "invoice_number": "INV-91914",
     "date": "11/13/2026",
@@ -464,7 +464,7 @@
     "tax": 493.27,
     "total": 6659.2
   },
-  "16_goods.xlsx": {
+  "invoice_016.xlsx": {
     "vendor": "Northwind Supply Co",
     "invoice_number": "INV-50663",
     "date": "10/03/2026",
@@ -505,7 +505,7 @@
     "tax": 450.84,
     "total": 6086.34
   },
-  "17_utilities_subscription.pdf": {
+  "invoice_017.pdf": {
     "vendor": "Nimbus Utilities",
     "invoice_number": "INV-75314",
     "date": "04/11/2026",
@@ -546,7 +546,7 @@
     "tax": 471.46,
     "total": 6364.74
   },
-  "18_utilities_subscription.xlsx": {
+  "invoice_018.xlsx": {
     "vendor": "BrightRoute Hosting",
     "invoice_number": "INV-46280",
     "date": "03/04/2026",
@@ -587,7 +587,7 @@
     "tax": 572.44,
     "total": 7728.0
   },
-  "19_utilities_subscription.pdf": {
+  "invoice_019.pdf": {
     "vendor": "Attic Robotics Cloud",
     "invoice_number": "INV-84787",
     "date": "06/10/2026",
@@ -610,7 +610,7 @@
     "tax": 67.08,
     "total": 905.57
   },
-  "20_goods.xlsx": {
+  "invoice_020.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-16152",
     "date": "11/04/2026",
@@ -651,7 +651,7 @@
     "tax": 324.38,
     "total": 4379.09
   },
-  "21_utilities_subscription.pdf": {
+  "invoice_021.pdf": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-61578",
     "date": "12/08/2026",
@@ -674,7 +674,7 @@
     "tax": 254.69,
     "total": 3438.36
   },
-  "22_utilities_subscription.xlsx": {
+  "invoice_022.xlsx": {
     "vendor": "BrightRoute Hosting",
     "invoice_number": "INV-59388",
     "date": "09/19/2026",
@@ -709,7 +709,7 @@
     "tax": 234.17,
     "total": 3161.27
   },
-  "23_services.pdf": {
+  "invoice_023.pdf": {
     "vendor": "Harbor & Co Advisory",
     "invoice_number": "INV-12051",
     "date": "06/17/2026",
@@ -732,7 +732,7 @@
     "tax": 188.81,
     "total": 2548.95
   },
-  "24_goods.xlsx": {
+  "invoice_024.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-18396",
     "date": "07/26/2026",
@@ -755,7 +755,7 @@
     "tax": 99.09,
     "total": 1337.76
   },
-  "25_utilities_subscription.pdf": {
+  "invoice_025.pdf": {
     "vendor": "Nimbus Utilities",
     "invoice_number": "INV-74563",
     "date": "10/23/2026",
@@ -778,7 +778,7 @@
     "tax": 192.94,
     "total": 2604.66
   },
-  "26_utilities_subscription.xlsx": {
+  "invoice_026.xlsx": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-78522",
     "date": "09/27/2026",
@@ -813,7 +813,7 @@
     "tax": 366.92,
     "total": 4953.48
   },
-  "27_goods.pdf": {
+  "invoice_027.pdf": {
     "vendor": "Northwind Supply Co",
     "invoice_number": "INV-89328",
     "date": "07/01/2026",
@@ -836,7 +836,7 @@
     "tax": 314.64,
     "total": 4247.66
   },
-  "28_utilities_subscription.xlsx": {
+  "invoice_028.xlsx": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-18637",
     "date": "09/15/2026",
@@ -877,7 +877,7 @@
     "tax": 328.71,
     "total": 4437.54
   },
-  "29_goods.pdf": {
+  "invoice_029.pdf": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-30385",
     "date": "04/01/2026",
@@ -912,7 +912,7 @@
     "tax": 625.32,
     "total": 8441.88
   },
-  "30_utilities_subscription.xlsx": {
+  "invoice_030.xlsx": {
     "vendor": "Nimbus Utilities",
     "invoice_number": "INV-13047",
     "date": "07/21/2026",
@@ -953,7 +953,7 @@
     "tax": 677.77,
     "total": 9149.9
   },
-  "31_goods.pdf": {
+  "invoice_031.pdf": {
     "vendor": "Fernway Retail",
     "invoice_number": "INV-89053",
     "date": "06/07/2026",
@@ -982,7 +982,7 @@
     "tax": 201.01,
     "total": 2713.63
   },
-  "32_services.xlsx": {
+  "invoice_032.xlsx": {
     "vendor": "Vertex Consulting",
     "invoice_number": "INV-36299",
     "date": "07/21/2026",
@@ -1005,7 +1005,7 @@
     "tax": 43.3,
     "total": 584.6
   },
-  "33_utilities_subscription.pdf": {
+  "invoice_033.pdf": {
     "vendor": "Attic Robotics Cloud",
     "invoice_number": "INV-75901",
     "date": "11/27/2026",
@@ -1034,7 +1034,7 @@
     "tax": 318.46,
     "total": 4299.17
   },
-  "34_goods.xlsx": {
+  "invoice_034.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-34187",
     "date": "02/07/2026",
@@ -1063,7 +1063,7 @@
     "tax": 175.69,
     "total": 2371.84
   },
-  "35_services.pdf": {
+  "invoice_035.pdf": {
     "vendor": "Loom Design Studio",
     "invoice_number": "INV-65894",
     "date": "09/12/2026",
@@ -1104,7 +1104,7 @@
     "tax": 584.9,
     "total": 7896.16
   },
-  "36_goods.xlsx": {
+  "invoice_036.xlsx": {
     "vendor": "Fernway Retail",
     "invoice_number": "INV-21118",
     "date": "12/28/2026",
@@ -1145,7 +1145,7 @@
     "tax": 898.21,
     "total": 12125.79
   },
-  "37_goods.pdf": {
+  "invoice_037.pdf": {
     "vendor": "Cobalt Outfitters",
     "invoice_number": "INV-37109",
     "date": "12/06/2026",
@@ -1168,7 +1168,7 @@
     "tax": 91.5,
     "total": 1235.3
   },
-  "38_goods.xlsx": {
+  "invoice_038.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-45779",
     "date": "11/10/2026",
@@ -1203,7 +1203,7 @@
     "tax": 485.52,
     "total": 6554.52
   },
-  "39_utilities_subscription.pdf": {
+  "invoice_039.pdf": {
     "vendor": "BrightRoute Hosting",
     "invoice_number": "INV-25042",
     "date": "10/04/2026",
@@ -1232,7 +1232,7 @@
     "tax": 103.2,
     "total": 1393.2
   },
-  "40_services.xlsx": {
+  "invoice_040.xlsx": {
     "vendor": "Harbor & Co Advisory",
     "invoice_number": "INV-82097",
     "date": "09/17/2026",
@@ -1273,7 +1273,7 @@
     "tax": 827.47,
     "total": 11170.9
   },
-  "41_services.pdf": {
+  "invoice_041.pdf": {
     "vendor": "Ridgeline Legal Partners",
     "invoice_number": "INV-66305",
     "date": "08/14/2026",
@@ -1308,7 +1308,7 @@
     "tax": 587.08,
     "total": 7925.64
   },
-  "42_goods.xlsx": {
+  "invoice_042.xlsx": {
     "vendor": "Northwind Supply Co",
     "invoice_number": "INV-42115",
     "date": "10/02/2026",
@@ -1337,7 +1337,7 @@
     "tax": 219.06,
     "total": 2957.36
   },
-  "43_goods.pdf": {
+  "invoice_043.pdf": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-66297",
     "date": "12/16/2026",
@@ -1372,7 +1372,7 @@
     "tax": 460.53,
     "total": 6217.19
   },
-  "44_goods.xlsx": {
+  "invoice_044.xlsx": {
     "vendor": "Atlas Hardware",
     "invoice_number": "INV-16823",
     "date": "06/17/2026",
@@ -1401,7 +1401,7 @@
     "tax": 283.74,
     "total": 3830.51
   },
-  "45_services.pdf": {
+  "invoice_045.pdf": {
     "vendor": "Vertex Consulting",
     "invoice_number": "INV-48027",
     "date": "12/05/2026",
@@ -1430,7 +1430,7 @@
     "tax": 269.52,
     "total": 3638.47
   },
-  "46_utilities_subscription.xlsx": {
+  "invoice_046.xlsx": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-92981",
     "date": "05/25/2026",
@@ -1459,7 +1459,7 @@
     "tax": 479.31,
     "total": 6470.68
   },
-  "47_services.pdf": {
+  "invoice_047.pdf": {
     "vendor": "Loom Design Studio",
     "invoice_number": "INV-13526",
     "date": "10/02/2026",
@@ -1482,7 +1482,7 @@
     "tax": 130.16,
     "total": 1757.2
   },
-  "48_utilities_subscription.xlsx": {
+  "invoice_048.xlsx": {
     "vendor": "CloudSync Inc",
     "invoice_number": "INV-92720",
     "date": "06/16/2026",
@@ -1523,7 +1523,7 @@
     "tax": 511.75,
     "total": 6908.67
   },
-  "49_goods.pdf": {
+  "invoice_049.pdf": {
     "vendor": "Fernway Retail",
     "invoice_number": "INV-48126",
     "date": "09/25/2026",
@@ -1552,7 +1552,7 @@
     "tax": 216.11,
     "total": 2917.51
   },
-  "50_utilities_subscription.xlsx": {
+  "invoice_050.xlsx": {
     "vendor": "Nimbus Utilities",
     "invoice_number": "INV-99827",
     "date": "08/10/2026",

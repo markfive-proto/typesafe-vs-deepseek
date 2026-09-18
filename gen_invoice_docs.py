@@ -111,7 +111,7 @@ manifest = {}
 for i in range(1, 51):
     inv = make_invoice(i)
     fmt = "pdf" if i % 2 == 1 else "xlsx"
-    fname = f"{i:02d}_{inv['category']}.{fmt}"
+    fname = f"invoice_{i:03d}.{fmt}"
     path = OUT / fname
     if fmt == "pdf":
         write_pdf(inv, path)

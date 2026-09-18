@@ -125,6 +125,13 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
 .split { display: flex; gap: 20px; align-items: flex-start; }
 .split-left { flex: 0 0 300px; min-width: 0; }
 .split-right { flex: 1; min-width: 0; }
+.split.collapsed .split-left { display: none; }
+.split-toggle {
+  display: inline-flex; align-items: center; gap: 4px; font-family: inherit; font-size: 0.72rem;
+  color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 9px; cursor: pointer; margin-bottom: 10px;
+}
+.split-toggle:hover { color: var(--ink); border-color: var(--ink); }
 .split-placeholder {
   border: 1px dashed var(--border); border-radius: 10px; padding: 32px 20px;
   text-align: center; color: var(--muted); font-size: 0.85rem;
@@ -148,6 +155,10 @@ td.num, th.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: 
 .feed-engine-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 3px; }
 .feed-engine-body { font-size: 0.78rem; line-height: 1.5; }
 .feed-meta { font-size: 0.68rem; color: var(--muted); margin-top: 4px; font-family: "IBM Plex Mono", monospace; }
+.feed-preview { margin-bottom: 8px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); background: var(--bg); }
+.feed-preview embed, .feed-preview iframe { width: 100%; height: 160px; display: block; border: none; }
+.feed-preview .feed-preview-fallback { display: flex; align-items: center; justify-content: center; gap: 6px; height: 60px; font-size: 0.78rem; color: var(--muted); }
+.feed-score { margin-top: 6px; font-size: 0.78rem; font-weight: 600; }
 
 footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
 
@@ -225,6 +236,7 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     <button id="tab-fraud">Fraud Triage</button>
     <button id="tab-recon">Reconciliation</button>
     <button id="tab-guardrail">Security Guardrail</button>
+    <button id="tab-ux">UX Audit</button>
   </nav>
 
   <!-- DOCUMENTS -->
@@ -524,6 +536,35 @@ footer.note { margin-top: 20px; font-size: 0.78rem; color: var(--muted); border-
     </div>
   </section>
 
+  <!-- UX AUDIT -->
+  <section id="view-ux" class="view">
+    <p class="sub" style="margin-bottom:12px;">
+      5 real screens captured live from tailwindcss.com, news.ycombinator.com, github.com,
+      vercel.com, and linear.app (Mobbin MCP needed a paid plan we don't have). Since Jev takes
+      text only, each was converted to a structured description by direct visual inspection —
+      same "look, then judge" pattern as the invoice pipeline. No ground truth here (subjective
+      UX quality isn't a right-answer test) — a genuine side-by-side critique, not a score.
+    </p>
+    <div class="split">
+      <div class="split-left">
+        <div class="picker" id="ux-picker"></div>
+        <div class="controls">
+          <button class="ghost" id="ux-selall">Select all</button>
+          <button class="primary" id="ux-run" disabled>Run comparison (0)</button>
+        </div>
+      </div>
+      <div class="split-right">
+        <p class="split-placeholder" id="ux-placeholder">Pick screens on the left, then run — critiques stream in here live.</p>
+        <div class="table-wrap">
+          <table id="ux-results" hidden>
+            <thead id="ux-thead"></thead>
+            <tbody id="ux-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="note">
     Time to output = when that engine's own last response actually landed (its real, per-engine finish
     time — not a shared clock dominated by whichever engine is slowest). Sum latencies = if every one of
@@ -552,6 +593,12 @@ function fmtCost(v) {
   if (v == null) return '—';
   if (v === 0) return '$0';
   return '$' + v.toFixed(v < 0.001 ? 6 : 4);
+}
+// "Accuracy" must mean every field the table actually marks with a ✓/✗, not just one of
+// several — otherwise a row full of red ✗ marks next to a green 100% reads as a lie (it isn't
+// hardcoded, it was just grading a narrower thing than what's visibly checked).
+function amountsMatch(a, b) {
+  return Math.abs(parseFloat(String(a).replace(/[^0-9.]/g, '')) - b) < 0.01;
 }
 
 function cssEscape(s) { return s.replace(/[^a-zA-Z0-9_-]/g, '_'); }
@@ -597,8 +644,8 @@ function cmpbarFinal(engine, { wall, sum, tokIn, tokOut, cost, acc, halluc, n })
 }
 
 // ---------- tabs ----------
-const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design', card: 'tab-card', usecases: 'tab-usecases', fraud: 'tab-fraud', recon: 'tab-recon', guardrail: 'tab-guardrail' };
-const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design', card: 'view-card', usecases: 'view-usecases', fraud: 'view-fraud', recon: 'view-recon', guardrail: 'view-guardrail' };
+const tabs = { documents: 'tab-documents', emails: 'tab-emails', retrieval: 'tab-retrieval', gategen: 'tab-gategen', design: 'tab-design', card: 'tab-card', usecases: 'tab-usecases', fraud: 'tab-fraud', recon: 'tab-recon', guardrail: 'tab-guardrail', ux: 'tab-ux' };
+const views = { documents: 'view-documents', emails: 'view-emails', retrieval: 'view-retrieval', gategen: 'view-gategen', design: 'view-design', card: 'view-card', usecases: 'view-usecases', fraud: 'view-fraud', recon: 'view-recon', guardrail: 'view-guardrail', ux: 'view-ux' };
 Object.keys(tabs).forEach(name => {
   document.getElementById(tabs[name]).addEventListener('click', () => switchTab(name));
 });
@@ -645,9 +692,12 @@ function buildThead(theadEl, fieldLabels) {
   theadEl.innerHTML = `<tr>${row1}</tr><tr>${row2}</tr>`;
 }
 
-// ---------- process feed: one card per file, appended as soon as all 3 engines finish it ----------
-// Gives a narrative "watch it happen" view alongside the table — same data, just presented as
-// a chronological feed instead of a wall of cells that all fill in silently at once.
+// ---------- process feed: one card per file, all 3 engine columns created UP FRONT ----------
+// Cards (and every column's "processing…" state) appear for every file immediately, before any
+// response has come back — because the requests really are fired concurrently, and the point of
+// this view is to make that visible: you see all three columns working at once, then each one
+// fills in independently, at its own real speed, instead of updates only surfacing after
+// everything is already done.
 function getOrCreateFeed(tableBody) {
   const table = tableBody.closest('table');
   let feed = table.previousElementSibling;
@@ -665,20 +715,36 @@ function summarizeResult(data) {
   const skip = new Set(['file', 'ground_truth', 'tokens', 'timing_ms', 'cost_usd', 'hallucinated', 'title', 'source_url']);
   const parts = Object.entries(data).filter(([k, v]) => !skip.has(k) && v != null)
     .map(([k, v]) => `<b>${k.replace(/_/g, ' ')}:</b> ${typeof v === 'object' ? JSON.stringify(v) : v}`);
-  const meta = `${data.timing_ms.total}ms · ${fmtCost(data.cost_usd)}${data.hallucinated ? ' · <span class="halluc-mark">⚠ hallucinated</span>' : ''}`;
+  const meta = `${data.timing_ms.total}ms · ${fmtCost(data.cost_usd)}`;
   return `${parts.join(' · ')}<div class="feed-meta">${meta}</div>`;
 }
-function appendFeedCard(feed, file, resultsByEngine) {
-  const engineBlocks = ENGINES.map(e => `
-    <div class="feed-engine ${e.cls}">
+function createFeedCard(feed, file, renderPreview) {
+  const id = cssEscape(file);
+  const cols = ENGINES.map(e => `
+    <div class="feed-engine ${e.cls}" id="feedcol-${e.key}-${id}">
       <div class="feed-engine-label">${e.label}</div>
-      <div class="feed-engine-body">${summarizeResult(resultsByEngine[e.key])}</div>
+      ${renderPreview ? `<div class="feed-preview">${renderPreview(file)}</div>` : ''}
+      <div class="feed-engine-body"><span class="status-run">processing…</span></div>
+      <div class="feed-score"></div>
     </div>`).join('');
   const card = document.createElement('div');
   card.className = 'feed-card';
-  card.innerHTML = `<div class="feed-file">${file}</div><div class="feed-engines">${engineBlocks}</div>`;
+  card.id = `feedcard-${id}`;
+  card.innerHTML = `<div class="feed-file">${file}</div><div class="feed-engines">${cols}</div>`;
   feed.appendChild(card);
   card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function updateFeedColumn(file, engineKey, data, correct) {
+  const id = cssEscape(file);
+  const col = document.getElementById(`feedcol-${engineKey}-${id}`);
+  if (!col) return;
+  col.querySelector('.feed-engine-body').innerHTML = summarizeResult(data);
+  const scoreEl = col.querySelector('.feed-score');
+  if (data.error) return;
+  const bits = [];
+  if (correct != null) bits.push(correct ? '<span class="ok-mark">✓ correct</span>' : '<span class="bad-mark">✗ incorrect</span>');
+  if (data.hallucinated) bits.push('<span class="halluc-mark">⚠ hallucinated</span>');
+  scoreEl.innerHTML = bits.join(' ');
 }
 
 // ---------- generic N-engine comparison runner ----------
@@ -687,14 +753,13 @@ function appendFeedCard(feed, file, resultsByEngine) {
 // once at the very end), and computes per-engine time-to-output (when THAT engine's own last
 // response actually landed, not the shared Promise.all finish time — otherwise a fast engine
 // reads as slow just because a different engine is still running).
-async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles, isCorrect }) {
+async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles, isCorrect, trackAccuracy = true, renderPreview }) {
   cmpbarShow(titles);
   ENGINES.forEach(e => cmpbarProgress(e.key, 0, files.length));
   tableBody.innerHTML = files.map(rowHtml).join('');
   files.forEach(f => setRunning(`row-${cssEscape(f)}`));
   const feed = getOrCreateFeed(tableBody);
-  const pending = {};
-  files.forEach(f => pending[f] = {});
+  files.forEach(f => createFeedCard(feed, f, renderPreview));
 
   const agg = {};
   ENGINES.forEach(e => agg[e.key] = { sum: 0, tokIn: 0, tokOut: 0, cost: 0, correct: 0, halluc: 0, n: 0, done: 0 });
@@ -705,23 +770,20 @@ async function runComparison({ files, urls, tableBody, rowHtml, fillRow, titles,
   await Promise.all(files.flatMap(file => ENGINES.map(e => {
     const a = agg[e.key];
     return post(urls[e.key], { file }).then(data => {
+      let correct = null;
       if (!data.error) {
         a.sum += data.timing_ms.total; a.tokIn += data.tokens?.input || 0; a.tokOut += data.tokens?.output || 0;
         a.cost += data.cost_usd || 0; a.n++;
-        if (isCorrect(e.key, data)) a.correct++;
+        if (trackAccuracy) { correct = isCorrect(e.key, data); if (correct) a.correct++; }
         if (data.hallucinated) a.halluc++;
       }
       a.done++;
       cmpbarProgress(e.key, a.done, files.length);
       // live running totals — updates on every single completion, not just once at the end.
       const wall = performance.now() - batchStart;
-      cmpbarFinal(e.key, { wall, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: a.n ? a.correct / a.n : null, halluc: a.halluc, n: a.n });
+      cmpbarFinal(e.key, { wall, sum: a.sum, tokIn: a.tokIn, tokOut: a.tokOut, cost: a.cost, acc: trackAccuracy ? (a.n ? a.correct / a.n : null) : null, halluc: a.halluc, n: a.n });
       fillRow(file, e.key, data);
-
-      pending[file][e.key] = data;
-      if (Object.keys(pending[file]).length === ENGINES.length) {
-        appendFeedCard(feed, file, pending[file]);
-      }
+      updateFeedColumn(file, e.key, data, correct);
     });
   })));
 }
@@ -791,7 +853,7 @@ function docFillRow(file, engine, data) {
     return;
   }
   const catOk = data.ground_truth && data.category === data.ground_truth.category;
-  const totOk = data.ground_truth && Math.abs(parseFloat(String(data.total_amount).replace(/[^0-9.]/g, '')) - data.ground_truth.total) < 0.01;
+  const totOk = data.ground_truth && amountsMatch(data.total_amount, data.ground_truth.total);
   document.getElementById(`${engine}-cat-${id}`).innerHTML = `${data.category ?? '—'} ${data.ground_truth ? mark(catOk) : ''}${hallucMark(data.hallucinated)}`;
   document.getElementById(`${engine}-tot-${id}`).innerHTML = `${data.total_amount ?? '—'} ${data.ground_truth ? mark(totOk) : ''}`;
   document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
@@ -800,6 +862,13 @@ function docFillRow(file, engine, data) {
     : `${data.tokens.input}/${data.tokens.output}`;
   const allDone = ENGINES.every(e => document.getElementById(`${e.key}-ms-${id}`).textContent !== '—');
   if (allDone) tr.querySelectorAll('td')[2].innerHTML = '<span class="status-ok">done</span>';
+}
+
+function docRenderPreview(file) {
+  if (file.endsWith('.pdf')) {
+    return `<embed src="/invoice_docs/${encodeURIComponent(file)}" type="application/pdf">`;
+  }
+  return `<div class="feed-preview-fallback">📊 ${file} (no browser preview for .xlsx)</div>`;
 }
 
 docRunBtn.addEventListener('click', () => {
@@ -811,7 +880,8 @@ docRunBtn.addEventListener('click', () => {
     files,
     urls: { ts: '/api/process_document', ds: '/api/process_document_deepseek', oa: '/api/process_document_openai' },
     tableBody: docBody, rowHtml: docRowHtml, fillRow: docFillRow,
-    isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth.category,
+    isCorrect: (engine, data) => data.ground_truth && data.category === data.ground_truth.category && amountsMatch(data.total_amount, data.ground_truth.total),
+    renderPreview: docRenderPreview,
   }).finally(() => { docRunBtn.disabled = false; });
 });
 
@@ -1122,7 +1192,10 @@ dzRunBtn.addEventListener('click', () => {
     files,
     urls: { ts: '/api/audit_design', ds: '/api/audit_design_deepseek', oa: '/api/audit_design_openai' },
     tableBody: dzBody, rowHtml: dzRowHtml, fillRow: dzFillRow,
-    isCorrect: (engine, data) => data.ground_truth && data.all_layers_compliant === data.ground_truth.all_layers_compliant,
+    isCorrect: (engine, data) => data.ground_truth
+      && data.all_layers_compliant === data.ground_truth.all_layers_compliant
+      && data.breaking_change === data.ground_truth.breaking_change
+      && data.comment_category === data.ground_truth.comment_category,
   }).finally(() => { dzRunBtn.disabled = false; });
 });
 
@@ -1258,7 +1331,7 @@ document.getElementById('uc-table-body').innerHTML = TASK_SHAPES.map(([shape, wh
 // ================= generic simple audit tab (fraud / recon / guardrail) =================
 // Same shape as Design Audit's picker+table+3-engine-run, just parameterized — avoids
 // copy-pasting that whole wiring three more times for tabs that only differ in their fields.
-function setupAuditTab({ prefix, listUrl, urls, fields, buildGtSummary, fillFields, isCorrect }) {
+function setupAuditTab({ prefix, listUrl, urls, fields, buildGtSummary, fillFields, isCorrect, trackAccuracy = true, renderPreview }) {
   const picker = document.getElementById(`${prefix}-picker`);
   const runBtn = document.getElementById(`${prefix}-run`);
   const selAllBtn = document.getElementById(`${prefix}-selall`);
@@ -1290,6 +1363,7 @@ function setupAuditTab({ prefix, listUrl, urls, fields, buildGtSummary, fillFiel
     const tr = document.getElementById(`row-${id}`);
     if (!tr) return;
     if (data.ground_truth) tr.querySelector(`#gt-${id}`).textContent = buildGtSummary(data.ground_truth);
+    else if (data.screen_type) tr.querySelector(`#gt-${id}`).textContent = data.screen_type;
     if (data.error) { tr.querySelectorAll('td')[2].innerHTML = '<span class="status-err">error</span>'; return; }
     fillFields(engine, id, data);
     document.getElementById(`${engine}-ms-${id}`).textContent = data.timing_ms.total + 'ms';
@@ -1305,7 +1379,7 @@ function setupAuditTab({ prefix, listUrl, urls, fields, buildGtSummary, fillFiel
     runBtn.disabled = true;
     table.hidden = false;
     placeholder.hidden = true;
-    runComparison({ files, urls, tableBody: body, rowHtml, fillRow, isCorrect }).finally(() => { runBtn.disabled = false; });
+    runComparison({ files, urls, tableBody: body, rowHtml, fillRow, isCorrect, trackAccuracy, renderPreview }).finally(() => { runBtn.disabled = false; });
   });
 
   load();
@@ -1338,7 +1412,9 @@ setupAuditTab({
     document.getElementById(`${engine}-match-${id}`).innerHTML = `${data.is_match ? 'yes' : 'no'} ${gt ? mark(data.is_match === gt.is_match) : ''}`;
     document.getElementById(`${engine}-reason-${id}`).innerHTML = `${data.discrepancy_reason ?? '—'} ${gt ? mark(data.discrepancy_reason === gt.discrepancy_reason) : ''}${hallucMark(data.hallucinated)}`;
   },
-  isCorrect: (engine, data) => data.ground_truth && data.is_match === data.ground_truth.is_match,
+  isCorrect: (engine, data) => data.ground_truth
+    && data.is_match === data.ground_truth.is_match
+    && data.discrepancy_reason === data.ground_truth.discrepancy_reason,
 });
 
 // ---- Security Guardrail ----
@@ -1355,7 +1431,53 @@ setupAuditTab({
     document.getElementById(`${engine}-pi-${id}`).innerHTML = `${data.is_prompt_injection ? 'yes' : 'no'} ${gt ? mark(data.is_prompt_injection === gt.is_prompt_injection) : ''}`;
     document.getElementById(`${engine}-pii-${id}`).innerHTML = `${data.contains_pii ? 'yes' : 'no'} ${gt ? mark(data.contains_pii === gt.contains_pii) : ''}`;
   },
-  isCorrect: (engine, data) => data.ground_truth && data.threat_category === data.ground_truth.threat_category,
+  isCorrect: (engine, data) => data.ground_truth
+    && data.threat_category === data.ground_truth.threat_category
+    && data.is_sqli === data.ground_truth.is_sqli
+    && data.is_prompt_injection === data.ground_truth.is_prompt_injection
+    && data.contains_pii === data.ground_truth.contains_pii,
+});
+
+// ---- UX Audit ----
+function uxRenderPreview(file) {
+  return `<div class="feed-preview-fallback">🖥️ real screen (captured live, not from Mobbin)</div>`;
+}
+setupAuditTab({
+  prefix: 'ux',
+  listUrl: '/api/ui_screens',
+  urls: { ts: '/api/audit_ux', ds: '/api/audit_ux_deepseek', oa: '/api/audit_ux_openai' },
+  fields: [
+    { label: 'Usability', key: 'us', num: true }, { label: 'UI design', key: 'ui', num: true },
+    { label: 'A11y', key: 'a11y', num: true }, { label: 'Design sys', key: 'ds', num: true },
+    { label: 'Alignment', key: 'al', num: true }, { label: 'Verdict', key: 'verdict' },
+    { label: 'ms', key: 'ms', num: true }, { label: 'tokens/cost', key: 'tok', num: true },
+  ],
+  buildGtSummary: gt => '',
+  fillFields: (engine, id, data) => {
+    const s = data.scores || {};
+    document.getElementById(`${engine}-us-${id}`).textContent = s.usability?.toFixed(2) ?? '—';
+    document.getElementById(`${engine}-ui-${id}`).textContent = s.ui_design?.toFixed(2) ?? '—';
+    document.getElementById(`${engine}-a11y-${id}`).textContent = s.accessibility?.toFixed(2) ?? '—';
+    document.getElementById(`${engine}-ds-${id}`).textContent = s.design_system_consistency?.toFixed(2) ?? '—';
+    document.getElementById(`${engine}-al-${id}`).textContent = s.alignment_spacing?.toFixed(2) ?? '—';
+    document.getElementById(`${engine}-verdict-${id}`).innerHTML = `${data.verdict ?? '—'}${hallucMark(data.hallucinated)}`;
+  },
+  trackAccuracy: false,
+  renderPreview: uxRenderPreview,
+});
+
+// ---------- dismissable left sidebar (every tab) ----------
+document.querySelectorAll('.split').forEach(split => {
+  const right = split.querySelector('.split-right');
+  if (!right) return;
+  const btn = document.createElement('button');
+  btn.className = 'split-toggle';
+  btn.textContent = '‹ Hide list';
+  btn.addEventListener('click', () => {
+    const collapsed = split.classList.toggle('collapsed');
+    btn.textContent = collapsed ? '› Show list' : '‹ Hide list';
+  });
+  right.insertBefore(btn, right.firstChild);
 });
 
 loadDocuments();

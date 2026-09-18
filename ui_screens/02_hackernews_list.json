@@ -1,0 +1,12 @@
+{
+  "source_url": "https://news.ycombinator.com",
+  "screen_type": "content list / feed page",
+  "description": {
+    "layout": "Dense single-column numbered list of ~25 items visible in one viewport, no cards or dividers between items — just numeral, upvote triangle, title (link), domain in parens, then a metadata line (points, author, time, comment count, action links). Thin orange header bar at top with site logo box, nav links (new/past/comments/ask/show/jobs/submit), and a login link far right.",
+    "color_scheme": "Pale beige/cream page background, orange brand header bar, black link text, gray metadata text, visited-link coloring not visible in this capture.",
+    "typography": "Small sans-serif font throughout, uniform size for nearly all text (title links and metadata are similarly sized), no heading hierarchy beyond the header bar.",
+    "spacing_alignment": "Very tight line spacing, minimal padding between list rows, numerals right-aligned in a narrow column so titles start at a consistent left edge. No visual grouping/whitespace separating one story block from the next beyond the metadata line.",
+    "accessibility_signals": "Small font size throughout (looks well under 16px equivalent) could strain readability. Orange-on-white header contrast looks acceptable but link/metadata gray-on-cream contrast looks borderline low. No visible focus states. Extremely information-dense per screen, which helps power users but raises cognitive load for new users.",
+    "notable_elements": "Upvote triangles, numbered ranking, inline metadata line per item, no imagery anywhere on the page."
+  }
+}

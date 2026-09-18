@@ -1,0 +1,12 @@
+{
+  "source_url": "https://github.com/pricing",
+  "screen_type": "pricing / plan comparison page",
+  "description": {
+    "layout": "Simple top bar (hamburger, centered logo mark, Sign in button). Centered hero: large bold H1 'Try GitHub, the complete developer platform', a supporting paragraph, and a prominent dark 'Start free for 30 days' button. Below, a vertical stack of plan cards (Free, Team, ...) each with plan name, one-line description, large price display ($0 / $4 USD per user/month), a full-width CTA button, and a collapsible 'Show features' row. The Team card sits inside a highlighted 'RECOMMENDED' banner treatment.",
+    "color_scheme": "White background, black/near-black text and primary buttons, one blue accent used specifically for the 'RECOMMENDED' banner border to draw the eye to the suggested plan.",
+    "typography": "Large bold serif-free H1, medium-weight plan names, a very large price numeral with smaller 'USD' and 'per user/month' riders for clear price hierarchy.",
+    "spacing_alignment": "Plan cards are centered, consistent width, generous internal padding, clear visual separation via card borders and shadow. CTA buttons are full-card-width and vertically aligned across cards.",
+    "accessibility_signals": "High contrast black-on-white throughout. CTA button labels are descriptive ('Join for free', 'Continue with Team') rather than generic 'Click here'. 'Show features' looks like a disclosure control but no visible expand/collapse icon state shown in this capture.",
+    "notable_elements": "Price-anchoring hierarchy (huge numeral), a single visually highlighted recommended-plan banner, stacked (not side-by-side) plan cards at this viewport width."
+  }
+}

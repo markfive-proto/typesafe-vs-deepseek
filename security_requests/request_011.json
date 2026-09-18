@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0011",
+  "payload": "GET /api/products?category=1; DROP TABLE users;--",
+  "ground_truth": {
+    "threat_category": "sqli",
+    "is_sqli": true,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

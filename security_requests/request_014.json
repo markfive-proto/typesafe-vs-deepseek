@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0014",
+  "payload": "chat message: My home address is 742 Evergreen Terrace, can you ship it there instead?",
+  "ground_truth": {
+    "threat_category": "pii_leak",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": true
+  }
+}

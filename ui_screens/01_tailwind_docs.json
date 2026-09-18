@@ -1,0 +1,12 @@
+{
+  "source_url": "https://tailwindcss.com/docs/installation/using-vite",
+  "screen_type": "documentation page",
+  "description": {
+    "layout": "Left sidebar nav (collapsed to hamburger icon at this width) with breadcrumb 'Getting Started > Using Vite' at top. Single-column article body: eyebrow label 'INSTALLATION' in small caps, large H1 'Get started with Tailwind CSS', two intro paragraphs, then a horizontal tab row (Using Vite / Using PostCSS / Tailwind CLI / Framework Guides / Play CDN) with the active tab underlined. Below that, numbered steps (01, 02, 03) each with a bold step title, one line of body text, and a dark code-block terminal panel with a copy icon top-right.",
+    "color_scheme": "Near-black background (#0a0a0a-ish), off-white body text, muted gray for secondary text, a small blue accent for the active tab underline and inline code. Code blocks are a slightly lighter dark gray than the page background.",
+    "typography": "Clean sans-serif, clear size hierarchy (large H1, medium step titles, small body). Code uses a monospace font with syntax coloring (pink for npm command, cyan for package names).",
+    "spacing_alignment": "Generous vertical rhythm between sections. Step numbers are left-aligned in bracketed boxes ([01]) which line up consistently down the page. Code blocks are full-width within the content column with consistent internal padding.",
+    "accessibility_signals": "Text contrast on dark background looks high (near-white on near-black). The hamburger icon has no visible text label. Tab row has no visible focus ring shown in this static capture. Copy-icon buttons on code blocks have no visible text label either.",
+    "notable_elements": "Numbered step boxes with monospace-style numerals, horizontal framework-choice tabs, terminal-style code blocks with copy buttons."
+  }
+}

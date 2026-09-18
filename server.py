@@ -21,6 +21,7 @@ import design_pipeline as G
 import fraud_pipeline as F
 import recon_pipeline as N
 import guardrail_pipeline as S
+import ux_pipeline as U
 
 P.load_env()
 
@@ -102,10 +103,19 @@ class Handler(BaseHTTPRequestHandler):
             return self._json({"files": N.list_pairs()})
         if parsed.path == "/api/security_requests":
             return self._json({"files": S.list_requests()})
+        if parsed.path == "/api/ui_screens":
+            return self._json({"files": U.list_screens()})
         if parsed.path == "/api/queries":
             corpus = parse_qs(parsed.query).get("corpus", ["emails"])[0]
             mod = CORPORA.get(corpus, CORPORA["emails"])
             return self._json({"queries": {k: v["text"] for k, v in mod.QUERIES.items()}})
+        if parsed.path.startswith("/invoice_docs/"):
+            fname = parsed.path.removeprefix("/invoice_docs/")
+            fpath = DOCS / fname
+            if fpath.is_file() and fpath.resolve().parent == DOCS.resolve():
+                ctype = mimetypes.guess_type(str(fpath))[0] or "application/octet-stream"
+                return self._file(fpath, ctype)
+            return self._json({"error": "not found"}, 404)
         if parsed.path.startswith("/emails_samples/"):
             fname = parsed.path.removeprefix("/emails_samples/")
             fpath = EMAILS / fname
@@ -147,6 +157,9 @@ class Handler(BaseHTTPRequestHandler):
             "/api/audit_guardrail": (S.classify, name),
             "/api/audit_guardrail_deepseek": (S.classify_via_deepseek, name),
             "/api/audit_guardrail_openai": (S.classify_via_openai, name),
+            "/api/audit_ux": (U.classify, name),
+            "/api/audit_ux_deepseek": (U.classify_via_deepseek, name),
+            "/api/audit_ux_openai": (U.classify_via_openai, name),
         }
         if parsed.path in routes:
             fn, arg = routes[parsed.path]

@@ -1,0 +1,10 @@
+{
+  "request_id": "req_0008",
+  "payload": "GET /api/products?category=electronics&sort=price_asc",
+  "ground_truth": {
+    "threat_category": "benign",
+    "is_sqli": false,
+    "is_prompt_injection": false,
+    "contains_pii": false
+  }
+}

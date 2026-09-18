@@ -9,15 +9,16 @@ import pipeline as P
 
 ROOT = Path(__file__).parent
 EMAILS = ROOT / "emails_samples"
+_GROUND_TRUTH = json.loads((EMAILS / "ground_truth.json").read_text()) if (EMAILS / "ground_truth.json").exists() else {}
 
 # deepseek-flash off-peak pricing, per token (https://api-docs.deepseek.com/quick_start/pricing)
 DEEPSEEK_PRICE = {"cache_hit_in": 0.003e-6, "cache_miss_in": 0.15e-6, "out": 0.6e-6}
 
 
 def ground_truth(name: str) -> str | None:
-    """Sample filenames are `NN_<category>.md` — the label is the generator's ground truth."""
-    m = re.match(r"^\d+_(.+)\.md$", name)
-    return m.group(1) if m else None
+    """Ground truth lives in a separate manifest, never in the filename or the email content
+    itself — so the category can't be guessed from the file list, and the model never sees it."""
+    return _GROUND_TRUTH.get(name)
 
 CATEGORY_CRITERIA = {
     "work": "internal team/project communication: status updates, meetings, requests from colleagues. Not a customer-facing or automated message.",
