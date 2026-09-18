@@ -1,9 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/api/:route*", "destination": "/api/index?route=:route*" }
-  ],
   "functions": {
-    "api/index.py": {
+    "api/*.py": {
       "includeFiles": "{invoice_docs/**,emails_samples/**}"
     }
   }
