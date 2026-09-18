@@ -21,9 +21,9 @@ DOCS = ROOT / "invoice_docs"
 GROUND_TRUTH = json.loads((DOCS / "ground_truth.json").read_text()) if (DOCS / "ground_truth.json").exists() else {}
 
 CATEGORY_CRITERIA = {
-    "goods": "physical products sold",
-    "services": "professional/consulting/legal/design services",
-    "utilities_subscription": "recurring hosting, utility, or subscription billing",
+    "goods": "physical products sold, priced per unit/quantity. Not billed on a recurring schedule (that's utilities_subscription).",
+    "services": "professional/consulting/legal/design labor, billed per hour or per engagement. Not a physical item (goods) and not a recurring flat-rate subscription (utilities_subscription).",
+    "utilities_subscription": "recurring hosting, utility, or subscription billing at a flat or usage-based recurring rate. Not a one-time purchase of goods or a one-off services engagement.",
 }
 
 

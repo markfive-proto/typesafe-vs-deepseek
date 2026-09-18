@@ -9,15 +9,28 @@ import rerank_core as core
 
 QUERIES = {
     "urgent incident": {
-        "text": "Find emails about an active production incident or outage that needs immediate attention.",
+        "text": (
+            "Find emails about an active production incident or outage that needs immediate "
+            "attention from the recipient's own team. NOT a marketing email using urgency "
+            "language ('act now', 'ends tonight') — that's promotional, not a real incident."
+        ),
         "relevant_category": "support_urgent",
     },
     "scam / phishing": {
-        "text": "Find emails that are unsolicited scams or phishing attempts asking for money or bank details.",
+        "text": (
+            "Find emails that are unsolicited scams or phishing attempts asking for money or "
+            "bank/account details, from a sender with no real relationship to the recipient. "
+            "NOT a legitimate marketing email offering a real discount code from a known "
+            "brand — that's promotional, even if it also uses urgency language."
+        ),
         "relevant_category": "spam",
     },
     "editorial digest": {
-        "text": "Find emails that are a recurring editorial newsletter/digest the recipient subscribed to.",
+        "text": (
+            "Find emails that are a recurring editorial newsletter/digest with curated "
+            "industry news the recipient subscribed to. NOT a receipt or order confirmation "
+            "(transactional), and NOT a sales pitch for a specific product (promotional)."
+        ),
         "relevant_category": "newsletter",
     },
 }

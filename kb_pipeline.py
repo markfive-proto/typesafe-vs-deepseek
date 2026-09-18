@@ -11,23 +11,23 @@ KB_DOCS = ROOT / "kb_docs"
 
 QUERIES = {
     "AI products": {
-        "text": "Find docs describing AI-powered products built for end users (not internal infra).",
+        "text": "Find docs describing AI-powered products built directly for end users to use — chatbots, copilots, generation tools, consumer or business-facing applications.",
         "relevant_category": "products",
     },
     "agent harness": {
-        "text": "Find docs about harness/orchestration tooling that runs and manages AI agents.",
+        "text": "Find docs about the developer-facing orchestration layer that builds and runs an AI agent itself — its tool-use loop, memory management, multi-agent coordination, and guardrails.",
         "relevant_category": "harness",
     },
     "inference runtime": {
-        "text": "Find docs about the runtime infrastructure that serves model inference (GPUs, batching, caching).",
+        "text": "Find docs about the systems-level infrastructure that physically serves a trained model's inference: GPU scheduling, request batching, KV cache management, quantization, autoscaling.",
         "relevant_category": "runtime",
     },
     "model evaluation": {
-        "text": "Find docs about evaluating model or agent quality, benchmarks, and testing.",
+        "text": "Find docs about measuring and testing model or agent output quality and correctness: benchmarks, judge models, test suites, red-teaming, calibration.",
         "relevant_category": "eval",
     },
     "observability": {
-        "text": "Find docs about monitoring, logging, tracing, and debugging AI systems in production.",
+        "text": "Find docs about watching and debugging an AI system's live production traffic after it has shipped: request tracing, dashboards, alerting, session replay, audit logs.",
         "relevant_category": "observability",
     },
 }

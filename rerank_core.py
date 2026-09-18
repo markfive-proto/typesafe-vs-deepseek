@@ -11,6 +11,9 @@ RANK_PROMPT = """Rank these {n} candidates by relevance to the query below.
 
 Query: {query}
 
+Judge each candidate by its actual central subject, not by surface keyword overlap with
+the query — two topics can share vocabulary while answering a different question.
+
 Candidates (id: snippet):
 {candidates}
 
@@ -30,8 +33,13 @@ def rerank_typesafe(query_key: str, query_text: str, candidates: list[dict], rel
     questions = {
         f"rel_{i}": {
             "type": "score",
-            "instructions": f"How relevant is `candidates[{i}]` to `query`?",
-            "criteria": ["not relevant", "somewhat relevant", "relevant", "highly relevant"],
+            "instructions": f"How relevant is `candidates[{i}]` to `query`? Judge by the candidate's actual central subject, not by surface keyword overlap.",
+            "criteria": [
+                "not relevant — a different topic entirely",
+                "somewhat relevant — related field, but a different central subject than query asks for",
+                "relevant — matches query's topic, though not the clearest example",
+                "highly relevant — a clear, central example of exactly what query asks for",
+            ],
         }
         for i in range(len(candidates))
     }

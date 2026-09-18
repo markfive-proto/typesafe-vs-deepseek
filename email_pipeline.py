@@ -20,13 +20,13 @@ def ground_truth(name: str) -> str | None:
     return m.group(1) if m else None
 
 CATEGORY_CRITERIA = {
-    "work": "internal team/project communication: status updates, meetings, requests from colleagues",
-    "personal": "message from a friend or family member, no business purpose",
-    "newsletter": "recurring editorial digest/roundup the recipient subscribed to",
-    "promotional": "marketing/sales pitch, discount codes, product launches",
-    "spam": "unsolicited scam/phishing: prize claims, fake urgency, requests for bank/account details",
-    "transactional": "receipt, order confirmation, shipping notice, payment/billing notice",
-    "support_urgent": "an active incident, outage, or urgent support/escalation request",
+    "work": "internal team/project communication: status updates, meetings, requests from colleagues. Not a customer-facing or automated message.",
+    "personal": "message from a friend or family member, no business purpose. Not a colleague (that's work).",
+    "newsletter": "recurring editorial digest/roundup of industry news the recipient subscribed to. Not a pitch for a specific product (that's promotional) and not a receipt (that's transactional).",
+    "promotional": "marketing/sales pitch from a real, identifiable brand: discount codes, product launches. Even if it uses urgent language ('ends tonight'), it's a legitimate offer with a real product — not a request for banking/account credentials (that's spam).",
+    "spam": "unsolicited scam/phishing: prize claims, fake urgency, and specifically a request for bank/account/credential details, from a sender with no real brand relationship. A real discount code from a known brand is promotional, not spam.",
+    "transactional": "receipt, order confirmation, shipping notice, payment/billing notice for a purchase already made. Not a pitch to buy something new (that's promotional).",
+    "support_urgent": "an active incident, outage, or urgent support/escalation request about the recipient's own systems needing action now. Not marketing urgency language about a sale ending (that's promotional).",
 }
 
 
