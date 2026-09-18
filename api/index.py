@@ -98,7 +98,7 @@ class handler(BaseHTTPRequestHandler):
             return self._json({"files": list_emails()})
         if route == "/api/queries":
             return self._json({"queries": {k: v["text"] for k, v in R.QUERIES.items()}})
-        self._json({"error": "not found"}, 404)
+        self._json({"error": "not found", "debug_self_path": self.path, "debug_route": route}, 404)
 
     def do_POST(self):
         route = self._route()
